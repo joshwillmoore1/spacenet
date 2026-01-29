@@ -1,4 +1,4 @@
-from compute_contributions import compute_contributions
+from netpcf.helpers.compute_contributions import compute_contributions
 import multiprocessing
 from tqdm import tqdm
 

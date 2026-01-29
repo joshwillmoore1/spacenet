@@ -1,5 +1,5 @@
 import numpy as np
-from polynomial_kernel import polynomial_kernel 
+from netpcf.helpers.polynomial_kernel import polynomial_kernel 
 import numba
 
 @numba.njit(

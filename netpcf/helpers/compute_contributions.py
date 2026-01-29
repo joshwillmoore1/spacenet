@@ -1,6 +1,6 @@
 import numpy as np
-from polynomial_kernel import polynomial_kernel
-from integrated_poly_finite_kernel import integrated_poly_finite_kernel
+from netpcf.helpers.polynomial_kernel import polynomial_kernel
+from netpcf.helpers.integrated_poly_finite_kernel import integrated_poly_finite_kernel
 
 
 def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,node_to_edges: dict) -> np.array:

@@ -10,11 +10,16 @@ from netpcf.helpers.compute_contributions_parallel import compute_contributions_
 from netpcf.helpers.batched_dijkstra import batched_dijkstra
 from netpcf.helpers.spatial_bootstrap import spatial_bootstrap
 
-def cross_pair_correlation_function(network, object_indices_A, object_indices_B, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
+def cross_pair_correlation_function(network, object_indices_A=None, object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
     
     # we make a copy of the networks as we may removed edges if a region is specified
     this_network = network
     all_node_ids = np.asarray(list(this_network.nodes))
+    
+    if object_indices_A is None:
+        object_indices_A = all_node_ids
+    if object_indices_B is None:
+        object_indices_B = all_node_ids
     
     # check object indices are in the domain
     object_indices_A=object_indices_A[np.isin(object_indices_A,all_node_ids,assume_unique=True)]
@@ -80,6 +85,8 @@ def cross_pair_correlation_function(network, object_indices_A, object_indices_B,
     
     
     if return_confidence_interval:
+        if verbose:
+            print("Computing confidence intervals via spatial bootstrap...")
         confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions,all_network_distances,weight_matrix=None,**confidence_interval_kwargs)
         
         return r ,g , confidence_interval
