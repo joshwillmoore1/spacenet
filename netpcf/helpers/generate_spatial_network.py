@@ -14,8 +14,8 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     
     Parameters
     ----------
-    domain : object
-        The domain containing the objects to be used for network generation.
+    points : np.array
+        An array of coordinates relating to the spatial location of each node to be used for network generation.
     network_type : str, optional
         The type of network to generate. Options are 'Delaunay' (Delaunay triangulation), 'KNN' (K-nearest neighbour), 'Proximity' and 'RNG' (relative neighbourhood graph).
     inverse_distance_function : callable, optional

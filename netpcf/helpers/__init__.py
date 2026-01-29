@@ -5,3 +5,5 @@ from .polynomial_kernel import polynomial_kernel
 from .batched_dijkstra import batched_dijkstra
 from .spatial_bootstrap import spatial_bootstrap
 from .leiden_compact_volume_partition import leiden_compact_volume_partition
+from .compute_weighted_contributions import compute_weighted_contributions
+from .compute_weighted_contributions_parallel import compute_weighted_contributions_parallel
