@@ -2,13 +2,7 @@
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 name: Python package
 
-on:
-  #push:
-  #  branches: [ networkx_dep ]
-  pull_request:
-    branches: [ main ]
-  #schedule:
-  #  - cron: "30 0 * * *"   # <=== Change this value
+on: [push]
     
 jobs:
   run-tests:

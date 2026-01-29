@@ -14,7 +14,7 @@ def setup_network_and_params():
     num_points = int(region_size[0] * region_size[1] * lambda_points)
     points = np.random.uniform(0, region_size[0], size=(num_points, 2))
     
-
+    # parameters for the  all pair correlation functions
     netPCF_kwargs = dict(spatial_kernel_bandwidth=75,
                         spatial_kernel_n=2,
                         r_min=0, 
@@ -24,6 +24,7 @@ def setup_network_and_params():
                         verbose=False,
                         n_jobs=1)  
 
+    # a network generated from the points
     G_ppp=npc.helpers.generate_spatial_network(points,network_type='delaunay',max_edge_distance=100)
     
     return G_ppp, netPCF_kwargs
