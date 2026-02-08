@@ -42,9 +42,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     - Proximity networks define connectivity purely by distance thresholds. See `Proximity networks <https://www.sciencedirect.com/science/article/pii/S037015731000308X>`_ for more information.
     
     - Relative Neighbourhood Graph (RNG) esimtates the natural connectivity of points in space. MuSpAn implements the Urquhart approximation to the RNG for computational efficiency. See `RNGs <https://en.wikipedia.org/wiki/Relative_neighborhood_graph>`_ for more information.
-    
-    If parallisation is producing a `ValueError: cannot pickle '_thread._local' object`, this is likely due to the `domain` object not being serializable. In this case, add `if __name__ == "__main__":` to the top of your script or you can set `n_jobs=1` to disable parallisation.
-    
+        
     Examples
     --------
     

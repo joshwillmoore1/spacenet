@@ -9,6 +9,7 @@ from netpcf.helpers.compute_contributions import compute_contributions
 from netpcf.helpers.compute_contributions_parallel import compute_contributions_parallel   
 from netpcf.helpers.batched_dijkstra import batched_dijkstra
 from netpcf.helpers.spatial_bootstrap import spatial_bootstrap
+from netpcf.helpers.is_connected_filter import is_connected_filter
 
 def cross_pair_correlation_function(network, object_indices_A=None, object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
     
@@ -25,6 +26,9 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     object_indices_A=object_indices_A[np.isin(object_indices_A,all_node_ids,assume_unique=True)]
     object_indices_B=object_indices_B[np.isin(object_indices_B,all_node_ids,assume_unique=True)]
 
+    # filter to the largest connected component if the network is not connected
+    this_network,object_indices_A,object_indices_B = is_connected_filter(this_network,object_indices_A,object_indices_B,filter_largest_connected=True)
+    
     # check if the populations are empty
     number_of_objects_A = len(object_indices_A)
     number_of_objects_B = len(object_indices_B)
@@ -34,6 +38,11 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     
     if number_of_objects_B == 0:
         raise RuntimeError(f'The object_indices_A is empty following filteration of node check.')    
+    
+    # exploit symmetry to reduce computational cost
+    if number_of_objects_A > number_of_objects_B:
+        object_indices_A, object_indices_B = object_indices_B, object_indices_A
+    
 
     # total length of the network
     total_length = this_network.size(weight=edge_weight_name)   

@@ -150,7 +150,7 @@ def _split_disconnected(G: nx.Graph, labels: Dict) -> Dict:
 def _compute_objective(G: nx.Graph, labels: Dict, distmaps: Dict[int, Dict],
                        T: float, alpha: float, p: int, dist_attr: str):
     W, B, V, _ = _per_community_W_B_V(G, labels, dist_attr)
-    vol_pen = sum((V.get(c,0.0) - T)**2 for c in set(labels.values()))
+    vol_pen = sum((V.get(c,0.0) - T)**p for c in set(labels.values()))
 
     comp = 0.0
     for c in set(labels.values()):

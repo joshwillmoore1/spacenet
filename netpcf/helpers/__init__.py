@@ -1,4 +1,3 @@
-from .generate_spatial_network import generate_spatial_network
 from .compute_contributions import compute_contributions
 from .integrated_poly_finite_kernel import integrated_poly_finite_kernel
 from .polynomial_kernel import polynomial_kernel
@@ -7,3 +6,4 @@ from .spatial_bootstrap import spatial_bootstrap
 from .leiden_compact_volume_partition import leiden_compact_volume_partition
 from .compute_weighted_contributions import compute_weighted_contributions
 from .compute_weighted_contributions_parallel import compute_weighted_contributions_parallel
+from .is_connected_filter import is_connected_filter

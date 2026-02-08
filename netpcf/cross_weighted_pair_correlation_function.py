@@ -3,6 +3,7 @@ import networkx as nx
 from scipy.sparse.csgraph import dijkstra
 from collections import defaultdict
 from tqdm import tqdm  # optional progress bar
+from copy import deepcopy   
 
 # bespoke imports
 from netpcf.helpers.compute_weighted_contributions import compute_weighted_contributions
@@ -10,7 +11,11 @@ from netpcf.helpers.compute_weighted_contributions_parallel import compute_weigh
 from netpcf.helpers.batched_dijkstra import batched_dijkstra
 from netpcf.helpers.spatial_bootstrap import spatial_bootstrap
 from netpcf.helpers.polynomial_kernel import polynomial_kernel
+from netpcf.helpers.is_connected_filter import is_connected_filter
 
+
+
+# THIS IS THE WRONG FUNCTION - THIS IS ONLY THE WPCF - ONLY ONE CONTINUOUS MARKER - SEE cross_weighted_pair_correlation_function_v2 for the correct implementation. This is kept for reference and to avoid breaking existing code that may use this function.
 def cross_weighted_pair_correlation_function(network,labels_for_objects_B, object_indices_A=None,object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth=0.2,marker_kernel_n=1,marker_min=0, marker_max=1, marker_step=0.1, edge_weight_name='Distance', save_temp_network=False, return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
     
     # we make a copy of the networks as we may removed edges if a region is specified
@@ -21,9 +26,19 @@ def cross_weighted_pair_correlation_function(network,labels_for_objects_B, objec
     object_indices_A=object_indices_A[np.isin(object_indices_A,all_node_ids,assume_unique=True)]
     object_indices_B=object_indices_B[np.isin(object_indices_B,all_node_ids,assume_unique=True)]
 
+    orginal_object_indices_A = deepcopy(object_indices_B)
+    orginal_object_indices_B = deepcopy(object_indices_B)
+
+    
+    # filter to the largest connected component if the network is not connected
+    this_network,object_indices_A,object_indices_B = is_connected_filter(this_network,object_indices_A,object_indices_B,filter_largest_connected=True)
+    
     # check if the populations are empty
     number_of_objects_A = len(object_indices_A)
     number_of_objects_B = len(object_indices_B)
+    
+    
+    # check the 
     
     if number_of_objects_A == 0:
         raise RuntimeError(f'The object_indices_A is empty following filteration of node check.')
@@ -42,7 +57,7 @@ def cross_weighted_pair_correlation_function(network,labels_for_objects_B, objec
         raise RuntimeError(f'The population_A is empty following filteration of boundaries and query.')
     
 
-    these_continuous_labels=labels_for_objects_B
+    these_continuous_labels=labels_for_objects_B[np.isin(orginal_object_indices_B,object_indices_B,assume_unique=True)]
     
     # pre compute the kernel of marker contributions for all target markers
     tau = np.arange(marker_min, marker_max + marker_step, marker_step)

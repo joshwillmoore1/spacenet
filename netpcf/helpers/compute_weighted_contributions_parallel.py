@@ -1,4 +1,4 @@
-from compute_weighted_contributions import compute_weighted_contributions
+from netpcf.helpers.compute_weighted_contributions import compute_weighted_contributions
 import multiprocessing
 from tqdm import tqdm
 
