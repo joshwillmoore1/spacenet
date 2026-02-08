@@ -20,6 +20,7 @@ license = { file = "LICENSE" }
 
 dependencies = [
 "networkx>= 3.4",
+"matplotlib>=3.0"
 "numpy>=2.0",
 "scipy>=1.14.1",
 "setuptools>=72.1.0",
