@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 requires-python = ">= 3.10"
 name = "netpcf"
-version = "0.0.1"
+version = "0.0.0"
 description = "A Python package for computing geometrically-corrected correlation functions over unweighted and weighted networks."
 authors = [
     {name = "Joshua Moore", email = "joshua.moore@maths.ox.ac.uk"}
@@ -20,7 +20,7 @@ license = { file = "LICENSE" }
 
 dependencies = [
 "networkx>= 3.4",
-"matplotlib>=3.0"
+"matplotlib>=3.0",
 "numpy>=2.0",
 "scipy>=1.14.1",
 "setuptools>=72.1.0",
@@ -38,8 +38,8 @@ allow-direct-references = true
 source = "vcs"
 
 [project.urls]
-Homepage = "https://www.muspan.co.uk"
-Documentation = "https://docs.muspan.co.uk/latest/Documentation.html"
+Homepage = ""
+Documentation = ""
 Repository = "https://github.com/joshwillmoore1/netpcf"
 
 

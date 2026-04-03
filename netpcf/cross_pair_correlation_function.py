@@ -12,6 +12,67 @@ from netpcf.helpers.spatial_bootstrap import spatial_bootstrap
 from netpcf.helpers.is_connected_filter import is_connected_filter
 
 def cross_pair_correlation_function(network, object_indices_A=None, object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
+    """
+    
+    Computes the cross pair correlation function between two populations of objects (A and B) on a spatial network.
+    
+    
+    Parameters
+    ----------
+    network : networkx.Graph
+        The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.
+    object_indices_A : array-like, optional
+        The indices of the nodes in population A. If None, all nodes in the network will be considered as part of population A. Default is None.
+    object_indices_B : array-like, optional
+        The indices of the nodes in population B. If None, all nodes in the network will be considered as part of population B. Default is None.
+    spatial_kernel_bandwidth : float, optional
+        The bandwidth parameter for the spatial kernel function. This controls the smoothness of the pair correlation function. Default is 10.
+    spatial_kernel_n : int, optional
+        The exponent parameter for the spatial kernel function. This controls the shape of the kernel. Default is 2 (which corresponds to a Gaussian-like kernel).
+    r_min : float, optional
+        The minimum distance to consider when computing the pair correlation function. Default is 0.
+    r_max : float, optional
+        The maximum distance to consider when computing the pair correlation function. Default is 100.
+    r_step : float, optional
+        The step size for the distance bins when computing the pair correlation function. Default is 10.
+    edge_weight_name : str, optional
+        The name of the edge attribute in the network that corresponds to the distance between nodes. Default is 'Distance'.
+    return_confidence_interval : bool, optional
+        Whether to compute and return confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.
+    confidence_interval_kwargs : dict, optional
+        Additional keyword arguments to pass to the spatial_bootstrap function when computing confidence intervals. Default is an empty dictionary.
+    low_memory : bool, optional
+        Whether to use a low-memory implementation of Dijkstra's algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.
+    verbose : bool, optional
+        Whether to print progress messages during computation. Default is True.
+    n_jobs : int, optional
+        The number of parallel jobs to run when computing contributions. If n_jobs > 1, the contributions will be computed in parallel across multiple CPU cores. Default is 1 (no parallelization).
+    
+
+    Returns
+    -------
+    
+    radius : numpy.ndarray
+        The radii at which the pair correlation function was computed.
+    
+    g : numpy.ndarray
+        The values of the pair correlation function at the corresponding radii.
+    
+    confidence_interval : numpy.ndarray (if return_confidence_interval is True)   
+        If return_confidence_interval is True, this will be a numpy array (2,n) containing the confidence intervals for the pair correlation function at each radius. The first row corresponds to the lower bounds of the confidence intervals, and the second row corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.
+    
+    
+    
+    Examples
+    --------
+    
+    
+    
+    
+    """
+    
+    
+    
     
     # we make a copy of the networks as we may removed edges if a region is specified
     this_network = network

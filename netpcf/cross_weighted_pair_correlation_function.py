@@ -26,7 +26,7 @@ def cross_weighted_pair_correlation_function(network,labels_for_objects_B, objec
     object_indices_A=object_indices_A[np.isin(object_indices_A,all_node_ids,assume_unique=True)]
     object_indices_B=object_indices_B[np.isin(object_indices_B,all_node_ids,assume_unique=True)]
 
-    orginal_object_indices_A = deepcopy(object_indices_B)
+    orginal_object_indices_A = deepcopy(object_indices_A)
     orginal_object_indices_B = deepcopy(object_indices_B)
 
     
