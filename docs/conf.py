@@ -9,8 +9,8 @@ with open(pyproject_path, 'r') as f:
     pyproject_data = toml.load(f)
 
 project = 'netpcf'
-copyright = '2026, Joshua Moore'
-author = 'Joshua Moore'
+copyright = '2026, Joshua W. Moore'
+author = 'Joshua W. Moore'
 release = pyproject_data['project']['version']
 
 # -- General configuration ---------------------------------------------------

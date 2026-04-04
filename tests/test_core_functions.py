@@ -25,7 +25,7 @@ def setup_network_and_params():
                         n_jobs=1)  
 
     # a network generated from the points
-    G_ppp=npc.helpers.generate_spatial_network(points,network_type='delaunay',max_edge_distance=100)
+    G_ppp=npc.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=100)
     
     return G_ppp, netPCF_kwargs
 

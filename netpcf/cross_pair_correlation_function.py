@@ -71,9 +71,6 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     
     """
     
-    
-    
-    
     # we make a copy of the networks as we may removed edges if a region is specified
     this_network = network
     all_node_ids = np.asarray(list(this_network.nodes))
