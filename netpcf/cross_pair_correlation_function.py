@@ -98,8 +98,8 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
         raise RuntimeError(f'The object_indices_A is empty following filteration of node check.')    
     
     # exploit symmetry to reduce computational cost
-    if number_of_objects_A > number_of_objects_B:
-        object_indices_A, object_indices_B = object_indices_B, object_indices_A
+    #if number_of_objects_A > number_of_objects_B:
+    #    object_indices_A, object_indices_B = object_indices_B, object_indices_A
     
 
     # total length of the network
