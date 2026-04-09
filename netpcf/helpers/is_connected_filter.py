@@ -16,8 +16,8 @@ def is_connected_filter(network,nodes_A,nodes_B,filter_largest_connected=False):
             # filter the nodes_A and nodes_B to be only in the largest connected component
             sub_node_ids = np.asarray(list(network.nodes))
             
-            if len(sub_node_ids) / len(all_node_ids) < 0.8:
-                raise RuntimeError("After filtering to the largest connected component, less than 80% of the original nodes remain. Please provide a connected network.")
+            if len(sub_node_ids) / len(all_node_ids) < 0.6:
+                raise RuntimeError("After filtering to the largest connected component, less than 60% of the original nodes remain. Please provide a connected network.")
             
             nodes_A=nodes_A[np.isin(nodes_A,sub_node_ids,assume_unique=True)]
             nodes_B=nodes_B[np.isin(nodes_B,sub_node_ids,assume_unique=True)]

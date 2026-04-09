@@ -4,6 +4,7 @@ sys.path.append('..')
 import pytest
 import numpy as np
 import netpcf as npc
+import networkx as nx   
 
 @pytest.fixture
 def setup_network_and_params():
@@ -41,5 +42,4 @@ def test_null_cross_pcf(setup_network_and_params):
     # check that g is approximately 1 for all r values
     assert np.allclose(g, 1, atol=0.2), "Cross-PCF deviates significantly from 1 for a homogeneous Poisson process."
 
-    
     
