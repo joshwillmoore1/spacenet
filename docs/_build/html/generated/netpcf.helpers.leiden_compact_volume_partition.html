@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>netpcf.cross_pair_correlation_function &#8212; Spatial Network Pair Correlation Functions</title>
+    <title>netpcf.helpers.leiden_compact_volume_partition &#8212; Spatial Network Pair Correlation Functions</title>
   
   
   
@@ -61,7 +61,7 @@
                 gtag('js', new Date());
                 gtag('config', 'XX-XXXXXXXXX-X');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/netpcf.cross_pair_correlation_function';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/netpcf.helpers.leiden_compact_volume_partition';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://docs.muspan.co.uk/version_switcher.json';
@@ -70,8 +70,8 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="netpcf.weighted_pair_correlation_function" href="netpcf.weighted_pair_correlation_function.html" />
-    <link rel="prev" title="Documentation" href="../Documentation.html" />
+    <link rel="next" title="netpcf.helpers.polynomial_kernel" href="netpcf.helpers.polynomial_kernel.html" />
+    <link rel="prev" title="netpcf.utils.plot_spatial_network" href="netpcf.utils.plot_spatial_network.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -386,16 +386,19 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.cross_pair_correlation_function</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="netpcf.cross_pair_correlation_function.html">netpcf.cross_pair_correlation_function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.weighted_pair_correlation_function.html">netpcf.weighted_pair_correlation_function</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.utils.plot_spatial_network.html">netpcf.utils.plot_spatial_network</a></li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.helpers.leiden_compact_volume_partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.polynomial_kernel.html">netpcf.helpers.polynomial_kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.integrated_poly_finite_kernel.html">netpcf.helpers.integrated_poly_finite_kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.is_connected_filter.html">netpcf.helpers.is_connected_filter</a></li>
 </ul>
 </div>
 </nav></div>
@@ -446,7 +449,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../Documentation.html" class="nav-link">Documentation</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">netpcf.cross...</li>
+    <li class="breadcrumb-item active" aria-current="page">netpcf.helpe...</li>
   </ul>
 </nav>
 </div>
@@ -463,59 +466,59 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="netpcf-cross-pair-correlation-function">
-<h1>netpcf.cross_pair_correlation_function<a class="headerlink" href="#netpcf-cross-pair-correlation-function" title="Link to this heading">#</a></h1>
+  <section id="netpcf-helpers-leiden-compact-volume-partition">
+<h1>netpcf.helpers.leiden_compact_volume_partition<a class="headerlink" href="#netpcf-helpers-leiden-compact-volume-partition" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="netpcf.cross_pair_correlation_function">
-<span class="sig-prename descclassname"><span class="pre">netpcf.</span></span><span class="sig-name descname"><span class="pre">cross_pair_correlation_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_confidence_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_interval_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.cross_pair_correlation_function" title="Link to this definition">#</a></dt>
-<dd><p>Computes the cross pair correlation function between two populations of objects (A and B) on a spatial network.</p>
-<p>For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices.</p>
+<dt class="sig sig-object py" id="netpcf.helpers.leiden_compact_volume_partition">
+<span class="sig-prename descclassname"><span class="pre">netpcf.helpers.</span></span><span class="sig-name descname"><span class="pre">leiden_compact_volume_partition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance_attr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed_samples</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">random_seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.helpers.leiden_compact_volume_partition" title="Link to this definition">#</a></dt>
+<dd><p>A compact and volume-balanced partitioning algorithm inspired by the Leiden method, adapted for spatial networks with edge distances.
+The algorithm seeks to partition the graph into k communities that are spatially contiguous, have similar volumes (total edge lengths), and minimize the distance from nodes to their community medoids.
+Convergence is achieved when no single node can be moved to a different community to improve the combined objective of compactness and volume balance, or when the maximum number of iterations is reached.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.</p>
+<dt><strong>G</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The input graph to partition. Must be undirected.</p>
 </dd>
-<dt><strong>object_indices_A</strong><span class="classifier">array-like, optional</span></dt><dd><p>The indices of the nodes in population A. If None, all nodes in the network will be considered as part of population A. Default is None.</p>
+<dt><strong>k</strong><span class="classifier">int, optional</span></dt><dd><p>The desired number of communities. If None, a heuristic based on the number of nodes will be used.</p>
 </dd>
-<dt><strong>object_indices_B</strong><span class="classifier">array-like, optional</span></dt><dd><p>The indices of the nodes in population B. If None, all nodes in the network will be considered as part of population B. Default is None.</p>
+<dt><strong>T</strong><span class="classifier">float, optional</span></dt><dd><p>The target volume for each community. If None, it will be estimated based on the total edge length and k.</p>
 </dd>
-<dt><strong>spatial_kernel_bandwidth</strong><span class="classifier">float, optional</span></dt><dd><p>The bandwidth parameter for the spatial kernel function. This controls the smoothness of the pair correlation function. Default is 10.</p>
+<dt><strong>distance_attr</strong><span class="classifier">str, optional</span></dt><dd><p>The edge attribute to use as distance for the partitioning. Default is “Distance”.</p>
 </dd>
-<dt><strong>spatial_kernel_n</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent parameter for the spatial kernel function. This controls the shape of the kernel. Default is 2 (which corresponds to a Gaussian-like kernel).</p>
+<dt><strong>alpha</strong><span class="classifier">float, optional</span></dt><dd><p>The weight of the volume penalty in the objective function. Must be in [0, 1]. Default is 0.5.</p>
 </dd>
-<dt><strong>r_min</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum distance to consider when computing the pair correlation function. Default is 0.</p>
+<dt><strong>p</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent for the volume penalty. Default is 2 (squared penalty).</p>
 </dd>
-<dt><strong>r_max</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum distance to consider when computing the pair correlation function. Default is 100.</p>
+<dt><strong>max_iter</strong><span class="classifier">int, optional</span></dt><dd><p>The maximum number of iterations for the local moving phase. Default is 10.</p>
 </dd>
-<dt><strong>r_step</strong><span class="classifier">float, optional</span></dt><dd><p>The step size for the distance bins when computing the pair correlation function. Default is 10.</p>
+<dt><strong>seed_samples</strong><span class="classifier">int, optional</span></dt><dd><p>The number of samples to use when approximating medoids. Default is 10.</p>
 </dd>
-<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
-</dd>
-<dt><strong>return_confidence_interval</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to compute and return confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.</p>
-</dd>
-<dt><strong>confidence_interval_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the spatial_bootstrap function when computing confidence intervals. Default is an empty dictionary.</p>
-</dd>
-<dt><strong>low_memory</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to use a low-memory implementation of Dijkstra’s algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.</p>
-</dd>
-<dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to print progress messages during computation. Default is True.</p>
-</dd>
-<dt><strong>n_jobs</strong><span class="classifier">int, optional</span></dt><dd><p>The number of parallel jobs to run when computing contributions. If n_jobs &gt; 1, the contributions will be computed in parallel across multiple CPU cores. Default is 1 (no parallelization).</p>
+<dt><strong>random_seed</strong><span class="classifier">int or None, optional</span></dt><dd><p>The random seed for reproducibility. If None, a random seed will be used. Default is 0.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>radius</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The radii at which the pair correlation function was computed.</p>
-</dd>
-<dt><strong>g</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The values of the pair correlation function at the corresponding radii.</p>
-</dd>
-<dt><strong>confidence_interval</strong><span class="classifier">numpy.ndarray (if return_confidence_interval is True)</span></dt><dd><p>If return_confidence_interval is True, this will be a numpy array (2,n) containing the confidence intervals for the pair correlation function at each radius. The first row corresponds to the lower bounds of the confidence intervals, and the second row corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.</p>
+<dt>LeidenCompactResult</dt><dd><p>A dataclass containing the partitioning results, including:</p>
+<ul class="simple">
+<li><p>labels: A dictionary mapping each node to its assigned community.</p></li>
+<li><p>community_lengths: A dictionary mapping each community to the total length of internal edges (W).</p></li>
+<li><p>community_cut_lengths: A dictionary mapping each community to the total length of cut edges (B).</p></li>
+<li><p>community_volumes: A dictionary mapping each community to its volume (V = W + B).</p></li>
+<li><p>medoids: A dictionary mapping each community to its medoid node.</p></li>
+<li><p>T: The target volume used in the partitioning.</p></li>
+<li><p>k: The number of communities in the final partitioning.</p></li>
+<li><p>objective: The final value of the objective function.</p></li>
+<li><p>compactness: The final compactness component of the objective function.</p></li>
+<li><p>volume_penalty: The final volume penalty component of the objective function.</p></li>
+<li><p>total_cut_length: The total length of cut edges across all communities.</p></li>
+<li><p>moves: The total number of node moves made during the local moving phase.</p></li>
+<li><p>iterations: The number of iterations taken in the local moving phase until convergence or reaching max_iter.</p></li>
+</ul>
 </dd>
 </dl>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices.</p>
 </dd></dl>
 
 </section>
@@ -542,7 +545,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.cross_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.helpers.leiden_compact_volume_partition"><code class="docutils literal notranslate"><span class="pre">leiden_compact_volume_partition()</span></code></a></li>
 </ul>
   </nav></div>
 

@@ -14,6 +14,7 @@ Computing pair correlation functions
    :nosignatures:
 
    cross_pair_correlation_function
+   weighted_pair_correlation_function
 
 
 .. currentmodule:: netpcf
@@ -26,6 +27,7 @@ Useful functions
    :nosignatures:
 
    utils.generate_spatial_network
+   utils.plot_spatial_network 
 
 
 Example datasets
@@ -35,3 +37,11 @@ Example datasets
 
 Backend Helper functions
 ------------------------
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   helpers.leiden_compact_volume_partition
+   helpers.polynomial_kernel
+   helpers.integrated_poly_finite_kernel
+   helpers.is_connected_filter

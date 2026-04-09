@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>netpcf.cross_pair_correlation_function &#8212; Spatial Network Pair Correlation Functions</title>
+    <title>netpcf.utils.plot_spatial_network &#8212; Spatial Network Pair Correlation Functions</title>
   
   
   
@@ -61,7 +61,7 @@
                 gtag('js', new Date());
                 gtag('config', 'XX-XXXXXXXXX-X');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/netpcf.cross_pair_correlation_function';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/netpcf.utils.plot_spatial_network';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://docs.muspan.co.uk/version_switcher.json';
@@ -70,8 +70,8 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="netpcf.weighted_pair_correlation_function" href="netpcf.weighted_pair_correlation_function.html" />
-    <link rel="prev" title="Documentation" href="../Documentation.html" />
+    <link rel="next" title="netpcf.helpers.polynomial_kernel" href="netpcf.helpers.polynomial_kernel.html" />
+    <link rel="prev" title="netpcf.utils.generate_spatial_network" href="netpcf.utils.generate_spatial_network.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -386,13 +386,13 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.cross_pair_correlation_function</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="netpcf.cross_pair_correlation_function.html">netpcf.cross_pair_correlation_function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.weighted_pair_correlation_function.html">netpcf.weighted_pair_correlation_function</a></li>
 </ul>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.utils.plot_spatial_network.html">netpcf.utils.plot_spatial_network</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.utils.plot_spatial_network</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.polynomial_kernel.html">netpcf.helpers.polynomial_kernel</a></li>
@@ -446,7 +446,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../Documentation.html" class="nav-link">Documentation</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">netpcf.cross...</li>
+    <li class="breadcrumb-item active" aria-current="page">netpcf.utils...</li>
   </ul>
 </nav>
 </div>
@@ -463,59 +463,58 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="netpcf-cross-pair-correlation-function">
-<h1>netpcf.cross_pair_correlation_function<a class="headerlink" href="#netpcf-cross-pair-correlation-function" title="Link to this heading">#</a></h1>
+  <section id="netpcf-utils-plot-spatial-network">
+<h1>netpcf.utils.plot_spatial_network<a class="headerlink" href="#netpcf-utils-plot-spatial-network" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="netpcf.cross_pair_correlation_function">
-<span class="sig-prename descclassname"><span class="pre">netpcf.</span></span><span class="sig-name descname"><span class="pre">cross_pair_correlation_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_confidence_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">confidence_interval_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.cross_pair_correlation_function" title="Link to this definition">#</a></dt>
-<dd><p>Computes the cross pair correlation function between two populations of objects (A and B) on a spatial network.</p>
-<p>For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices.</p>
+<dt class="sig sig-object py" id="netpcf.utils.plot_spatial_network">
+<span class="sig-prename descclassname"><span class="pre">netpcf.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
+<dd><p>Plots a spatial network with nodes positioned according to the provided points. Nodes can be colored based on provided labels, and edges can be colored based on their weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.</p>
+<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network to be plotted. Edges should have a weight attribute corresponding to the distance between nodes.</p>
 </dd>
-<dt><strong>object_indices_A</strong><span class="classifier">array-like, optional</span></dt><dd><p>The indices of the nodes in population A. If None, all nodes in the network will be considered as part of population A. Default is None.</p>
+<dt><strong>points</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An (n, 2) or (n, 3) array of coordinates for the n nodes in the spatial network. The order of points should correspond to the order of nodes in the spatial network.</p>
 </dd>
-<dt><strong>object_indices_B</strong><span class="classifier">array-like, optional</span></dt><dd><p>The indices of the nodes in population B. If None, all nodes in the network will be considered as part of population B. Default is None.</p>
+<dt><strong>labels</strong><span class="classifier">array-like, optional</span></dt><dd><p>An array of labels for the nodes, used for coloring. If None, all nodes will be colored the same. Default is None.</p>
 </dd>
-<dt><strong>spatial_kernel_bandwidth</strong><span class="classifier">float, optional</span></dt><dd><p>The bandwidth parameter for the spatial kernel function. This controls the smoothness of the pair correlation function. Default is 10.</p>
+<dt><strong>ax</strong><span class="classifier">matplotlib.axes.Axes, optional</span></dt><dd><p>An existing matplotlib Axes object to plot on. If None, a new figure and axes will be created. Default is None.</p>
 </dd>
-<dt><strong>spatial_kernel_n</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent parameter for the spatial kernel function. This controls the shape of the kernel. Default is 2 (which corresponds to a Gaussian-like kernel).</p>
+<dt><strong>edge_width</strong><span class="classifier">float, optional</span></dt><dd><p>The width of the edges in the plot. Default is 1.</p>
 </dd>
-<dt><strong>r_min</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum distance to consider when computing the pair correlation function. Default is 0.</p>
+<dt><strong>marker_size</strong><span class="classifier">float, optional</span></dt><dd><p>The size of the node markers in the plot. Default is 10.</p>
 </dd>
-<dt><strong>r_max</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum distance to consider when computing the pair correlation function. Default is 100.</p>
+<dt><strong>add_legend</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a legend for the node labels. Default is False.</p>
 </dd>
-<dt><strong>r_step</strong><span class="classifier">float, optional</span></dt><dd><p>The step size for the distance bins when computing the pair correlation function. Default is 10.</p>
+<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
 </dd>
-<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
+<dt><strong>edge_cmap</strong><span class="classifier">str or matplotlib.colors.Colormap, optional</span></dt><dd><p>The colormap to use for coloring edges based on their weights. Default is ‘Greys_r’.</p>
 </dd>
-<dt><strong>return_confidence_interval</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to compute and return confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.</p>
+<dt><strong>edge_vmin</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum value for edge weight coloring. If None, the minimum edge weight will be used. Default is None.</p>
 </dd>
-<dt><strong>confidence_interval_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the spatial_bootstrap function when computing confidence intervals. Default is an empty dictionary.</p>
+<dt><strong>edge_vmax</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum value for edge weight coloring. If None, the maximum edge weight will be used. Default is None.</p>
 </dd>
-<dt><strong>low_memory</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to use a low-memory implementation of Dijkstra’s algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.</p>
+<dt><strong>add_edge_cbar</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a colorbar for the edge weights. Default is False.</p>
 </dd>
-<dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to print progress messages during computation. Default is True.</p>
+<dt><strong>continuous_labels</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether the node labels are continuous values that should be colored using a colormap (True) or discrete categories that should be colored separately (False). Default is False.</p>
 </dd>
-<dt><strong>n_jobs</strong><span class="classifier">int, optional</span></dt><dd><p>The number of parallel jobs to run when computing contributions. If n_jobs &gt; 1, the contributions will be computed in parallel across multiple CPU cores. Default is 1 (no parallelization).</p>
+<dt><strong>label_name</strong><span class="classifier">str, optional</span></dt><dd><p>The label for the colorbar if continuous_labels is True. Default is ‘labels’.</p>
+</dd>
+<dt><strong>scatter_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.</p>
+</dd>
+<dt><strong>figure_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to plt.figure() when creating a new figure. Default is an empty dictionary.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>radius</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The radii at which the pair correlation function was computed.</p>
+<dt><strong>fig</strong><span class="classifier">matplotlib.figure.Figure</span></dt><dd><p>The figure object containing the plot.</p>
 </dd>
-<dt><strong>g</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The values of the pair correlation function at the corresponding radii.</p>
-</dd>
-<dt><strong>confidence_interval</strong><span class="classifier">numpy.ndarray (if return_confidence_interval is True)</span></dt><dd><p>If return_confidence_interval is True, this will be a numpy array (2,n) containing the confidence intervals for the pair correlation function at each radius. The first row corresponds to the lower bounds of the confidence intervals, and the second row corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.</p>
+<dt><strong>ax</strong><span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>The axes object containing the plot.</p>
 </dd>
 </dl>
 </dd>
 </dl>
-<p class="rubric">Notes</p>
-<p>For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices.</p>
 </dd></dl>
 
 </section>
@@ -542,7 +541,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.cross_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.utils.plot_spatial_network"><code class="docutils literal notranslate"><span class="pre">plot_spatial_network()</span></code></a></li>
 </ul>
   </nav></div>
 

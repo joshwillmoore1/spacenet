@@ -6,7 +6,54 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1,marker_size=10,add_legend=False,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,continuous_labels=False,label_name='labels',scatter_kwargs={},figure_kwargs={}):
+    """
+    
+    Plots a spatial network with nodes positioned according to the provided points. Nodes can be colored based on provided labels, and edges can be colored based on their weights. 
 
+    Parameters
+    ----------
+    spatial_network : networkx.Graph
+        The spatial network to be plotted. Edges should have a weight attribute corresponding to the distance between nodes.
+    points : numpy.ndarray
+        An (n, 2) or (n, 3) array of coordinates for the n nodes in the spatial network. The order of points should correspond to the order of nodes in the spatial network.
+    labels : array-like, optional
+        An array of labels for the nodes, used for coloring. If None, all nodes will be colored the same. Default is None.
+    ax : matplotlib.axes.Axes, optional 
+        An existing matplotlib Axes object to plot on. If None, a new figure and axes will be created. Default is None.
+    edge_width : float, optional
+        The width of the edges in the plot. Default is 1.
+    marker_size : float, optional
+        The size of the node markers in the plot. Default is 10.
+    add_legend : bool, optional
+        Whether to add a legend for the node labels. Default is False.
+    edge_weight_name : str, optional
+        The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is 'Distance'.
+    edge_cmap : str or matplotlib.colors.Colormap, optional
+        The colormap to use for coloring edges based on their weights. Default is 'Greys_r'.
+    edge_vmin : float, optional
+        The minimum value for edge weight coloring. If None, the minimum edge weight will be used. Default is None.
+    edge_vmax : float, optional
+        The maximum value for edge weight coloring. If None, the maximum edge weight will be used. Default is None.
+    add_edge_cbar : bool, optional
+        Whether to add a colorbar for the edge weights. Default is False.
+    continuous_labels : bool, optional
+        Whether the node labels are continuous values that should be colored using a colormap (True) or discrete categories that should be colored separately (False). Default is False.
+    label_name : str, optional
+        The label for the colorbar if continuous_labels is True. Default is 'labels'.
+    scatter_kwargs : dict, optional
+        Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.
+    figure_kwargs : dict, optional
+        Additional keyword arguments to pass to plt.figure() when creating a new figure. Default is an empty dictionary.
+
+    Returns
+    -------
+    fig : matplotlib.figure.Figure  
+        The figure object containing the plot.
+    ax : matplotlib.axes.Axes
+        The axes object containing the plot.
+
+                            
+    """
     pos = {i: points[i] for i in range(len(points))}
     
     if ax is None:

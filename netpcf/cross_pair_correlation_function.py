@@ -16,6 +16,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     
     Computes the cross pair correlation function between two populations of objects (A and B) on a spatial network.
     
+    For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices. 
     
     Parameters
     ----------
@@ -61,7 +62,10 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     confidence_interval : numpy.ndarray (if return_confidence_interval is True)   
         If return_confidence_interval is True, this will be a numpy array (2,n) containing the confidence intervals for the pair correlation function at each radius. The first row corresponds to the lower bounds of the confidence intervals, and the second row corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.
     
-    
+    Notes
+    -----
+    For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices. 
+
     
     Examples
     --------

@@ -61,6 +61,8 @@
                 gtag('js', new Date());
                 gtag('config', 'XX-XXXXXXXXX-X');
             </script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Documentation';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
@@ -388,9 +390,17 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="generated/netpcf.cross_pair_correlation_function.html">netpcf.cross_pair_correlation_function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/netpcf.weighted_pair_correlation_function.html">netpcf.weighted_pair_correlation_function</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="generated/netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/netpcf.utils.plot_spatial_network.html">netpcf.utils.plot_spatial_network</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="generated/netpcf.helpers.leiden_compact_volume_partition.html">netpcf.helpers.leiden_compact_volume_partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/netpcf.helpers.polynomial_kernel.html">netpcf.helpers.polynomial_kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/netpcf.helpers.integrated_poly_finite_kernel.html">netpcf.helpers.integrated_poly_finite_kernel</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/netpcf.helpers.is_connected_filter.html">netpcf.helpers.is_connected_filter</a></li>
 </ul>
 </div>
 </nav></div>
@@ -465,6 +475,9 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/netpcf.cross_pair_correlation_function.html#netpcf.cross_pair_correlation_function" title="netpcf.cross_pair_correlation_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross_pair_correlation_function</span></code></a></p></td>
 <td><p>Computes the cross pair correlation function between two populations of objects (A and B) on a spatial network.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/netpcf.weighted_pair_correlation_function.html#netpcf.weighted_pair_correlation_function" title="netpcf.weighted_pair_correlation_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">weighted_pair_correlation_function</span></code></a></p></td>
+<td><p>Computes the weighted pair correlation function between two populations of objects (A and B) using a continuous label on objects B over a spatial network.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -476,15 +489,35 @@ document.write(`
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/netpcf.utils.generate_spatial_network.html#netpcf.utils.generate_spatial_network" title="netpcf.utils.generate_spatial_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.generate_spatial_network</span></code></a></p></td>
 <td><p>Generate a spatial network using set of points.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/netpcf.utils.plot_spatial_network.html#netpcf.utils.plot_spatial_network" title="netpcf.utils.plot_spatial_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.plot_spatial_network</span></code></a></p></td>
+<td><p>Plots a spatial network with nodes positioned according to the provided points.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 </section>
-<section id="loading-example-datasets">
-<h2>Loading example datasets<a class="headerlink" href="#loading-example-datasets" title="Link to this heading">#</a></h2>
+<section id="example-datasets">
+<h2>Example datasets<a class="headerlink" href="#example-datasets" title="Link to this heading">#</a></h2>
 </section>
 <section id="backend-helper-functions">
 <h2>Backend Helper functions<a class="headerlink" href="#backend-helper-functions" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/netpcf.helpers.leiden_compact_volume_partition.html#netpcf.helpers.leiden_compact_volume_partition" title="netpcf.helpers.leiden_compact_volume_partition"><code class="xref py py-obj docutils literal notranslate"><span class="pre">helpers.leiden_compact_volume_partition</span></code></a></p></td>
+<td><p>A compact and volume-balanced partitioning algorithm inspired by the Leiden method, adapted for spatial networks with edge distances.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/netpcf.helpers.polynomial_kernel.html#netpcf.helpers.polynomial_kernel" title="netpcf.helpers.polynomial_kernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">helpers.polynomial_kernel</span></code></a></p></td>
+<td><p>Computes the polynomial kernel function for a given distance or array of distances.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/netpcf.helpers.integrated_poly_finite_kernel.html#netpcf.helpers.integrated_poly_finite_kernel" title="netpcf.helpers.integrated_poly_finite_kernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">helpers.integrated_poly_finite_kernel</span></code></a></p></td>
+<td><p>Computes the integrated polynomial kernel function for given distances and bandwidth parameters.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/netpcf.helpers.is_connected_filter.html#netpcf.helpers.is_connected_filter" title="netpcf.helpers.is_connected_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">helpers.is_connected_filter</span></code></a></p></td>
+<td><p>A helper function to check if the network is connected and filter to the largest connected component if not.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 </section>
 
@@ -512,7 +545,7 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-pair-correlation-functions">Computing pair correlation functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#useful-functions">Useful functions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-example-datasets">Loading example datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-datasets">Example datasets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backend-helper-functions">Backend Helper functions</a></li>
 </ul>
   </nav></div>
@@ -542,7 +575,7 @@ document.write(`
 
   <p class="copyright">
     
-      © Copyright 2026, Joshua Moore.
+      © Copyright 2026, Joshua W. Moore.
       <br/>
     
   </p>

@@ -6,6 +6,41 @@ import numba
     fastmath=True
 )
 def integrated_poly_finite_kernel(r,w,d_1,d_2,delta_r=1,n=2):
+    """
+    
+    Computes the integrated polynomial kernel function for given distances and bandwidth parameters. The integrated kernel is defined as:
+    
+    .. math::
+        L_{i} \\left(  r \\right) = \\sum_{e_{nm} \\in E}  \\int_{0}^{w_{nm}} \\kappa_{\Delta r, n } \\left(  |  d_{in} + \\frac{d_{im} - d_{in}}{w_{nm}}x  - r |  \\right) dx
+
+    The kernel function is integrated over the length of the edge, weighted by the edge weight.   
+
+    Parameters
+    ----------
+    r : float
+        The distance at which to evaluate the integrated kernel function.
+    w : numpy.ndarray
+        An array of edge weights corresponding to the lengths of the edges in the network.
+    d_1 : numpy.ndarray
+        An array of distances from the reference node to one endpoint of each edge.
+    d_2 : numpy.ndarray
+        An array of distances from the reference node to the other endpoint of each edge.
+    delta_r : float, optional
+        The bandwidth parameter for the polynomial kernel function. Default is 1.
+    n : int, optional
+        The exponent parameter for the polynomial kernel function. Default is 2.
+    
+    Returns
+    -------
+    integrated_kernel_values : numpy.ndarray    
+        An array of integrated kernel values from node i at all r values.
+    
+    Notes
+    -----
+    See reference paper for details on the derivation of the integrated kernel function and its implementation.
+    
+    
+    """
     
     # Initialize the integrated kernel values as a NumPy array
     integrated_kernel_values = np.zeros_like(w, dtype=np.float64)
