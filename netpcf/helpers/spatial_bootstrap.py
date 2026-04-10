@@ -158,9 +158,44 @@ def spatial_bootstrap(spatial_network,edge_weight_name,object_indices_A,contribu
         confidence_interval[1,:,:] = PCF_max
         
     elif len(contributions.shape) == 4:
+        
         # this is the cross-weighted case
-        print("Confidence intervals for 4D contributions are not implemented - weights needs to be considered.")
-        return 
+        total_marker_contribution_weighting_A = np.sum(weight_matrix, axis=0)
+        standard_cross_wpcf = (1/total_marker_contribution_weighting_A)[:,np.newaxis,np.newaxis]*np.sum(contributions, axis=0)
+    
+        samplePCFs = np.zeros(shape=(number_of_bootstrap_samples, contributions.shape[1], contributions.shape[2],contributions.shape[3]))
+        quad_contributions = np.zeros((number_of_partitions, contributions.shape[1], contributions.shape[2],contributions.shape[3]))
+        quadNs = np.zeros((number_of_partitions, contributions.shape[1]))
+        
+        for j in range(len(region_ids)):
+            quadID = region_ids[j]
+            sampleMask = toSampleStr == quadID
+            toSample[sampleMask] = j
+            accept = labels_of_indices_a == quadID
+            
+            if sum(accept) > 0:
+                for tau_a_indx in range(contributions.shape[1]):
+                    quad_contributions[j, tau_a_indx, :,:] = np.sum(contributions[accept,tau_a_indx , :,:], axis=0)
+                    quadNs[j,tau_a_indx] = np.sum(weight_matrix[accept,tau_a_indx])
+        
+        for b in range(number_of_bootstrap_samples):
+            for tau_a_indx in range(contributions.shape[1]):
+                sampled_indices = np.random.choice(range(number_of_partitions), size=number_of_partitions, replace=True)
+                sample = np.sum(quad_contributions[sampled_indices, tau_a_indx, :,:], axis=0)
+                Ns = np.sum(quadNs[sampled_indices,tau_a_indx], axis=0)
+                
+                with np.errstate(divide='ignore', invalid='ignore'):
+                
+                    samplePCFs[b, tau_a_indx, :,:] = sample / Ns   
+        
+        PCF_min = 2*standard_cross_wpcf - np.nanpercentile(samplePCFs, 97.5, axis=0)
+        PCF_max = 2*standard_cross_wpcf - np.nanpercentile(samplePCFs, 2.5, axis=0)
+        PCF_min[PCF_min<0] = 0
+        
+        confidence_interval = np.zeros((2, PCF_min.shape[0], PCF_max.shape[1],PCF_max.shape[2]))
+        confidence_interval[0,:,:,:] = PCF_min
+        confidence_interval[1,:,:,:] = PCF_max
+        
     else:
         raise ValueError("The contributions array must be 2D or 3D.")
     

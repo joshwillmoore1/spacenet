@@ -194,7 +194,7 @@ def cross_weighted_pair_correlation_function(spatial_network,labels_for_objects_
     # add a method for spatial contributions
     if return_confidence_interval:
         # spatial bootstrap needs to accomodate the tensor
-        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions,weight_matrix=marker_contributions_weighting_A)
+        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,weighted_contributions,weight_matrix=marker_contributions_weighting_A)
         return tau_A, tau_B, r, g , confidence_interval
 
     else:
