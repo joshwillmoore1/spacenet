@@ -46,7 +46,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'pydata_sphinx_theme'
-html_title = 'Spatial Network Pair Correlation Functions'
+html_title = 'netPCF'
 html_short_title = 'netPCF'
 
 html_static_path = ['_static']

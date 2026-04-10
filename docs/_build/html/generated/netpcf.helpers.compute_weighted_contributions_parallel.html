@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>netpcf.utils.plot_spatial_network &#8212; netPCF</title>
+    <title>netpcf.helpers.compute_weighted_contributions_parallel &#8212; netPCF</title>
   
   
   
@@ -61,7 +61,7 @@
                 gtag('js', new Date());
                 gtag('config', 'XX-XXXXXXXXX-X');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/netpcf.utils.plot_spatial_network';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/netpcf.helpers.compute_weighted_contributions_parallel';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://docs.muspan.co.uk/version_switcher.json';
@@ -70,8 +70,8 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="netpcf.helpers.leiden_compact_volume_partition" href="netpcf.helpers.leiden_compact_volume_partition.html" />
-    <link rel="prev" title="netpcf.utils.generate_spatial_network" href="netpcf.utils.generate_spatial_network.html" />
+    <link rel="next" title="netpcf.helpers.batched_dijkstra" href="netpcf.helpers.batched_dijkstra.html" />
+    <link rel="prev" title="netpcf.helpers.compute_contributions_parallel" href="netpcf.helpers.compute_contributions_parallel.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -390,11 +390,11 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="netpcf.cross_pair_correlation_function.html">netpcf.cross_pair_correlation_function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.weighted_pair_correlation_function.html">netpcf.weighted_pair_correlation_function</a></li>
 </ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.utils.plot_spatial_network</a></li>
-</ul>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netpcf.utils.plot_spatial_network.html">netpcf.utils.plot_spatial_network</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.leiden_compact_volume_partition.html">netpcf.helpers.leiden_compact_volume_partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.polynomial_kernel.html">netpcf.helpers.polynomial_kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.integrated_poly_finite_kernel.html">netpcf.helpers.integrated_poly_finite_kernel</a></li>
@@ -402,7 +402,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_contributions.html">netpcf.helpers.compute_contributions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_weighted_contributions.html">netpcf.helpers.compute_weighted_contributions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_contributions_parallel.html">netpcf.helpers.compute_contributions_parallel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_weighted_contributions_parallel.html">netpcf.helpers.compute_weighted_contributions_parallel</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.helpers.compute_weighted_contributions_parallel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.batched_dijkstra.html">netpcf.helpers.batched_dijkstra</a></li>
 </ul>
 </div>
@@ -454,7 +454,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="../Documentation.html" class="nav-link">Documentation</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">netpcf.utils...</li>
+    <li class="breadcrumb-item active" aria-current="page">netpcf.helpe...</li>
   </ul>
 </nav>
 </div>
@@ -471,54 +471,42 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="netpcf-utils-plot-spatial-network">
-<h1>netpcf.utils.plot_spatial_network<a class="headerlink" href="#netpcf-utils-plot-spatial-network" title="Link to this heading">#</a></h1>
+  <section id="netpcf-helpers-compute-weighted-contributions-parallel">
+<h1>netpcf.helpers.compute_weighted_contributions_parallel<a class="headerlink" href="#netpcf-helpers-compute-weighted-contributions-parallel" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="netpcf.utils.plot_spatial_network">
-<span class="sig-prename descclassname"><span class="pre">netpcf.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
-<dd><p>Plots a spatial network with nodes positioned according to the provided points. Nodes can be colored based on provided labels, and edges can be colored based on their weights.</p>
+<dt class="sig sig-object py" id="netpcf.helpers.compute_weighted_contributions_parallel">
+<span class="sig-prename descclassname"><span class="pre">netpcf.helpers.</span></span><span class="sig-name descname"><span class="pre">compute_weighted_contributions_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_indices_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_network_distances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">these_marker_contributions_weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.helpers.compute_weighted_contributions_parallel" title="Link to this definition">#</a></dt>
+<dd><p>Computes the local contributions to the pair correlation function for a list of reference nodes (object_indices_A) and a set of target nodes (object_indices_B) at specified radii (r), weighted by marker contributions, in parallel across multiple CPU cores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network to be plotted. Edges should have a weight attribute corresponding to the distance between nodes.</p>
+<dt><strong>object_indices_A</strong><span class="classifier">list</span></dt><dd><p>A list of object indices for which to compute contributions.</p>
 </dd>
-<dt><strong>points</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An (n, 2) or (n, 3) array of coordinates for the n nodes in the spatial network. The order of points should correspond to the order of nodes in the spatial network.</p>
+<dt><strong>object_indices_B</strong><span class="classifier">list</span></dt><dd><p>A list of object indices that contribute to the kernel for each object in A.</p>
 </dd>
-<dt><strong>labels</strong><span class="classifier">array-like, optional</span></dt><dd><p>An array of labels for the nodes, used for coloring. If None, all nodes will be colored the same. Default is None.</p>
+<dt><strong>r</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An array of radii at which to compute contributions.</p>
 </dd>
-<dt><strong>ax</strong><span class="classifier">matplotlib.axes.Axes, optional</span></dt><dd><p>An existing matplotlib Axes object to plot on. If None, a new figure and axes will be created. Default is None.</p>
+<dt><strong>spatial_kernel_bandwidth</strong><span class="classifier">float</span></dt><dd><p>The bandwidth parameter for the spatial kernel function.</p>
 </dd>
-<dt><strong>edge_width</strong><span class="classifier">float, optional</span></dt><dd><p>The width of the edges in the plot. Default is 1.</p>
+<dt><strong>spatial_kernel_n</strong><span class="classifier">float</span></dt><dd><p>The exponent parameter for the spatial kernel function.</p>
 </dd>
-<dt><strong>marker_size</strong><span class="classifier">float, optional</span></dt><dd><p>The size of the node markers in the plot. Default is 10.</p>
+<dt><strong>total_length</strong><span class="classifier">float</span></dt><dd><p>The total length of the network, used for density normalization.</p>
 </dd>
-<dt><strong>add_legend</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a legend for the node labels. Default is False.</p>
+<dt><strong>all_network_distances</strong><span class="classifier">dict</span></dt><dd><p>A dictionary mapping each node index to a dictionary of shortest distances to all other nodes in the network. This should be precomputed for efficiency.</p>
 </dd>
-<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
+<dt><strong>these_marker_contributions_weighting</strong><span class="classifier">np.array</span></dt><dd><p>An array of shape (num_objects_B, num_markers) containing the contributions of each object in population B to each marker. This should be precomputed based on the marker values and the weighting scheme for the contributions.</p>
 </dd>
-<dt><strong>edge_cmap</strong><span class="classifier">str or matplotlib.colors.Colormap, optional</span></dt><dd><p>The colormap to use for coloring edges based on their weights. Default is ‘Greys_r’.</p>
+<dt><strong>node_to_edges</strong><span class="classifier">dict</span></dt><dd><p>A dictionary mapping node indices to a list of edges (and their weights) that are connected to that node. This should be precomputed for efficiency.</p>
 </dd>
-<dt><strong>edge_vmin</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum value for edge weight coloring. If None, the minimum edge weight will be used. Default is None.</p>
+<dt><strong>n_jobs</strong><span class="classifier">int, optional</span></dt><dd><p>The number of parallel jobs to run when computing contributions. If n_jobs &gt; 1, the contributions will be computed in parallel across multiple CPU cores. Default is -1 (use all available cores).</p>
 </dd>
-<dt><strong>edge_vmax</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum value for edge weight coloring. If None, the maximum edge weight will be used. Default is None.</p>
-</dd>
-<dt><strong>add_edge_cbar</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a colorbar for the edge weights. Default is False.</p>
-</dd>
-<dt><strong>continuous_labels</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether the node labels are continuous values that should be colored using a colormap (True) or discrete categories that should be colored separately (False). Default is False.</p>
-</dd>
-<dt><strong>label_name</strong><span class="classifier">str, optional</span></dt><dd><p>The label for the colorbar if continuous_labels is True. Default is ‘labels’.</p>
-</dd>
-<dt><strong>scatter_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.</p>
-</dd>
-<dt><strong>figure_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to plt.figure() when creating a new figure. Default is an empty dictionary.</p>
+<dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to print progress messages during computation. Default is True.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>fig</strong><span class="classifier">matplotlib.figure.Figure</span></dt><dd><p>The figure object containing the plot.</p>
-</dd>
-<dt><strong>ax</strong><span class="classifier">matplotlib.axes.Axes</span></dt><dd><p>The axes object containing the plot.</p>
+<dt><strong>local_contributions</strong><span class="classifier">np.array</span></dt><dd><p>An array of local contributions to the pair correlation function for the reference node at each radius in r, weighted by the marker contributions. The shape of this array will be (num_markers, len(r)).</p>
 </dd>
 </dl>
 </dd>
@@ -549,7 +537,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.utils.plot_spatial_network"><code class="docutils literal notranslate"><span class="pre">plot_spatial_network()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.helpers.compute_weighted_contributions_parallel"><code class="docutils literal notranslate"><span class="pre">compute_weighted_contributions_parallel()</span></code></a></li>
 </ul>
   </nav></div>
 

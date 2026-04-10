@@ -51,33 +51,83 @@ def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributio
     # get the contribution for that node 
     number_of_bootstrap_samples = 1000  
     
-    samplePCFs = np.zeros(shape=(number_of_bootstrap_samples, np.shape(contributions)[1]))
+    # get 1
     toSampleStr = np.random.choice(region_ids,size=(number_of_partitions,number_of_bootstrap_samples))
     toSample = np.zeros(shape=(number_of_partitions,number_of_bootstrap_samples),dtype=int)
     
-    
-    quad_contributions = np.zeros((number_of_partitions,np.shape(contributions)[1]))
-    quadNs = np.zeros(number_of_partitions)
-    for j in range(len(region_ids)):
-        quadID = region_ids[j]
-        sampleMask = toSampleStr == quadID
-        toSample[sampleMask] = j
-        
-        accept = labels_of_indices_a==quadID
-        if sum(accept) > 0:
-            quad_contributions[j,:] = np.sum(contributions[accept,:],axis=0)
-            quadNs[j] = sum(accept)
-    sample = np.sum(quad_contributions[toSample,:],axis=0)
-    Ns = np.sum(quadNs[toSample],axis=0)
-    
-    samplePCFs = sample / Ns[:,np.newaxis]
+    if len(contributions.shape) == 2:
+        # this is the cross pcf where the contributions are of the form (n_objects_A, number_of_radii)
+        samplePCFs = np.zeros(shape=(number_of_bootstrap_samples, np.shape(contributions)[1]))
+        quad_contributions = np.zeros((number_of_partitions,np.shape(contributions)[1]))
+        quadNs = np.zeros(number_of_partitions)
+        for j in range(len(region_ids)):
+            quadID = region_ids[j]
+            
+            sampleMask = toSampleStr == quadID
+            
+            toSample[sampleMask] = j
+            
+            accept = labels_of_indices_a==quadID
+            if sum(accept) > 0:
+                quad_contributions[j,:] = np.sum(contributions[accept,:],axis=0)
+                quadNs[j] = sum(accept)
+                
+                
+        sample = np.sum(quad_contributions[toSample,:],axis=0)
+        Ns = np.sum(quadNs[toSample],axis=0)
+        with np.errstate(divide='ignore', invalid='ignore'):
+            samplePCFs = sample / Ns[:,np.newaxis]
 
-    # Get 95% CI ----- here we need to be use the true PCF values - not the sample mean
-    PCF_min = 2*np.mean(contributions,axis=0) - np.percentile(samplePCFs, 97.5, axis=0)
-    PCF_max = 2*np.mean(contributions,axis=0) - np.percentile(samplePCFs, 2.5, axis=0)
-    PCF_min[PCF_min<0] = 0
-    confidence_interval = np.array([PCF_min, PCF_max])
+        # Get 95% CI ----- here we need to be use the true PCF values - not the sample mean
+        PCF_min = 2*np.mean(contributions,axis=0) - np.nanpercentile(samplePCFs, 97.5, axis=0)
+        PCF_max = 2*np.mean(contributions,axis=0) - np.nanpercentile(samplePCFs, 2.5, axis=0)
+        PCF_min[PCF_min<0] = 0
+        confidence_interval = np.array([PCF_min, PCF_max])
+        
+    elif len(contributions.shape) == 3:
+        # this is the weight pcf where the contributions are of the form (n_objects_A, number_of_target_markers, number_of_radii)
+        standard_wpcf = np.mean(contributions, axis=0)  
+        samplePCFs = np.zeros(shape=(number_of_bootstrap_samples, contributions.shape[1], contributions.shape[2]))
+        quad_contributions = np.zeros((number_of_partitions, contributions.shape[1], contributions.shape[2]))
+        quadNs = np.zeros(number_of_partitions)
+
+        for j in range(len(region_ids)):
+            quadID = region_ids[j]
+            sampleMask = toSampleStr == quadID
+            toSample[sampleMask] = j
+            accept = labels_of_indices_a == quadID
+            
+            if sum(accept) > 0:
+                quad_contributions[j, :, :] = np.sum(contributions[accept, :, :], axis=0)
+                quadNs[j] = sum(accept)
+
+        for b in range(number_of_bootstrap_samples):
+            sampled_indices = np.random.choice(range(number_of_partitions), size=number_of_partitions, replace=True)
+            sample = np.sum(quad_contributions[sampled_indices, :, :], axis=0)
+            Ns = np.sum(quadNs[sampled_indices], axis=0)
+
+            with np.errstate(divide='ignore', invalid='ignore'):
+                
+                samplePCFs[b, :, :] = sample / Ns   
+        
+        PCF_min = 2*standard_wpcf - np.nanpercentile(samplePCFs, 97.5, axis=0)
+        PCF_max = 2*standard_wpcf - np.nanpercentile(samplePCFs, 2.5, axis=0)
+        PCF_min[PCF_min<0] = 0
+        
+        confidence_interval = np.zeros(( PCF_min.shape[0], PCF_max.shape[1],2))
+        confidence_interval[:,:,0] = PCF_min
+        confidence_interval[:,:,1] = PCF_max
+        
+        
+        
+    elif len(contributions.shape) == 4:
+        # this is the cross-weighted case
+        print("Confidence intervals for 4D contributions are not implemented - weights needs to be considered.")
+        return 
+    else:
+        raise ValueError("The contributions array must be 2D or 3D.")
     
+    return confidence_interval
     
     # TODO: UPDATED FOR weighted and weight-weight PCF
     
@@ -164,4 +214,4 @@ def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributio
                 raise ValueError("The lower_bound array must be 1D or 2D.")
         
         
-    return confidence_interval
+    

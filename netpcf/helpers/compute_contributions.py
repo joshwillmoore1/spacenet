@@ -4,7 +4,40 @@ from netpcf.helpers.integrated_poly_finite_kernel import integrated_poly_finite_
 
 
 def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,node_to_edges: dict) -> np.array:
-
+    """
+    
+    Computes the local contributions to the pair correlation function for a given reference node (object_id_A) and a set of target nodes (object_indices_B) at specified radii (r). 
+    The contributions are computed using a polynomial kernel function that weights the distances of nodes in the network relative to the reference node, and an integrated kernel function that accounts for the edge lengths in the network. 
+    The contributions are normalized by the total density of target nodes and the total length of the network to yield local contributions to the pair correlation function.
+    
+    Parameters
+    ----------
+    
+    object_id_A : np.array, int
+        The ID of the reference node for which local contributions are being computed.
+    object_indices_B : np.array
+        An array of node indices corresponding to the population B for which the pair correlation function is being computed.
+    r : np.array
+        An array of radii at which to compute the contributions.
+    spatial_kernel_bandwidth : float
+        The bandwidth parameter for the spatial kernel function.
+    spatial_kernel_n : float
+        The exponent parameter for the spatial kernel function.
+    total_length : float
+        The total length of the network, used for density normalization.
+    this_node_shortest_distance : dict
+        A dictionary mapping node indices to their shortest distance from the reference node (object_id_A). This should be precomputed for efficiency.
+    node_to_edges : dict
+        A dictionary mapping node indices to a list of edges (and their weights) that are connected to that node. This should be precomputed for efficiency.
+    
+    Returns 
+    -------
+    
+    local_contributions : np.array
+        An array of local contributions to the pair correlation function for the reference node at each radius in r.  
+    
+    
+    """
     # Convert node distances and list to NumPy arrays for vectorized operations
     node_list = np.array(list(this_node_shortest_distance.keys()))
     node_distances = np.array(list(this_node_shortest_distance.values()))

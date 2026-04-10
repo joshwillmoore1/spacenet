@@ -35,7 +35,7 @@ Example datasets
 
 
 
-Backend Helper functions
+Backend helper functions
 ------------------------
 .. autosummary::
    :toctree: generated/
@@ -45,3 +45,9 @@ Backend Helper functions
    helpers.polynomial_kernel
    helpers.integrated_poly_finite_kernel
    helpers.is_connected_filter
+   helpers.compute_contributions
+   helpers.compute_weighted_contributions
+   helpers.compute_contributions_parallel
+   helpers.compute_weighted_contributions_parallel
+   helpers.batched_dijkstra
+

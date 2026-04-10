@@ -4,7 +4,39 @@ from netpcf.helpers.integrated_poly_finite_kernel import integrated_poly_finite_
 
 
 def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict):
+    """
     
+    Compute the local contributions to the pair correlation function for a given reference node (object_id_A) and a set of target nodes (object_indices_B) at specified radii (r), weighted by marker contributions.
+    
+    Parameters
+    ----------
+    
+    object_id_A : np.array, int 
+        The ID of the reference node for which local contributions are being computed.
+    object_indices_B : np.array
+        An array of node indices corresponding to the population B for which the pair correlation function is being computed.
+    r : np.array
+        An array of radii at which to compute the contributions.
+    spatial_kernel_bandwidth : float
+        The bandwidth parameter for the spatial kernel function.
+    spatial_kernel_n : float
+        The exponent parameter for the spatial kernel function.
+    total_length : float
+        The total length of the network, used for density normalization.
+    this_node_shortest_distance : dict
+        A dictionary mapping node indices to their shortest distance from the reference node (object_id_A). This should be precomputed for efficiency.
+    these_marker_contributions_weighting : np.array
+        An array of shape (num_objects_B, num_markers) containing the contributions of each object in population B to each marker. This should be precomputed based on the marker values and the weighting scheme for the contributions.
+    node_to_edges : dict
+        A dictionary mapping node indices to a list of edges (and their weights) that are connected to that node. This should be precomputed for efficiency.
+    
+    Returns
+    -------
+    
+    local_contributions : np.array  
+        An array of local contributions to the pair correlation function for the reference node at each radius in r, weighted by the marker contributions. The shape of this array will be (num_markers, len(r)).
+    
+    """
     
     valid_indices = np.isin(object_indices_B, object_id_A, invert=True)
     object_indices_B = object_indices_B[valid_indices]

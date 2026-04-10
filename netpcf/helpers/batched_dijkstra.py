@@ -5,7 +5,32 @@ from tqdm import tqdm  # optional progress bar
 
 def batched_dijkstra(G, sources, batch_size=5000, weight='Distance',limit=np.inf,verbose=False):
     """
-    TODO: Docstring for batched_dijkstra.
+    
+    Compute shortest path distances from multiple source nodes to all other nodes in the graph using Dijkstra's algorithm in batches.
+    This is useful for large graphs where computing all pairwise shortest paths at once may be memory-intensive.
+    
+    Parameters
+    ----------
+    
+    G : networkx.Graph
+        The input graph on which to compute shortest path distances.
+    sources : array-like
+        A list or array of source node indices for which to compute shortest path distances to all other nodes in the graph.
+    batch_size : int, optional
+        The number of source nodes to process in each batch when computing shortest path distances. Default is 5000.
+    weight : str, optional
+        The name of the edge attribute to use as the weight for computing shortest path distances. Default is 'Distance'.
+    limit : float, optional
+        The maximum distance to consider when computing shortest path distances. Nodes that are farther than this distance from the source will be ignored. Default is np.inf (no limit).
+    verbose : bool, optional
+        Whether to print progress messages during computation. Default is False.
+    
+    Returns
+    -------
+    
+    all_distances : dict
+        A dictionary mapping each source node to a dictionary of shortest path distances to all other nodes in the graph. The inner dictionary maps target node indices to their corresponding shortest path distances from the source node.
+    
     """
     # Build node index mapping
     nodes = list(G.nodes())

@@ -171,14 +171,10 @@ def weighted_pair_correlation_function(network,labels_for_objects_B, object_indi
     
     if return_confidence_interval:
         
-        # TODO: Update for weighted PCF
-        print("Warning: Ensure that the spatial_bootstrap function is updated for weighted PCF.")
-        
         if verbose:
             print("Computing confidence intervals via spatial bootstrap...")
-            
-        confidence_interval = spatial_bootstrap(object_indices_A,contributions,all_network_distances,total_length,confidence_interval_kwargs)
-        
+        # contributions (number of objects A, number of target markers, number of radii)
+        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions,all_network_distances,weight_matrix=None,**confidence_interval_kwargs)
         return r, tau, g, confidence_interval
     
     else:
