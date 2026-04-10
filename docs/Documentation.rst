@@ -15,6 +15,7 @@ Computing pair correlation functions
 
    cross_pair_correlation_function
    weighted_pair_correlation_function
+   cross_weighted_pair_correlation_function
 
 
 .. currentmodule:: netpcf
@@ -42,6 +43,7 @@ Backend helper functions
    :nosignatures:
 
    helpers.leiden_compact_volume_partition
+   helpers.spatial_bootstrap
    helpers.polynomial_kernel
    helpers.integrated_poly_finite_kernel
    helpers.is_connected_filter

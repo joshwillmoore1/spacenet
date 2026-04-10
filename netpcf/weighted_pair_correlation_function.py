@@ -13,14 +13,14 @@ from netpcf.helpers.spatial_bootstrap import spatial_bootstrap
 from netpcf.helpers.polynomial_kernel import polynomial_kernel
 from netpcf.helpers.is_connected_filter import is_connected_filter
 
-def weighted_pair_correlation_function(network,labels_for_objects_B, object_indices_A=None,object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth=0.2,marker_kernel_n=1,marker_min=0, marker_max=1, marker_step=0.1, edge_weight_name='Distance',return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
+def weighted_pair_correlation_function(spatial_network,labels_for_objects_B, object_indices_A=None,object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth=0.2,marker_kernel_n=1,marker_min=0, marker_max=1, marker_step=0.1, edge_weight_name='Distance',return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
     """
     
     Computes the weighted pair correlation function between two populations of objects (A and B) using a continuous label on objects B over a spatial network.
         
     Parameters
     ----------
-    network : networkx.Graph
+    spatial_network : networkx.Graph
         The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.
     labels_for_objects_B : array-like
         A continuous label for each object in population B. This should be an array of the same length as object_indices_B, where each entry corresponds to the label of the respective object in population B.
@@ -50,8 +50,6 @@ def weighted_pair_correlation_function(network,labels_for_objects_B, object_indi
         The name of the edge attribute in the network that corresponds to the distance between nodes. Default is 'Distance'.
     return_confidence_interval : bool, optional
         Whether to compute and return confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.
-    confidence_interval_kwargs : dict, optional
-        Additional keyword arguments to pass to the spatial_bootstrap function when computing confidence intervals. Default is an empty dictionary.
     low_memory : bool, optional
         Whether to use a low-memory implementation of Dijkstra's algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.
     verbose : bool, optional
@@ -62,19 +60,24 @@ def weighted_pair_correlation_function(network,labels_for_objects_B, object_indi
 
     Returns
     -------
-    
-    radius : numpy.ndarray
-        The radii at which the pair correlation function was computed.
         
     tau : numpy.ndarray 
         The target marker values at which the pair correlation function was computed.
+    
+    radii : numpy.ndarray
+        The radii at which the pair correlation function was computed.
     
     g : numpy.ndarray
         The values of the pair correlation function at the corresponding radii and target marker values. Shape is (len(tau), len(radius)).
     
     confidence_interval : numpy.ndarray (if return_confidence_interval is True)   
-        If return_confidence_interval is True, this will be a numpy array (2,n) containing the confidence intervals for the pair correlation function at each radius. The first row corresponds to the lower bounds of the confidence intervals, and the second row corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.
+        If return_confidence_interval is True, this will be a numpy array (2,num_mark_targets,num_radii) containing the confidence intervals for the pair correlation function at each mark target and radii. The CI[0,:,:] corresponds to the lower bounds of the confidence intervals, and CI[1,:,:] corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.
     
+    
+    Notes
+    -----
+    
+    For details, see the reference paper...
     
     Examples
     --------
@@ -82,7 +85,7 @@ def weighted_pair_correlation_function(network,labels_for_objects_B, object_indi
     
     """
     # we make a copy of the networks as we may removed edges if a region is specified
-    this_network = network
+    this_network = spatial_network
     all_node_ids = np.asarray(list(this_network.nodes))
     
     # check object indices are in the domain
@@ -131,8 +134,6 @@ def weighted_pair_correlation_function(network,labels_for_objects_B, object_indi
        
     all_network_distances=dict()
     
-
-    
     if verbose:
         print("Computing node-node distances...")
     if low_memory:
@@ -169,16 +170,19 @@ def weighted_pair_correlation_function(network,labels_for_objects_B, object_indi
     # Compute the g function
     g = np.mean(contributions, axis=0)
     
+    # transpose g so that the first dimension corresponds to the marker targets and the second dimension corresponds to the radii, 
+    # for consistency with other functions and ease of plotting
+    
     if return_confidence_interval:
         
         if verbose:
             print("Computing confidence intervals via spatial bootstrap...")
         # contributions (number of objects A, number of target markers, number of radii)
-        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions,all_network_distances,weight_matrix=None,**confidence_interval_kwargs)
-        return r, tau, g, confidence_interval
+        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions)
+        return tau, r, g, confidence_interval
     
     else:
-        return r, tau, g
+        return tau, r, g
 
 
 

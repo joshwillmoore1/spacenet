@@ -3,7 +3,46 @@ import numpy as np
 import networkx as nx
 from netpcf.helpers.leiden_compact_volume_partition import leiden_compact_volume_partition
 
-def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions,all_network_distances,number_sample_windows=100,percentile=0.95,sample_radius=200,weight_matrix=None):
+def spatial_bootstrap(spatial_network,edge_weight_name,object_indices_A,contributions,weight_matrix=None):
+    """
+    
+    Compute the 95% confidence interval for the pair correlation function at each radius (and target marker, if applicable) using method of spatial bootstrap on spatial networks.
+    
+    Parameters
+    ----------
+    spatial_network : networkx.Graph    
+        The spatial network on which to compute the confidence intervals. Edges should have a weight attribute corresponding to the distance between nodes.
+    edge_weight_name : str
+        The name of the edge attribute in the network that corresponds to the distance between nodes. Default is 'Distance'.
+    object_indices_A : array-like
+        The indices of the nodes in population A for which to compute confidence intervals. This should correspond to the first dimension of the contributions array.
+    contributions : numpy.ndarray
+        An array of contributions to the pair correlation function for each node in object_indices_A. This should be the output of the compute_contributions_parallel function, and can be either 2D (n_objects_A, number_of_radii) or 3D (n_objects_A, number_of_target_markers, number_of_radii) depending on whether weights are used.
+    weight_matrix : numpy.ndarray, optional
+        An optional weight matrix to apply to the contributions when computing confidence intervals, required for computing confidence intervals for cross weighted pair correlation functions. This should be of shape (n_objects_A, number_of_target_markers_A). If None, no weights will be applied. Default is None. 
+    
+    Returns
+    -------
+    
+    confidence_interval : numpy.ndarray 
+        An array of confidence intervals for the pair correlation function at each radius (and target marker, if applicable). 
+        The shape of this array will depend on the shape of the contributions array and whether weights are used. 
+        
+        - For 2D contributions, the output will be of shape (2,number_of_radii) where the first dimension corresponds to the lower and upper bounds of the confidence interval. 
+        
+        - For 3D contributions with weights, the output will be of shape (2, number_of_target_markers, number_of_radii) where the first dimension corresponds to the lower and upper bounds of the confidence interval for each target marker and radius.
+        
+        - For 4D contributions (cross-weighted case), the output will be of shape (2, number_of_target_markers_A, number_of_target_markers_B, number_of_radii) where the first dimension corresponds to the lower and upper bounds of the confidence interval for each combination of target markers and radius. 
+    
+    Notes
+    -----
+    This function extends Loh's method of spatial bootstrap for estimating confidence intervals of the pair correlation function for spatial networks.
+    For details, see the reference paper: 
+    
+    """
+    
+    
+    
     
     # Loh's method for interval estimation - tile the domain - sample tiles and compute g - CI of samples of g 
     
@@ -22,11 +61,11 @@ def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributio
     
     
     # First we need to parition our spatial network in to subgraphs of approximately equal size and contiguous with minimal boundaries
-    all_node_list = list(this_network.nodes())
-    has_partition_label = '__partition_label' in this_network.nodes[all_node_list[0]]
+    all_node_list = list(spatial_network.nodes())
+    has_partition_label = '__partition_label' in spatial_network.nodes[all_node_list[0]]
     number_of_partitions = 9
     if has_partition_label:
-        node_to_partition_dict = {node: this_network.nodes[node]['__partition_label'] for node in all_node_list}
+        node_to_partition_dict = {node: spatial_network.nodes[node]['__partition_label'] for node in all_node_list}
     else:
                 
         partition_paramters = dict(distance_attr=edge_weight_name,
@@ -35,14 +74,14 @@ def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributio
         max_iter=5,
         random_seed=0)
         
-        network_partitions = leiden_compact_volume_partition(this_network, k=number_of_partitions, **partition_paramters)
+        network_partitions = leiden_compact_volume_partition(spatial_network, k=number_of_partitions, **partition_paramters)
         
 
         node_to_partition_dict = network_partitions.labels  # node -> community id, each community is spatially contiguous
         
         # add the partition labels to the graph
         for node in all_node_list:
-            this_network.nodes[node]['__partition_label'] = node_to_partition_dict[node]
+            spatial_network.nodes[node]['__partition_label'] = node_to_partition_dict[node]
     
     region_ids = np.unique(list(node_to_partition_dict.values()))
     labels_of_indices_a = np.array([node_to_partition_dict[idx] for idx in object_indices_A])
@@ -114,11 +153,9 @@ def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributio
         PCF_max = 2*standard_wpcf - np.nanpercentile(samplePCFs, 2.5, axis=0)
         PCF_min[PCF_min<0] = 0
         
-        confidence_interval = np.zeros(( PCF_min.shape[0], PCF_max.shape[1],2))
-        confidence_interval[:,:,0] = PCF_min
-        confidence_interval[:,:,1] = PCF_max
-        
-        
+        confidence_interval = np.zeros((2, PCF_min.shape[0], PCF_max.shape[1]))
+        confidence_interval[0,:,:] = PCF_min
+        confidence_interval[1,:,:] = PCF_max
         
     elif len(contributions.shape) == 4:
         # this is the cross-weighted case
@@ -129,89 +166,4 @@ def spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributio
     
     return confidence_interval
     
-    # TODO: UPDATED FOR weighted and weight-weight PCF
-    
-    # OLD METHOD - kept for reference
-    
-    if False:    
-        all_node_list = list(this_network.nodes())
-        # randomly choose a source node and find all other source nodes within a certain distance
-        sample_source_nodes = np.random.choice(all_node_list, size=number_sample_windows,replace=True)
-            
-        node_idx = {node: i for i, node in enumerate(all_node_list)}
-
-        sparse_adj_mat = nx.to_scipy_sparse_array(this_network, weight=edge_weight_name, nodelist=all_node_list, format='csr')
-
-        # Get indices of sources
-        sources_idx = [node_idx[s] for s in sample_source_nodes]
-
-        # Run Dijkstra from multiple sources independently
-        dist_matrix = dijkstra(sparse_adj_mat, directed=False, unweighted=False, indices=sources_idx, limit=sample_radius, min_only=False)
-
-        # Convert back to dict form if needed
-        all_network_distances = {sample_source_nodes[i]: {all_node_list[j]: dist for j, dist in zip(np.flatnonzero(~np.isinf(row)), row[~np.isinf(row)]) } for i, row in enumerate(dist_matrix)}
-            
-
-        if len(contributions.shape) == 2:
-            distribution_of_g_estimates = np.zeros((len(sample_source_nodes), contributions.shape[1]))
-        elif len(contributions.shape) == 3:
-            distribution_of_g_estimates = np.zeros((len(sample_source_nodes), contributions.shape[1], contributions.shape[2]))
-        elif len(contributions.shape) == 4:
-            distribution_of_g_estimates = np.zeros((len(sample_source_nodes), contributions.shape[1], contributions.shape[2],contributions.shape[3]))
-            
-        else:
-            raise ValueError("The contributions array must be 2D or 3D.")
-
-        for sample_index,sample in enumerate(sample_source_nodes):
-            
-            this_distances=all_network_distances[sample]
-            
-            # Convert node distances and list to NumPy arrays for vectorized operations
-            node_list = np.array(list(this_distances.keys()))
-            node_distances = np.array(list(this_distances.values()))
-
-            # Precompute kernel indicators and filter nodes in kernels
-            kernel_r_indicators = (node_distances <= (sample_radius))
-            
-            # Filter nodes based on kernel_r_indicators
-            nodes_in_kernel = node_list[kernel_r_indicators]
-            
-            # now only get those in the object A population
-            _, indices_in_objects_A,_ = np.intersect1d(object_indices_A,nodes_in_kernel, return_indices=True)
-            
-            if len(indices_in_objects_A) == 0:
-                # If no nodes in the kernel, skip this sample
-                distribution_of_g_estimates[sample_index,:] = np.zeros(contributions.shape[1])
-                continue
-            else:
-                distribution_of_g_estimates[sample_index,:] = np.mean(contributions[indices_in_objects_A,:], axis=0)
-            
-            # this would need to be the weighted mean if we are using a weight matrix - then the percentile can be taken as normal - weights are happening locally
-        
-        if weight_matrix is None:
-        
-            # Calculate the x percent confidence interval
-            #lower_bound = np.percentile(distribution_of_g_estimates, 100*(1-percentile), axis=0)
-            #upper_bound = np.percentile(distribution_of_g_estimates, 100*percentile, axis=0)
-            
-            z_value = NormalDist().inv_cdf((1 + percentile) / 2.)
-            lower_bound = np.mean(distribution_of_g_estimates,axis=0) - z_value * np.std(distribution_of_g_estimates, axis=0) / np.sqrt(distribution_of_g_estimates.shape[0])
-            upper_bound = np.mean(distribution_of_g_estimates,axis=0) + z_value * np.std(distribution_of_g_estimates, axis=0) / np.sqrt(distribution_of_g_estimates.shape[0])
-            lower_bound[lower_bound < 0] = 0
-            
-            
-            if len(contributions.shape) == 2:
-                confidence_interval = np.vstack([lower_bound,upper_bound])
-            elif len(contributions.shape) == 3:
-                confidence_interval = np.zeros(( lower_bound.shape[0], lower_bound.shape[1],2))
-                confidence_interval[:,:,0] = lower_bound
-                confidence_interval[:,:,1] = upper_bound
-                
-            elif len(contributions.shape) == 4:
-                raise NotImplementedError("Confidence intervals for 4D contributions are not implemented - weights needs to be considered.")
-                
-            else:
-                raise ValueError("The lower_bound array must be 1D or 2D.")
-        
-        
-    
+  

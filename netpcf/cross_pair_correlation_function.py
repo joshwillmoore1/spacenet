@@ -11,7 +11,7 @@ from netpcf.helpers.batched_dijkstra import batched_dijkstra
 from netpcf.helpers.spatial_bootstrap import spatial_bootstrap
 from netpcf.helpers.is_connected_filter import is_connected_filter
 
-def cross_pair_correlation_function(network, object_indices_A=None, object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
+def cross_pair_correlation_function(spatial_network, object_indices_A=None, object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
     """
     
     Computes the cross pair correlation function between two populations of objects (A and B) on a spatial network.
@@ -20,7 +20,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     
     Parameters
     ----------
-    network : networkx.Graph
+    spatial_network : networkx.Graph
         The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.
     object_indices_A : array-like, optional
         The indices of the nodes in population A. If None, all nodes in the network will be considered as part of population A. Default is None.
@@ -39,9 +39,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     edge_weight_name : str, optional
         The name of the edge attribute in the network that corresponds to the distance between nodes. Default is 'Distance'.
     return_confidence_interval : bool, optional
-        Whether to compute and return confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.
-    confidence_interval_kwargs : dict, optional
-        Additional keyword arguments to pass to the spatial_bootstrap function when computing confidence intervals. Default is an empty dictionary.
+        Whether to compute and return 95% confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.
     low_memory : bool, optional
         Whether to use a low-memory implementation of Dijkstra's algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.
     verbose : bool, optional
@@ -53,7 +51,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     Returns
     -------
     
-    radius : numpy.ndarray
+    radii : numpy.ndarray
         The radii at which the pair correlation function was computed.
     
     g : numpy.ndarray
@@ -65,6 +63,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     Notes
     -----
     For a pair correlation function (not cross) on a spatial network set object_indices_A and object_indices_B to be the same set of node indices. 
+    For details, see the reference paper...
 
     
     Examples
@@ -76,7 +75,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     """
     
     # we make a copy of the networks as we may removed edges if a region is specified
-    this_network = network
+    this_network = spatial_network
     all_node_ids = np.asarray(list(this_network.nodes))
     
     if object_indices_A is None:
@@ -158,7 +157,7 @@ def cross_pair_correlation_function(network, object_indices_A=None, object_indic
     if return_confidence_interval:
         if verbose:
             print("Computing confidence intervals via spatial bootstrap...")
-        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions,all_network_distances,weight_matrix=None,**confidence_interval_kwargs)
+        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,contributions)
         
         return r ,g , confidence_interval
 
