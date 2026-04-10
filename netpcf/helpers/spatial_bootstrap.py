@@ -42,8 +42,6 @@ def spatial_bootstrap(spatial_network,edge_weight_name,object_indices_A,contribu
     """
     
     
-    
-    
     # Loh's method for interval estimation - tile the domain - sample tiles and compute g - CI of samples of g 
     
     # JWM

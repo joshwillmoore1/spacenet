@@ -34,6 +34,11 @@ Useful functions
 Example datasets
 ----------------
 
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   datasets.load_dataset
 
 
 Backend helper functions

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 requires-python = ">= 3.10"
 name = "netpcf"
-version = "0.0.0"
+version = "0.0.1"
 description = "A Python package for computing geometrically-corrected correlation functions over unweighted and weighted networks."
 authors = [
     {name = "Joshua Moore", email = "joshua.moore@maths.ox.ac.uk"}
