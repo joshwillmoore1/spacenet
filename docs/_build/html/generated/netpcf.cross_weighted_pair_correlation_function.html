@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
   
@@ -70,8 +70,6 @@
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="netpcf.partition.compact_volume_partition" href="netpcf.partition.compact_volume_partition.html" />
-    <link rel="prev" title="netpcf.weighted_pair_correlation_function" href="netpcf.weighted_pair_correlation_function.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -185,7 +183,7 @@ document.write(`
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../Documentation.html">
     Documentation
   </a>
@@ -283,10 +281,6 @@ document.write(`
   
 
   
-    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
-      <span class="fa-solid fa-outdent"></span>
-    </button>
-  
 </div>
 
     </header>
@@ -297,7 +291,9 @@ document.write(`
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -312,7 +308,7 @@ document.write(`
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="../Documentation.html">
     Documentation
   </a>
@@ -381,41 +377,6 @@ document.write(`
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-<nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.cross_pair_correlation_function.html">netpcf.cross_pair_correlation_function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.weighted_pair_correlation_function.html">netpcf.weighted_pair_correlation_function</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.cross_weighted_pair_correlation_function</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.partition.compact_volume_partition.html">netpcf.partition.compact_volume_partition</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.utils.plot_spatial_network.html">netpcf.utils.plot_spatial_network</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.datasets.load_dataset.html">netpcf.datasets.load_dataset</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.spatial_bootstrap.html">netpcf.helpers.spatial_bootstrap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.polynomial_kernel.html">netpcf.helpers.polynomial_kernel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.integrated_poly_finite_kernel.html">netpcf.helpers.integrated_poly_finite_kernel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.is_connected_filter.html">netpcf.helpers.is_connected_filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_contributions.html">netpcf.helpers.compute_contributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_weighted_contributions.html">netpcf.helpers.compute_weighted_contributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_contributions_parallel.html">netpcf.helpers.compute_contributions_parallel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.compute_weighted_contributions_parallel.html">netpcf.helpers.compute_weighted_contributions_parallel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.batched_dijkstra.html">netpcf.helpers.batched_dijkstra</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item"><nav class="sidebar-indices-items" aria-labelledby="pst-indices-navigation-heading-2">
@@ -458,9 +419,6 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="../Documentation.html" class="nav-link">Documentation</a></li>
-    
     <li class="breadcrumb-item active" aria-current="page">netpcf.cross...</li>
   </ul>
 </nav>
@@ -480,84 +438,6 @@ document.write(`
                   
   <section id="netpcf-cross-weighted-pair-correlation-function">
 <h1>netpcf.cross_weighted_pair_correlation_function<a class="headerlink" href="#netpcf-cross-weighted-pair-correlation-function" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="netpcf.cross_weighted_pair_correlation_function">
-<span class="sig-prename descclassname"><span class="pre">netpcf.</span></span><span class="sig-name descname"><span class="pre">cross_weighted_pair_correlation_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_for_objects_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels_for_objects_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_kernel_bandwidth_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_kernel_n_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_min_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_max_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_step_A</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_kernel_bandwidth_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_kernel_n_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_min_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_max_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_step_B</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_confidence_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.cross_weighted_pair_correlation_function" title="Link to this definition">#</a></dt>
-<dd><p>Compute the cross weighted pair correlation function between two populations of objects (A and B) on a spatial network, where the contributions of each object to the pair correlation function are weighted by a kernel function based on their marker levels.
-Polynomial kernels are used to weight contributions based on marker levels, and the pair correlation function is computed across a range of distances (r) and target marker values for both populations. 
-The function can also compute confidence intervals using spatial bootstrapping.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.</p>
-</dd>
-<dt><strong>labels_for_objects_A</strong><span class="classifier">np.array</span></dt><dd><p>An array of continuous marker values for the objects in population A. The length of this array should match the number of nodes in the network, and the values should correspond to the marker levels for each node.</p>
-</dd>
-<dt><strong>labels_for_objects_B</strong><span class="classifier">np.array</span></dt><dd><p>An array of continuous marker values for the objects in population B. The length of this array should match the number of nodes in the network, and the values should correspond to the marker levels for each node.</p>
-</dd>
-<dt><strong>object_indices_A</strong><span class="classifier">array-like, optional</span></dt><dd><p>The indices of the nodes in population A. If None, all nodes in the network will be considered as part of population A. Default is None.</p>
-</dd>
-<dt><strong>object_indices_B</strong><span class="classifier">array-like, optional</span></dt><dd><p>The indices of the nodes in population B. If None, all nodes in the network will be considered as part of population B. Default is None.</p>
-</dd>
-<dt><strong>spatial_kernel_bandwidth</strong><span class="classifier">float, optional</span></dt><dd><p>The bandwidth parameter for the spatial kernel function. This controls the smoothness of the pair correlation function. Default is 10.</p>
-</dd>
-<dt><strong>spatial_kernel_n</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent parameter for the spatial kernel function. This controls the shape of the kernel. Default is 2 (which corresponds to a Gaussian-like kernel).</p>
-</dd>
-<dt><strong>r_min</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum distance to consider when computing the pair correlation function. Default is 0.</p>
-</dd>
-<dt><strong>r_max</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum distance to consider when computing the pair correlation function. Default is 100.</p>
-</dd>
-<dt><strong>r_step</strong><span class="classifier">float, optional</span></dt><dd><p>The step size for the distance bins when computing the pair correlation function. Default is 10.</p>
-</dd>
-<dt><strong>marker_kernel_bandwidth_A</strong><span class="classifier">float, optional</span></dt><dd><p>The bandwidth parameter for the marker kernel function for population A. This controls the smoothness of the weighting based on marker levels. Default is 0.2.</p>
-</dd>
-<dt><strong>marker_kernel_n_A</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent parameter for the marker kernel function for population A. This controls the shape of the kernel for marker weighting. Default is 1 (which corresponds to a triangular kernel).</p>
-</dd>
-<dt><strong>marker_min_A</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum marker value to consider for population A when computing the marker kernel. Default is 0.</p>
-</dd>
-<dt><strong>marker_max_A</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum marker value to consider for population A when computing the marker kernel. Default is 1.</p>
-</dd>
-<dt><strong>marker_step_A</strong><span class="classifier">float, optional</span></dt><dd><p>The step size for the marker values when computing the marker kernel for population A. Default is 0.1.</p>
-</dd>
-<dt><strong>marker_kernel_bandwidth_B</strong><span class="classifier">float, optional</span></dt><dd><p>The bandwidth parameter for the marker kernel function for population B. This controls the smoothness of the weighting based on marker levels for population B. Default is 0.2.</p>
-</dd>
-<dt><strong>marker_kernel_n_B</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent parameter for the marker kernel function for population B. This controls the shape of the kernel for marker weighting for population B. Default is 1 (which corresponds to a triangular kernel).</p>
-</dd>
-<dt><strong>marker_min_B</strong><span class="classifier">float, optional</span></dt><dd><p>The minimum marker value to consider for population B when computing the marker kernel. Default is 0.</p>
-</dd>
-<dt><strong>marker_max_B</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum marker value to consider for population B when computing the marker kernel. Default is 1.</p>
-</dd>
-<dt><strong>marker_step_B</strong><span class="classifier">float, optional</span></dt><dd><p>The step size for the marker values when computing the marker kernel for population B. Default is 0.1.</p>
-</dd>
-<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
-</dd>
-<dt><strong>return_confidence_interval</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to compute and return 95% confidence intervals for the pair correlation function using spatial bootstrapping. Default is False.</p>
-</dd>
-<dt><strong>low_memory</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to use a low-memory implementation of Dijkstra’s algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.</p>
-</dd>
-<dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to print progress messages during computation. Default is True.</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>tau_A</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The target marker values for label A at which the pair correlation function was computed.</p>
-</dd>
-<dt><strong>tau_B</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The target marker values for label B at which the pair correlation function was computed.</p>
-</dd>
-<dt><strong>radii</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The radii at which the pair correlation function was computed.</p>
-</dd>
-<dt><strong>g</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The values of the pair correlation function at the corresponding target marker values and radii. This will be a 3D array with dimensions corresponding to (number of target marker values for A, number of target marker values for B, number of radii).</p>
-</dd>
-<dt><strong>confidence_interval</strong><span class="classifier">numpy.ndarray (if return_confidence_interval is True)</span></dt><dd><p>If return_confidence_interval is True, this will be a numpy array (2, number of target marker values for A, number of target marker values for B, number of radii) containing the confidence intervals for the pair correlation function at each combination of target marker values and radius. The CI[0,:,:,:] corresponds to the lower bounds of the confidence intervals, and CI[1,:,:,:] corresponds to the upper bounds. If return_confidence_interval is False, this will not be returned.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-<p class="rubric">Notes</p>
-<p>For details, see the reference paper…</p>
-</dd></dl>
-
 </section>
 
 
@@ -570,23 +450,6 @@ The function can also compute confidence intervals using spatial bootstrapping.<
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-
-  <div class="sidebar-secondary-item">
-<div
-    id="pst-page-navigation-heading-2"
-    class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#netpcf.cross_weighted_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_weighted_pair_correlation_function()</span></code></a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>

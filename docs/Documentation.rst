@@ -2,9 +2,20 @@
 Documentation
 =============
 
-somestuff
+Package structure overview...
 
 .. currentmodule:: netpcf
+
+Utility functions
+-----------------
+
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   utils.generate_spatial_network
+   utils.plot_spatial_network 
+
 
 Pair correlation functions
 --------------------------
@@ -13,9 +24,9 @@ Pair correlation functions
    :toctree: generated/
    :nosignatures:
 
-   cross_pair_correlation_function
-   weighted_pair_correlation_function
-   cross_weighted_pair_correlation_function
+   pcf.cross_pair_correlation_function
+   pcf.weighted_pair_correlation_function
+   pcf.cross_weighted_pair_correlation_function
 
 
 Spatial network partitioning
@@ -28,25 +39,13 @@ Spatial network partitioning
    partition.compact_volume_partition
 
 
-.. currentmodule:: netpcf
-
-Useful functions
-----------------
-
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
-
-   utils.generate_spatial_network
-   utils.plot_spatial_network 
-
-
 Example datasets
 ----------------
 
 .. autosummary::
    :toctree: generated/
    :nosignatures:
+
 
    datasets.load_dataset
 
@@ -57,13 +56,13 @@ Correlation helper functions
    :toctree: generated/
    :nosignatures:
 
-   helpers.spatial_bootstrap
-   helpers.polynomial_kernel
-   helpers.integrated_poly_finite_kernel
-   helpers.is_connected_filter
-   helpers.compute_contributions
-   helpers.compute_weighted_contributions
-   helpers.compute_contributions_parallel
-   helpers.compute_weighted_contributions_parallel
-   helpers.batched_dijkstra
+   pcf.helpers.spatial_bootstrap
+   pcf.helpers.polynomial_kernel
+   pcf.helpers.integrated_poly_finite_kernel
+   pcf.helpers.is_connected_filter
+   pcf.helpers.compute_contributions
+   pcf.helpers.compute_weighted_contributions
+   pcf.helpers.compute_contributions_parallel
+   pcf.helpers.compute_weighted_contributions_parallel
+   pcf.helpers.batched_dijkstra
 
