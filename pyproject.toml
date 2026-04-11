@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 requires-python = ">= 3.10"
-name = "netpcf"
+name = "spacenet"
 version = "0.0.1"
-description = "A Python package for computing geometrically-corrected correlation functions over unweighted and weighted networks."
+description = "A Python package for spatial analysis of spatial networks."
 authors = [
     {name = "Joshua Moore", email = "joshua.moore@maths.ox.ac.uk"}
 ]
@@ -30,7 +30,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["netpcf"]
+packages = ["spacenet"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
@@ -41,7 +41,7 @@ source = "vcs"
 [project.urls]
 Homepage = ""
 Documentation = ""
-Repository = "https://github.com/joshwillmoore1/netpcf"
+Repository = "https://github.com/joshwillmoore1/spacenet"
 
 
 [tool.pytest.ini_options]

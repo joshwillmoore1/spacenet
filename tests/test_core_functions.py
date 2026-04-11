@@ -3,7 +3,7 @@ sys.path.append('..')
 
 import pytest
 import numpy as np
-import netpcf as npc
+import spacenet as sn
 import networkx as nx   
 
 @pytest.fixture
@@ -26,7 +26,7 @@ def setup_network_and_params():
                         n_jobs=1)  
 
     # a network generated from the points
-    G_ppp=npc.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=100)
+    G_ppp=sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=100)
     
     return G_ppp, netPCF_kwargs
 
@@ -36,7 +36,7 @@ def test_null_cross_pcf(setup_network_and_params):
     
     
     # compute the cross-PCF
-    r,g,CI = npc.cross_pair_correlation_function(this_metwork,**netPCF_kwargs)
+    r,g,CI = sn.pcf.cross_pair_correlation_function(this_metwork,**netPCF_kwargs)
     
     
     # check that g is approximately 1 for all r values

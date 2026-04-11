@@ -4,11 +4,11 @@ from datetime import date
 import toml
 
 # Load the version from pyproject.toml
-pyproject_path = os.path.abspath('/Users/joshuamoore/Dropbox/Ox_PostDoc/Method_development/netPCF_paper/netPCF/netpcf/pyproject.toml')
+pyproject_path = os.path.abspath('/Users/joshuamoore/Dropbox/Ox_PostDoc/Method_development/netPCF_paper/netPCF/spacenet/pyproject.toml')
 with open(pyproject_path, 'r') as f:
     pyproject_data = toml.load(f)
 
-project = 'netpcf'
+project = 'spacenet'
 copyright = '2026, Joshua W. Moore'
 author = 'Joshua W. Moore'
 release = pyproject_data['project']['version']
@@ -46,8 +46,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'pydata_sphinx_theme'
-html_title = 'netPCF'
-html_short_title = 'netPCF'
+html_title = 'SpaceNet'
+html_short_title = 'SpaceNet'
 
 html_static_path = ['_static']
 
@@ -96,7 +96,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/joshwillmoore1/netpcf",
+            "url": "https://github.com/joshwillmoore1/spacenet",
             "icon": "fab fa-github-square",
             "type": "fontawesome",
         },

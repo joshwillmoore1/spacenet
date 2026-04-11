@@ -4,7 +4,7 @@ Documentation
 
 Package structure overview...
 
-.. currentmodule:: netpcf
+.. currentmodule:: spacenet
 
 Utility functions
 -----------------
@@ -65,4 +65,3 @@ Correlation helper functions
    pcf.helpers.compute_contributions_parallel
    pcf.helpers.compute_weighted_contributions_parallel
    pcf.helpers.batched_dijkstra
-
