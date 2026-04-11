@@ -205,7 +205,7 @@ def _aggregate_neighbor_communities_numba(
 
 
 @dataclass
-class LeidenCompactResult:
+class PartitionResult:
     labels: Dict
     community_lengths: Dict[int, float]
     community_cut_lengths: Dict[int, float]
@@ -699,7 +699,7 @@ def _local_move_pass_from_array(
     return moved
 
 
-def leiden_compact_volume_partition(
+def compact_volume_partition(
     G: nx.Graph,
     k: Optional[int] = None,
     T: Optional[float] = None,
@@ -709,7 +709,7 @@ def leiden_compact_volume_partition(
     max_iter: int = 10,
     seed_samples: int = 10,
     random_seed: Optional[int] = 0,
-) -> LeidenCompactResult:
+) -> PartitionResult:
     """
     
     A compact and volume-balanced partitioning algorithm inspired by the Leiden method, adapted for spatial networks with edge distances.
@@ -740,7 +740,7 @@ def leiden_compact_volume_partition(
     
     Returns
     -------
-    LeidenCompactResult
+    PartitionResult
         A dataclass containing the partitioning results, including:
         
         - labels: A dictionary mapping each node to its assigned community.
@@ -771,8 +771,6 @@ def leiden_compact_volume_partition(
     
     
     """
-    
-    
     
     if G.is_directed():
         raise ValueError("Expected an undirected graph.")
@@ -834,7 +832,7 @@ def leiden_compact_volume_partition(
     Wfin, Bfin, Vfin, total_cut = _per_community_W_B_V_from_array(backend, label_arr)
     k_final = len(set(labels.values()))
 
-    return LeidenCompactResult(
+    return PartitionResult(
         labels=labels,
         community_lengths=Wfin,
         community_cut_lengths=Bfin,

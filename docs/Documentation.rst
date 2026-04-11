@@ -47,7 +47,7 @@ Backend helper functions
    :toctree: generated/
    :nosignatures:
 
-   helpers.leiden_compact_volume_partition
+   helpers.compact_volume_partition
    helpers.spatial_bootstrap
    helpers.polynomial_kernel
    helpers.integrated_poly_finite_kernel

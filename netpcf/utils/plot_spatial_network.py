@@ -8,7 +8,8 @@ import numpy as np
 def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1,marker_size=10,add_legend=False,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,continuous_labels=False,label_name='labels',scatter_kwargs={},figure_kwargs={}):
     """
     
-    Plots a spatial network with nodes positioned according to the provided points. Nodes can be colored based on provided labels, and edges can be colored based on their weights. 
+    Plots a spatial network with nodes positioned according to the provided points.
+    Nodes can be colored based on provided labels, and edges can be colored based on their weights. 
 
     Parameters
     ----------
@@ -148,7 +149,7 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
     
     # Set aspect ratio to equal
     ax.set_aspect('equal')
-    ax.axis('off')
+    ax.set_axis_on()
     return plt.gcf(),ax
 
 def __draw_edges_2D(

@@ -1,3 +1,2 @@
 from .plot_spatial_network import plot_spatial_network
 from .generate_spatial_network import generate_spatial_network
-#from .plot_correlation_function import plot_correlation_function

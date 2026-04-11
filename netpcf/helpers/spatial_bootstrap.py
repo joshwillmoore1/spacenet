@@ -1,7 +1,7 @@
 
 import numpy as np
 import networkx as nx
-from netpcf.helpers.leiden_compact_volume_partition import leiden_compact_volume_partition
+from netpcf.helpers.compact_volume_partition import compact_volume_partition
 
 def spatial_bootstrap(spatial_network,edge_weight_name,object_indices_A,contributions,weight_matrix=None):
     """
@@ -72,7 +72,7 @@ def spatial_bootstrap(spatial_network,edge_weight_name,object_indices_A,contribu
         max_iter=5,
         random_seed=0)
         
-        network_partitions = leiden_compact_volume_partition(spatial_network, k=number_of_partitions, **partition_paramters)
+        network_partitions = compact_volume_partition(spatial_network, k=number_of_partitions, **partition_paramters)
         
 
         node_to_partition_dict = network_partitions.labels  # node -> community id, each community is spatially contiguous
