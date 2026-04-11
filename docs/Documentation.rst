@@ -6,8 +6,8 @@ somestuff
 
 .. currentmodule:: netpcf
 
-Computing pair correlation functions
-------------------------------------
+Pair correlation functions
+--------------------------
 
 .. autosummary::
    :toctree: generated/
@@ -16,6 +16,16 @@ Computing pair correlation functions
    cross_pair_correlation_function
    weighted_pair_correlation_function
    cross_weighted_pair_correlation_function
+
+
+Spatial network partitioning
+----------------------------
+
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   partition.compact_volume_partition
 
 
 .. currentmodule:: netpcf
@@ -41,13 +51,12 @@ Example datasets
    datasets.load_dataset
 
 
-Backend helper functions
-------------------------
+Correlation helper functions
+----------------------------
 .. autosummary::
    :toctree: generated/
    :nosignatures:
 
-   helpers.compact_volume_partition
    helpers.spatial_bootstrap
    helpers.polynomial_kernel
    helpers.integrated_poly_finite_kernel

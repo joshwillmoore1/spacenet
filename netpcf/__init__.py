@@ -4,6 +4,7 @@ from .cross_weighted_pair_correlation_function import cross_weighted_pair_correl
 from . import helpers
 from . import utils
 from . import datasets
+from . import partition
 
 
 from importlib.metadata import version, PackageNotFoundError

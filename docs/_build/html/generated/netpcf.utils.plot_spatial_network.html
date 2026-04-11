@@ -41,7 +41,7 @@
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=3e6ca1ad"></script>
+    <script src="../_static/documentation_options.js?v=5aa371e9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -65,12 +65,12 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://docs.muspan.co.uk/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.1';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="netpcf.helpers.leiden_compact_volume_partition" href="netpcf.helpers.leiden_compact_volume_partition.html" />
+    <link rel="next" title="netpcf.datasets.load_dataset" href="netpcf.datasets.load_dataset.html" />
     <link rel="prev" title="netpcf.utils.generate_spatial_network" href="netpcf.utils.generate_spatial_network.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -389,13 +389,20 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="netpcf.cross_pair_correlation_function.html">netpcf.cross_pair_correlation_function</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.weighted_pair_correlation_function.html">netpcf.weighted_pair_correlation_function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netpcf.cross_weighted_pair_correlation_function.html">netpcf.cross_weighted_pair_correlation_function</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="netpcf.partition.compact_volume_partition.html">netpcf.partition.compact_volume_partition</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="netpcf.utils.generate_spatial_network.html">netpcf.utils.generate_spatial_network</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">netpcf.utils.plot_spatial_network</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.leiden_compact_volume_partition.html">netpcf.helpers.leiden_compact_volume_partition</a></li>
+<li class="toctree-l1"><a class="reference internal" href="netpcf.datasets.load_dataset.html">netpcf.datasets.load_dataset</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.spatial_bootstrap.html">netpcf.helpers.spatial_bootstrap</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.polynomial_kernel.html">netpcf.helpers.polynomial_kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.integrated_poly_finite_kernel.html">netpcf.helpers.integrated_poly_finite_kernel</a></li>
 <li class="toctree-l1"><a class="reference internal" href="netpcf.helpers.is_connected_filter.html">netpcf.helpers.is_connected_filter</a></li>
@@ -476,7 +483,8 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="netpcf.utils.plot_spatial_network">
 <span class="sig-prename descclassname"><span class="pre">netpcf.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#netpcf.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
-<dd><p>Plots a spatial network with nodes positioned according to the provided points. Nodes can be colored based on provided labels, and edges can be colored based on their weights.</p>
+<dd><p>Plots a spatial network with nodes positioned according to the provided points.
+Nodes can be colored based on provided labels, and edges can be colored based on their weights.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">

@@ -1,7 +1,6 @@
 
 import numpy as np
-import networkx as nx
-from netpcf.helpers.compact_volume_partition import compact_volume_partition
+from netpcf.partition.compact_volume_partition import compact_volume_partition
 
 def spatial_bootstrap(spatial_network,edge_weight_name,object_indices_A,contributions,weight_matrix=None):
     """
