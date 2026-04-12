@@ -11,7 +11,7 @@ def integrated_poly_finite_kernel(r,w,d_1,d_2,delta_r=1,n=2):
     Computes the integrated polynomial kernel function for given distances and bandwidth parameters. The integrated kernel is defined as:
     
     .. math::
-        L_{i} \\left(  r \\right) = \\sum_{e_{nm} \\in E}  \\int_{0}^{w_{nm}} \\kappa_{\Delta r, n } \\left(  |  d_{in} + \\frac{d_{im} - d_{in}}{w_{nm}}x  - r |  \\right) dx
+        L_{i} \\left(  r \\right) = \\sum_{e_{nm} \\in E}  \\int_{0}^{w_{nm}} \\kappa_{\\Delta r, n } \\left(  |  d_{in} + \\frac{d_{im} - d_{in}}{w_{nm}}x  - r |  \\right) dx
 
     The kernel function is integrated over the length of the edge, weighted by the edge weight.   
 

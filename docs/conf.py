@@ -63,6 +63,7 @@ bibtex_bibfiles = ['netpcf_citations.bib']
 # Drop out the sidebar on specific pages
 html_sidebars = {
     "references": [],
+    "install": [],
 }
 
 # auto doc settings
@@ -80,7 +81,7 @@ html_favicon = '_static/images/fav.svg'
 # theme options
 
 # version switch url
-version_switcher_json_url = 'https://docs.muspan.co.uk/version_switcher.json'
+version_switcher_json_url = 'https://spacenet-python.com/version_switcher.json'
 
 html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
@@ -106,9 +107,9 @@ html_theme_options = {
         },
     ],
     "icon_links_label": "Quick Links",
-    "analytics": {"google_analytics_id": "XX-XXXXXXXXX-X"},
-    "switcher": {
-        "json_url": version_switcher_json_url,
-        "version_match": release,
-    },
+    "analytics": {"google_analytics_id": "G-HQ98Y5N0C9"},
+    #"switcher": {
+    #    "json_url": version_switcher_json_url,
+    #    "version_match": release,
+    #},
 }

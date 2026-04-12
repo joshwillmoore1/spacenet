@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 requires-python = ">= 3.10"
 name = "spacenet"
-version = "0.0.1"
+version = "0.1.0"
 description = "A Python package for spatial analysis of spatial networks."
 authors = [
     {name = "Joshua Moore", email = "joshua.moore@maths.ox.ac.uk"}
@@ -39,8 +39,8 @@ allow-direct-references = true
 source = "vcs"
 
 [project.urls]
-Homepage = ""
-Documentation = ""
+Homepage = "www.spacenet-python.com"
+Documentation = "www.spacenet-python.com"
 Repository = "https://github.com/joshwillmoore1/spacenet"
 
 

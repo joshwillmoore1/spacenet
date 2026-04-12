@@ -1,6 +1,75 @@
 .. _installation:
-Install
-=======
 
+Getting Started
+===============
+
+This guide will help you install **SpaceNet** and run a minimal example.
+
+Installation
+------------
+
+SpaceNet is available on PyPI and can be installed using ``pip``, via ``conda`` from the conda-forge channel, or with modern Python package managers such as ``uv`` and ``pixi``. Choose the method that best suits your environment:
+
+.. tab-set::
+
+    .. tab-item:: pip
+        :sync: pip
+
+        .. code-block:: bash
+
+            pip install spacenet
+
+    .. tab-item:: conda
+        :sync: conda
+
+        .. code-block:: bash
+
+            conda install -c conda-forge spacenet
+
+    .. tab-item:: uv
+        :sync: uv
+
+        .. code-block:: bash
+
+            uv add spacenet
+
+    .. tab-item:: pixi
+        :sync: pixi
+
+        .. code-block:: bash
+
+            pixi add spacenet
+
+Minimal example
+---------------
+
+Below is a minimal example demonstrating how to import SpaceNet and begin working with spatial networks.
+
+.. code-block:: python
+
+   import spacenet as sn
+
+    # Load the spiral dataset and extract the 'x' and 'y' columns as points
+    spiral_data = sn.datasets.load_dataset('spiral')
+    points = spiral_data[['x', 'y']].to_numpy()
+
+    # generate a spatial network
+    G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+
+    # plot the spatial network
+    sn.utils.plot_spatial_network(G,points)
+
+
+
+The output of this snippet will be a plot of the spatial network generated from the spiral dataset. 
+The nodes of the network correspond to the points in the dataset, and edges are drawn between nodes that are within a specified distance of each other.
+
+
+Next steps
+----------
+
+- Explore the :doc:`examples` for detailed tutorials and examples.
+
+- Explore the :doc:`Documentation` for full function documentation.
 
 
