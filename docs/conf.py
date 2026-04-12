@@ -71,6 +71,7 @@ copybutton_only_copy_prompt_lines = False
 html_show_sourcelink = False
 html_copy_source = False
 
+html_favicon = '_static/images/fav.svg'
 
 
 # theme options
@@ -80,13 +81,13 @@ version_switcher_json_url = 'https://docs.muspan.co.uk/version_switcher.json'
 
 html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
-    #"logo": {
-    #    "link": "https://www.muspan.co.uk",
-    #    "image_light": "images/muspan_logo_lightmode.png",
-    #    "image_dark": "images/muspan_logo_darkmode.png",
-    #},
-    "navbar_end": ["navbar-icon-links", "theme-switcher"],
-    "navbar_start": ["navbar-logo", "version-switcher"],
+    "logo": {
+        #"link": "https://www.muspan.co.uk",
+        "image_light": "_static/images/logo_full_color.png",
+        "image_dark": "_static/images/logo_full_color.png",
+    },
+    "navbar_end": ["navbar-icon-links", "theme-switcher", "version-switcher"],
+    "navbar_start": ["navbar-logo"],
     "collapse_navigation": True,
     "navigation_depth": 2,
     "show_prev_next": False,
