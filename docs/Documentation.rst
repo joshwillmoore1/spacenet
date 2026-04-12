@@ -2,66 +2,38 @@
 Documentation
 =============
 
-Package structure overview...
-
-.. currentmodule:: spacenet
-
-Utility functions
------------------
-
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
-
-   utils.generate_spatial_network
-   utils.plot_spatial_network 
+SpaceNet is a Python package for spatial network analysis. It is structured into several subpackages, each of which contains functions and classes for specific types of spatial network analysis. 
+The subpackages are listed below, along with a brief description of each one.
 
 
-Pair correlation functions
---------------------------
+.. list-table::
+  :header-rows: 1
 
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
-
-   pcf.cross_pair_correlation_function
-   pcf.weighted_pair_correlation_function
-   pcf.cross_weighted_pair_correlation_function
-
-
-Spatial network partitioning
-----------------------------
-
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
-
-   partition.compact_volume_partition
+  * - Subpackage
+    - Description
+  * - :ref:`utils<utils>`
+    - A useful collection of utility functions for spatial network analysis.
+  * - :ref:`pcf<pcf>`
+    - Pair correlation functions for spatial networks.
+  * - :ref:`partition<partition>`
+    - Methods for partitioning spatial networks.
+  * - :ref:`datasets<datasets>`
+    - Datasets for testing and demonstration of spatial network analysis methods.
 
 
-Example datasets
-----------------
-
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
 
 
-   datasets.load_dataset
+SpaceNet reference list
+-----------------------
+
+All of the modules are listed below, and each module has its own documentation page that provides a detailed description of the functions and classes that are available in that module.
 
 
-Correlation helper functions
-----------------------------
-.. autosummary::
-   :toctree: generated/
-   :nosignatures:
 
-   pcf.helpers.spatial_bootstrap
-   pcf.helpers.polynomial_kernel
-   pcf.helpers.integrated_poly_finite_kernel
-   pcf.helpers.is_connected_filter
-   pcf.helpers.compute_contributions
-   pcf.helpers.compute_weighted_contributions
-   pcf.helpers.compute_contributions_parallel
-   pcf.helpers.compute_weighted_contributions_parallel
-   pcf.helpers.batched_dijkstra
+.. toctree::
+   :maxdepth: 4
+   
+   spacenet.utils
+   spacenet.pcf
+   spacenet.partition
+   spacenet.datasets

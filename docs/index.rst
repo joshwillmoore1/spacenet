@@ -3,17 +3,26 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-SpaceNet
-========
 
-big image of spacenet - remove the title
+
+.. image:: _static/images/docs_banner.svg
+   :align: center
+   :alt: SpaceNet banner
+   :scale: 110%
+
+.. raw:: html
+
+   <br>
+
+
+
 
 
 .. grid:: 1 1 2 2
     :gutter: 2 3 4 4
 
     .. grid-item-card::
-        :img-top: _static/index_user_guide.svg
+        :img-top: _static/images/install.svg
         :text-align: center
 
         **Getting started**
@@ -31,7 +40,7 @@ big image of spacenet - remove the title
             Installation guide
 
     .. grid-item-card::
-        :img-top: _static/index_api.svg
+        :img-top: _static/images/docs.svg
         :text-align: center
 
         **API reference**
@@ -50,7 +59,7 @@ big image of spacenet - remove the title
             To the documentation
 
     .. grid-item-card::
-        :img-top: _static/index_getting_started.svg
+        :img-top: _static/images/examples.svg
         :text-align: center
 
         **Using SpaceNet**
@@ -65,10 +74,10 @@ big image of spacenet - remove the title
             :color: secondary
             :click-parent:
 
-            To the examples section
+            To the examples
 
     .. grid-item-card::
-        :img-top: _static/index_contribute.svg
+        :img-top: _static/images/collab.svg
         :text-align: center
 
         **Developer guide**
@@ -84,7 +93,7 @@ big image of spacenet - remove the title
             :color: secondary
             :click-parent:
 
-            To the release notes
+            See release notes
 
 
 

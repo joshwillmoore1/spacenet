@@ -33,6 +33,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bdbcc2a0" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
@@ -71,8 +72,8 @@
     <link rel="icon" href="../_static/fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spacenet.pcf.helpers.spatial_bootstrap" href="spacenet.pcf.helpers.spatial_bootstrap.html" />
-    <link rel="prev" title="spacenet.partition.compact_volume_partition" href="spacenet.partition.compact_volume_partition.html" />
+    <link rel="next" title="Examples" href="../examples.html" />
+    <link rel="prev" title="spacenet.datasets" href="../spacenet.datasets.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -431,31 +432,14 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="spacenet.utils.generate_spatial_network.html">spacenet.utils.generate_spatial_network</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.utils.plot_spatial_network.html">spacenet.utils.plot_spatial_network</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.utils.html">spacenet.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.pcf.html">spacenet.pcf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.partition.html">spacenet.partition</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../spacenet.datasets.html">spacenet.datasets</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.datasets.load_dataset</a></li>
 </ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.cross_pair_correlation_function.html">spacenet.pcf.cross_pair_correlation_function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.weighted_pair_correlation_function.html">spacenet.pcf.weighted_pair_correlation_function</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.cross_weighted_pair_correlation_function.html">spacenet.pcf.cross_weighted_pair_correlation_function</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="spacenet.partition.compact_volume_partition.html">spacenet.partition.compact_volume_partition</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">spacenet.datasets.load_dataset</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.spatial_bootstrap.html">spacenet.pcf.helpers.spatial_bootstrap</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.polynomial_kernel.html">spacenet.pcf.helpers.polynomial_kernel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.integrated_poly_finite_kernel.html">spacenet.pcf.helpers.integrated_poly_finite_kernel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.is_connected_filter.html">spacenet.pcf.helpers.is_connected_filter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.compute_contributions.html">spacenet.pcf.helpers.compute_contributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.compute_weighted_contributions.html">spacenet.pcf.helpers.compute_weighted_contributions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.compute_contributions_parallel.html">spacenet.pcf.helpers.compute_contributions_parallel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.compute_weighted_contributions_parallel.html">spacenet.pcf.helpers.compute_weighted_contributions_parallel</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.helpers.batched_dijkstra.html">spacenet.pcf.helpers.batched_dijkstra</a></li>
+</details></li>
 </ul>
 </div>
 </nav></div>
@@ -505,6 +489,9 @@ document.write(`
     </li>
     
     <li class="breadcrumb-item"><a href="../Documentation.html" class="nav-link">Documentation</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="../spacenet.datasets.html" class="nav-link">spacenet.datasets</a></li>
     
     <li class="breadcrumb-item active" aria-current="page">spacenet.dat...</li>
   </ul>

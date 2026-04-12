@@ -51,6 +51,9 @@ html_short_title = 'SpaceNet'
 
 html_static_path = ['_static']
 
+html_css_files = [
+    'custom.css',
+]
 
 # -- Options for sphinxcontrib-bibtex ---------------------------------------
 bibtex_bibfiles = ['netpcf_citations.bib']
