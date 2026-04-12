@@ -1,4 +1,0 @@
-.. _release:
-
-Release notes
-=============

@@ -1,2 +1,0 @@
-from .plot_spatial_network import plot_spatial_network
-from .generate_spatial_network import generate_spatial_network
