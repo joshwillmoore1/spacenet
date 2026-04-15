@@ -56,7 +56,7 @@ html_css_files = [
 ]
 
 # -- Options for sphinxcontrib-bibtex ---------------------------------------
-bibtex_bibfiles = ['netpcf_citations.bib']
+bibtex_bibfiles = ['spacenet_citations.bib']
 
 
 
@@ -86,7 +86,6 @@ version_switcher_json_url = 'https://spacenet-python.com/version_switcher.json'
 html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
     "logo": {
-        #"link": "https://www.muspan.co.uk",
         "image_light": "_static/images/logo_full_color.png",
         "image_dark": "_static/images/logo_full_color.png",
     },
