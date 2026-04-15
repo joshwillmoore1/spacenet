@@ -1,6 +1,7 @@
 import numpy as np
 from spacenet.pcf.helpers.polynomial_kernel import polynomial_kernel
 from spacenet.pcf.helpers.integrated_poly_finite_kernel import integrated_poly_finite_kernel
+from spacenet.pcf.helpers.prepare_reachable_edge_arrays import prepare_reachable_edge_arrays
 
 
 def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict):
@@ -45,53 +46,42 @@ def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.a
     # Convert node distances and list to NumPy arrays for vectorized operations
     node_list = np.array(list(this_node_shortest_distance.keys()))
     node_distances = np.array(list(this_node_shortest_distance.values()))
-    node_distance_dict = dict(zip(node_list, node_distances))
 
     # Precompute total density
     total_density = (np.sum(these_marker_contributions_weighting,axis=0,keepdims=True) / total_length)
-    # Precompute kernel indicators and nodes in kernels for all r values
+    # Precompute kernel indicators and the subset of nodes that can contribute.
     kernel_r_indicators = (node_distances[:, None] >= (r - spatial_kernel_bandwidth)) & \
                           (node_distances[:, None] <= (r + spatial_kernel_bandwidth))
-    which_nodes_in_kernels = [node_list[kernel_r_indicators[:, i]] for i in range(len(r))]
-
-    # Precompute nodes in kernels and in population for all r values -- this can be pre filtered?
-    object_indices_B_set = set(object_indices_B)
-    which_nodes_in_kernels_and_in_pop = [
-        np.array([node for node in which_nodes_in_kernel if node != object_id_A and node in object_indices_B_set])
-        for which_nodes_in_kernel in which_nodes_in_kernels
-    ]
+    object_population_mask = np.isin(node_list, object_indices_B, assume_unique=True)
+    object_indices_B_position = {node: i for i, node in enumerate(object_indices_B)}
+    edge_weights, edge_d_1, edge_d_2, edge_u_idx, edge_v_idx = prepare_reachable_edge_arrays(
+        node_list, node_distances, node_to_edges
+    )
     
     # Initialize lists for numerator contributions and total kernel lengths
     numerator_contributions = np.zeros((these_marker_contributions_weighting.shape[1],len(r)), dtype=np.float64)
     total_kernel_lengths = np.ones((these_marker_contributions_weighting.shape[1],len(r)), dtype=np.float64)
     
-    for r_index,(r_value, which_nodes_in_kernel_and_in_pop_local) in enumerate(zip(r, which_nodes_in_kernels_and_in_pop)):
-        if which_nodes_in_kernel_and_in_pop_local.size > 0:
+    for r_index, r_value in enumerate(r):
+        kernel_node_mask = kernel_r_indicators[:, r_index]
+        population_in_kernel_mask = kernel_node_mask & object_population_mask
+
+        if np.any(population_in_kernel_mask):
             # Compute numerator contributions
-            node_indices = np.isin(node_list, which_nodes_in_kernel_and_in_pop_local)
-            distances = np.abs(node_distances[node_indices] - r_value)
+            selected_nodes = node_list[population_in_kernel_mask]
+            distances = np.abs(node_distances[population_in_kernel_mask] - r_value)
             
             # get the marker contributions for the nodes in the kernel
-            these_marker_contributions_weighting_in_kernel = these_marker_contributions_weighting[np.isin(object_indices_B, which_nodes_in_kernel_and_in_pop_local,assume_unique=True),:]
+            selected_object_positions = [object_indices_B_position[node] for node in selected_nodes]
+            these_marker_contributions_weighting_in_kernel = these_marker_contributions_weighting[selected_object_positions, :].copy()
             
-            # Compute total kernel lengths
-            edges_seen = set()
-            filtered_edges_with_data = {}
-            nodes_in_kernel = set(which_nodes_in_kernels[r_index])
-
-            for node in nodes_in_kernel:
-                for edge, weight in node_to_edges.get(node, []):
-                    if edge not in edges_seen:
-                        filtered_edges_with_data[edge] = weight
-                        edges_seen.add(edge)
-            weights, d_1, d_2 = zip(*((data, node_distance_dict[this_edge[0]], node_distance_dict[this_edge[1]]) for this_edge, data in filtered_edges_with_data.items()))
-
-            weights = np.array(weights,dtype=np.float64)
-            d_1 = np.array(d_1, dtype=np.float64)
-            d_2 = np.array(d_2, dtype=np.float64)
+            edge_mask = kernel_node_mask[edge_u_idx] | kernel_node_mask[edge_v_idx]
             
             total_length = np.sum(integrated_poly_finite_kernel(
-                r=r_value, w=weights, d_1=d_1, d_2=d_2, 
+                r=r_value,
+                w=edge_weights[edge_mask],
+                d_1=edge_d_1[edge_mask],
+                d_2=edge_d_2[edge_mask],
                 delta_r=spatial_kernel_bandwidth, n=spatial_kernel_n
             ))
             

@@ -7,3 +7,4 @@ from .spatial_bootstrap import spatial_bootstrap
 from .compute_weighted_contributions import compute_weighted_contributions
 from .compute_weighted_contributions_parallel import compute_weighted_contributions_parallel
 from .is_connected_filter import is_connected_filter
+from .prepare_reachable_edge_arrays import prepare_reachable_edge_arrays
