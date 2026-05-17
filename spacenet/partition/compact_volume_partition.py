@@ -38,6 +38,7 @@ class PartitionResult:
     total_cut_length: float
     moves: int
     iterations: int
+    objective_values: List[float]
     
     
     
@@ -151,7 +152,7 @@ def compact_volume_partition(
     total_moves = 0
     iterations = 0
     last_obj, comp, vpen = compute_objective_from_arrays(backend, label_arr, distmaps, T, alpha, p)
-
+    objective_values = [last_obj]   
     while iterations < max_iter:
         iterations += 1
         moved = local_move_pass_from_array(backend, label_arr, medoids, distmaps, T, alpha, p, rng)
@@ -164,7 +165,7 @@ def compact_volume_partition(
 
         medoids, distmaps = approx_update_medoids_from_array(backend, label_arr, seed_samples, rng)
         obj, comp, vpen = compute_objective_from_arrays(backend, label_arr, distmaps, T, alpha, p)
-
+        objective_values.append(obj)
         if moved == 0 or abs(last_obj - obj) < 1e-9:
             last_obj = obj
             break
@@ -188,4 +189,5 @@ def compact_volume_partition(
         total_cut_length=total_cut,
         moves=total_moves,
         iterations=iterations,
+        objective_values=objective_values
     )

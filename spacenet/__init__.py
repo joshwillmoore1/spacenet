@@ -2,10 +2,10 @@ from . import utils
 from . import datasets
 from . import partition
 from . import pcf
+from . import helpers
+from . import summary
 
-from importlib.metadata import version, PackageNotFoundError
 
-try:
-    __version__ = version("spacenet")   
-except PackageNotFoundError:
-    __version__ = "0.0.0"
+
+from importlib.metadata import version
+__version__ = version("spacenet")   
