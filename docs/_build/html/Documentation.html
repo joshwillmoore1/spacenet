@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bdbcc2a0" />
@@ -433,6 +433,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.html">spacenet.pcf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.datasets.html">spacenet.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.helpers.html">spacenet.helpers</a></li>
 </ul>
 </div>
 </nav></div>
@@ -511,14 +512,20 @@ The subpackages are listed below, along with a brief description of each one.</p
 <tr class="row-even"><td><p><a class="reference internal" href="spacenet.utils.html#utils"><span class="std std-ref">utils</span></a></p></td>
 <td><p>A useful collection of utility functions for spatial network analysis.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="spacenet.pcf.html#pcf"><span class="std std-ref">pcf</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="spacenet.summary.html#summary"><span class="std std-ref">summary</span></a></p></td>
+<td><p>Summary metrics for spatial networks.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="spacenet.pcf.html#pcf"><span class="std std-ref">pcf</span></a></p></td>
 <td><p>Pair correlation functions for spatial networks.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="spacenet.partition.html#partition"><span class="std std-ref">partition</span></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="spacenet.partition.html#partition"><span class="std std-ref">partition</span></a></p></td>
 <td><p>Methods for partitioning spatial networks.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="spacenet.datasets.html#datasets"><span class="std std-ref">datasets</span></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="spacenet.datasets.html#datasets"><span class="std std-ref">datasets</span></a></p></td>
 <td><p>Datasets for testing and demonstration of spatial network analysis methods.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="spacenet.helpers.html#helpers"><span class="std std-ref">helpers</span></a></p></td>
+<td><p>Helper functions for spatial network analysis.</p></td>
 </tr>
 </tbody>
 </table>
@@ -529,13 +536,35 @@ The subpackages are listed below, along with a brief description of each one.</p
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.utils.html">spacenet.utils</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.html#utility-functions">Utility functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.html#creating-and-modifying-spatial-networks">Creating and modifying spatial networks</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/spacenet.utils.generate_spatial_network.html">spacenet.utils.generate_spatial_network</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="generated/spacenet.utils.generate_spatial_network.html#spacenet.utils.generate_spatial_network"><code class="docutils literal notranslate"><span class="pre">generate_spatial_network()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.utils.add_node_labels.html">spacenet.utils.add_node_labels</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.utils.add_node_labels.html#spacenet.utils.add_node_labels"><code class="docutils literal notranslate"><span class="pre">add_node_labels()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.utils.delete_node_labels.html">spacenet.utils.delete_node_labels</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.utils.delete_node_labels.html#spacenet.utils.delete_node_labels"><code class="docutils literal notranslate"><span class="pre">delete_node_labels()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.html#querying-spatial-networks">Querying spatial networks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.utils.query_nodes.html">spacenet.utils.query_nodes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.utils.query_nodes.html#spacenet.utils.query_nodes"><code class="docutils literal notranslate"><span class="pre">query_nodes()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.html#viewing-data">Viewing data</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/spacenet.utils.plot_spatial_network.html">spacenet.utils.plot_spatial_network</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="generated/spacenet.utils.plot_spatial_network.html#spacenet.utils.plot_spatial_network"><code class="docutils literal notranslate"><span class="pre">plot_spatial_network()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.utils.print_network_properties.html">spacenet.utils.print_network_properties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.utils.print_network_properties.html#spacenet.utils.print_network_properties"><code class="docutils literal notranslate"><span class="pre">print_network_properties()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -612,6 +641,20 @@ The subpackages are listed below, along with a brief description of each one.</p
 <li class="toctree-l1"><a class="reference internal" href="spacenet.datasets.html">spacenet.datasets</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.datasets.load_dataset.html">spacenet.datasets.load_dataset</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/spacenet.datasets.load_dataset.html#spacenet.datasets.load_dataset"><code class="docutils literal notranslate"><span class="pre">load_dataset()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.helpers.html">spacenet.helpers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.html#helper-functions-for-spatial-networks">Helper functions for spatial networks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.helpers.get_edge_weights.html">spacenet.helpers.get_edge_weights</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.helpers.get_edge_weights.html#spacenet.helpers.get_edge_weights"><code class="docutils literal notranslate"><span class="pre">get_edge_weights()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.helpers.get_nodes_and_labels.html">spacenet.helpers.get_nodes_and_labels</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.helpers.get_nodes_and_labels.html#spacenet.helpers.get_nodes_and_labels"><code class="docutils literal notranslate"><span class="pre">get_nodes_and_labels()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

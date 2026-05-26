@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bdbcc2a0" />
@@ -429,12 +429,17 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">spacenet.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.generate_spatial_network.html">spacenet.utils.generate_spatial_network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.add_node_labels.html">spacenet.utils.add_node_labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.delete_node_labels.html">spacenet.utils.delete_node_labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.query_nodes.html">spacenet.utils.query_nodes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.plot_spatial_network.html">spacenet.utils.plot_spatial_network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.print_network_properties.html">spacenet.utils.print_network_properties</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.html">spacenet.pcf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.datasets.html">spacenet.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.helpers.html">spacenet.helpers</a></li>
 </ul>
 </div>
 </nav></div>
@@ -504,15 +509,43 @@ document.write(`
                   
   <section id="spacenet-utils">
 <span id="utils"></span><h1>spacenet.utils<a class="headerlink" href="#spacenet-utils" title="Link to this heading">#</a></h1>
-<section id="utility-functions">
-<h2>Utility functions<a class="headerlink" href="#utility-functions" title="Link to this heading">#</a></h2>
+<section id="creating-and-modifying-spatial-networks">
+<h2>Creating and modifying spatial networks<a class="headerlink" href="#creating-and-modifying-spatial-networks" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.generate_spatial_network.html#spacenet.utils.generate_spatial_network" title="spacenet.utils.generate_spatial_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_spatial_network</span></code></a></p></td>
 <td><p>Generate a spatial network using set of points.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.utils.plot_spatial_network.html#spacenet.utils.plot_spatial_network" title="spacenet.utils.plot_spatial_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_spatial_network</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.utils.add_node_labels.html#spacenet.utils.add_node_labels" title="spacenet.utils.add_node_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_node_labels</span></code></a></p></td>
+<td><p>A function to add labels to nodes in a spatial network.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.delete_node_labels.html#spacenet.utils.delete_node_labels" title="spacenet.utils.delete_node_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_node_labels</span></code></a></p></td>
+<td><p>A function to delete node labels from a spatial network.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="querying-spatial-networks">
+<h2>Querying spatial networks<a class="headerlink" href="#querying-spatial-networks" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.query_nodes.html#spacenet.utils.query_nodes" title="spacenet.utils.query_nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query_nodes</span></code></a></p></td>
+<td><p>Query nodes in a spatial network based on a specified node attribute, relation, and value.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="viewing-data">
+<h2>Viewing data<a class="headerlink" href="#viewing-data" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.plot_spatial_network.html#spacenet.utils.plot_spatial_network" title="spacenet.utils.plot_spatial_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_spatial_network</span></code></a></p></td>
 <td><p>Plots a spatial network with nodes positioned according to the provided points.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.utils.print_network_properties.html#spacenet.utils.print_network_properties" title="spacenet.utils.print_network_properties"><code class="xref py py-obj docutils literal notranslate"><span class="pre">print_network_properties</span></code></a></p></td>
+<td><p>A function to print the properties of a spatial network, including the number of nodes, edges, names of edge weights, node labels names .</p></td>
 </tr>
 </tbody>
 </table>
@@ -542,7 +575,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-functions">Utility functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-and-modifying-spatial-networks">Creating and modifying spatial networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#querying-spatial-networks">Querying spatial networks</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#viewing-data">Viewing data</a></li>
 </ul>
   </nav></div>
 

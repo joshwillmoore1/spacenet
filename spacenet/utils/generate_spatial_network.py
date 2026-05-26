@@ -11,6 +11,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     Edges will be created between objects based on the selected network type and distance constraints.
     Edge weights for 'Distance' and 'Inverse Distance' will be added to the network. 
     Node indices correspond to the indices of the input points array.
+    Nodes will have a 'position' attribute corresponding to their spatial coordinates from the input points array.
     
     Parameters
     ----------
@@ -75,6 +76,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     
     object_positions=points
     object_indices=np.arange(len(points),dtype=int)
+    
     if network_type.lower()=='delaunay':
         
         delaunay_network = Delaunay(object_positions)
@@ -227,5 +229,8 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     G.add_weighted_edges_from(final_edge_list, weight='Distance')
     G.add_weighted_edges_from(final_edge_list_inv, weight='Inverse Distance')
 
+    # add positions as node attributes
+    for i in range(len(object_positions)):
+        G.nodes[i]['position'] = object_positions[i]
     
     return G

@@ -19,8 +19,8 @@ def get_edge_weights(network,weight='Distance'):
         An array of edge weights corresponding to the specified weight attribute for each edge in the network.
     
     """
-    if weight not in network.edges(data=True)[0][2]:
-        raise ValueError(f"Weight '{weight}' is not a valid edge attribute.")
+    #if weight not in network.edges(data=True)[0][2]:
+    #    raise ValueError(f"Weight '{weight}' is not a valid edge attribute.")
     
     edge_weights = np.asarray([data[weight] for _, _, data in network.edges(data=True)])
     

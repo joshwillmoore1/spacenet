@@ -4,8 +4,9 @@ import collections
 import itertools
 import matplotlib.pyplot as plt
 import numpy as np
+from spacenet.helpers import get_nodes_and_labels
 
-def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1,marker_size=10,add_legend=False,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,continuous_labels=False,label_name='labels',scatter_kwargs={},figure_kwargs={}):
+def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None,ax=None,edge_width=1,marker_size=10,add_node_cbar=True,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,continuous_labels=False,scatter_kwargs={},figure_kwargs={}):
     """
     
     Plots a spatial network with nodes positioned according to the provided points.
@@ -15,17 +16,17 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
     ----------
     spatial_network : networkx.Graph
         The spatial network to be plotted. Edges should have a weight attribute corresponding to the distance between nodes.
-    points : numpy.ndarray
-        An (n, 2) or (n, 3) array of coordinates for the n nodes in the spatial network. The order of points should correspond to the order of nodes in the spatial network.
-    labels : array-like, optional
-        An array of labels for the nodes, used for coloring. If None, all nodes will be colored the same. Default is None.
+    node_label_name : str, optional
+        The name of the node attribute in the spatial network that corresponds to the labels for coloring nodes. If None, nodes will not be colored based on labels. Default is None.
+    nodes_to_plot : list, tuple, or numpy array, optional
+        A list, tuple, or numpy array of node indices to plot. If None, all nodes in the spatial network will be plotted. Default is None.
     ax : matplotlib.axes.Axes, optional 
         An existing matplotlib Axes object to plot on. If None, a new figure and axes will be created. Default is None.
     edge_width : float, optional
         The width of the edges in the plot. Default is 1.
     marker_size : float, optional
         The size of the node markers in the plot. Default is 10.
-    add_legend : bool, optional
+    add_node_cbar : bool, optional
         Whether to add a legend for the node labels. Default is False.
     edge_weight_name : str, optional
         The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is 'Distance'.
@@ -39,8 +40,6 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
         Whether to add a colorbar for the edge weights. Default is False.
     continuous_labels : bool, optional
         Whether the node labels are continuous values that should be colored using a colormap (True) or discrete categories that should be colored separately (False). Default is False.
-    label_name : str, optional
-        The label for the colorbar if continuous_labels is True. Default is 'labels'.
     scatter_kwargs : dict, optional
         Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.
     figure_kwargs : dict, optional
@@ -55,8 +54,32 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
 
                             
     """
-    pos = {i: points[i] for i in range(len(points))}
     
+    
+    # get the nodes we are interested in plotting based on the provided nodes_to_plot argument
+    if nodes_to_plot is None:
+        node_indices = list(spatial_network.nodes())    
+    elif isinstance(nodes_to_plot, (list, tuple, np.ndarray)):
+        node_indices = nodes_to_plot
+    else:
+        raise ValueError("nodes_to_plot must be None or a list, tuple, or numpy array of node indices.")
+    
+    # get the node locations from the spatial network
+    node_indices_all = list(spatial_network.nodes())
+    points_all = np.array([spatial_network.nodes[node]['position'] for node in node_indices_all])
+    pos_all = {id: points_all[i] for i,id in enumerate(node_indices_all)}
+    
+    # only those nodes we are interested in plotting
+    points = np.array([spatial_network.nodes[node]['position'] for node in node_indices])
+    
+    # get the node labels from the spatial network
+    if node_label_name is not None:
+        q_nodes,q_labels = get_nodes_and_labels(spatial_network,node_label_name)
+        label_dict = {node: label for node, label in zip(q_nodes, q_labels)}
+        labels = np.array([label_dict[node] for node in node_indices])
+    else:
+        labels = None   
+        
     if ax is None:
         
         if points.shape[1]==2:
@@ -86,9 +109,9 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
                 this_scat = ax.scatter(points[:, 0], points[:, 1], c=labels, s=marker_size,zorder=100,**scatter_kwargs)
             elif points.shape[1]==3:
                 this_scat = ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=labels, s=marker_size,zorder=100,**scatter_kwargs)
-            if add_legend:   
+            if add_node_cbar:   
                 cbar = plt.colorbar(this_scat, ax=ax)
-                cbar.set_label(label_name)
+                cbar.set_label(node_label_name)
             
         else:
             unique_labels = np.unique(labels)
@@ -99,7 +122,7 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
             elif points.shape[1]==3:
                 for i in unique_labels:
                     ax.scatter(points[labels==i, 0], points[labels==i, 1], points[labels==i, 2], label=str(i), s=marker_size,zorder=100,**scatter_kwargs)
-            if add_legend:
+            if add_node_cbar:
                 ax.legend()
     
     if nx.is_weighted(spatial_network, edge=None, weight=edge_weight_name):
@@ -109,7 +132,7 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
         if points.shape[1]==2:
         
             edges=__draw_edges_2D(spatial_network, 
-                                pos,
+                                pos_all,
                                 edge_color = weights,
                                 edge_cmap = edge_cmap, 
                                 width=edge_width,
@@ -118,7 +141,7 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
                                 ax=ax)
         elif points.shape[1]==3:
             edges=__draw_edges_3D(spatial_network, 
-                                pos,
+                                pos_all,
                                 edge_color = weights,
                                 edge_cmap = edge_cmap, 
                                 width=edge_width,
@@ -132,7 +155,7 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
         
         if points.shape[1]==2:
             edges=__draw_edges_2D(spatial_network, 
-                                pos,
+                                pos_all,
                                 edge_color = [0.2,0.2,0.2,1], 
                                 width=edge_width ,
                                 edge_vmin=edge_vmin,
@@ -140,7 +163,7 @@ def plot_spatial_network(spatial_network,points,labels=None,ax=None,edge_width=1
                                 ax=ax)
         elif points.shape[1]==3:
             edges=__draw_edges_3D(spatial_network, 
-                                pos,
+                                pos_all,
                                 edge_color = [0.2,0.2,0.2,1], 
                                 width=edge_width ,
                                 edge_vmin=edge_vmin,

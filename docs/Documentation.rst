@@ -13,12 +13,16 @@ The subpackages are listed below, along with a brief description of each one.
     - Description
   * - :ref:`utils<utils>`
     - A useful collection of utility functions for spatial network analysis.
+  * - :ref:`summary<summary>`
+    - Summary metrics for spatial networks.
   * - :ref:`pcf<pcf>`
     - Pair correlation functions for spatial networks.
   * - :ref:`partition<partition>`
     - Methods for partitioning spatial networks.
   * - :ref:`datasets<datasets>`
     - Datasets for testing and demonstration of spatial network analysis methods.
+  * - :ref:`helpers<helpers>`
+    - Helper functions for spatial network analysis.
 
 
 
@@ -37,3 +41,4 @@ All of the modules are listed below, and each module has its own documentation p
    spacenet.pcf
    spacenet.partition
    spacenet.datasets
+   spacenet.helpers
