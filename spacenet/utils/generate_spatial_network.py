@@ -232,5 +232,8 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     # add positions as node attributes
     for i in range(len(object_positions)):
         G.nodes[i]['position'] = object_positions[i]
+        
+    # add an empty distance cache
+    G.distance_cache = {}
     
     return G

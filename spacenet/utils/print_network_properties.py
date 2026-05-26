@@ -1,6 +1,3 @@
-
-
-
 def print_network_properties(network):
     """
     A function to print the properties of a spatial network, including the number of nodes, edges, names of edge weights, node labels names .

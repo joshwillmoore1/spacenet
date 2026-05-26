@@ -36,6 +36,9 @@ def add_node_labels(spatial_network,labels,node_label_name='label',nodes=None):
     else:
         raise ValueError(f'Nodes should be a list or numpy array of node indices. Got {type(nodes)} instead.')
     
+    prohibited_node_label_names = ['position','__partition_label']
+    if node_label_name in prohibited_node_label_names:
+        raise ValueError(f'node_label_name "{node_label_name}" is reserved and cannot be used. Prohibited node label names: {prohibited_node_label_names}')
     
     labels_to_add = []  
     if isinstance(labels, np.ndarray):

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from spacenet.helpers import get_nodes_and_labels
 
-def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None,ax=None,edge_width=1,marker_size=10,add_node_cbar=True,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,continuous_labels=False,scatter_kwargs={},figure_kwargs={}):
+def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None,ax=None,edge_width=1,marker_size=10,add_node_cbar=True,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,scatter_kwargs={},figure_kwargs={}):
     """
     
     Plots a spatial network with nodes positioned according to the provided points.
@@ -38,9 +38,7 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         The maximum value for edge weight coloring. If None, the maximum edge weight will be used. Default is None.
     add_edge_cbar : bool, optional
         Whether to add a colorbar for the edge weights. Default is False.
-    continuous_labels : bool, optional
-        Whether the node labels are continuous values that should be colored using a colormap (True) or discrete categories that should be colored separately (False). Default is False.
-    scatter_kwargs : dict, optional
+     scatter_kwargs : dict, optional
         Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.
     figure_kwargs : dict, optional
         Additional keyword arguments to pass to plt.figure() when creating a new figure. Default is an empty dictionary.
@@ -77,6 +75,13 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         q_nodes,q_labels = get_nodes_and_labels(spatial_network,node_label_name)
         label_dict = {node: label for node, label in zip(q_nodes, q_labels)}
         labels = np.array([label_dict[node] for node in node_indices])
+        
+        # if labels are floats, then we will treat them as continuous values 
+        if isinstance(labels[0], (float)):
+            continuous_labels = True
+        else:
+            continuous_labels = False
+        
     else:
         labels = None   
         

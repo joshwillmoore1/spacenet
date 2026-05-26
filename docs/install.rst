@@ -57,7 +57,7 @@ Below is a minimal example demonstrating how to import SpaceNet and begin workin
     G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
 
     # plot the spatial network
-    sn.utils.plot_spatial_network(G,points)
+    sn.utils.plot_spatial_network(G)
 
 
 
