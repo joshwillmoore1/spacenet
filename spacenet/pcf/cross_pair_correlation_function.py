@@ -7,9 +7,10 @@ from tqdm import tqdm  # optional progress bar
 # bespoke imports
 from spacenet.pcf.helpers.compute_contributions import compute_contributions
 from spacenet.pcf.helpers.compute_contributions_parallel import compute_contributions_parallel   
-from spacenet.pcf.helpers.batched_dijkstra import batched_dijkstra
+#from spacenet.helpers.batched_dijkstra import batched_dijkstra
 from spacenet.pcf.helpers.spatial_bootstrap import spatial_bootstrap
 from spacenet.pcf.helpers.is_connected_filter import is_connected_filter
+from spacenet.helpers.node_node_distance import node_node_distance  
 
 def cross_pair_correlation_function(spatial_network, object_indices_A=None, object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,confidence_interval_kwargs={},low_memory=False,verbose=True,n_jobs=1):
     """
@@ -121,26 +122,30 @@ def cross_pair_correlation_function(spatial_network, object_indices_A=None, obje
     all_network_distances=dict()
     distance_upper_bound = r_max + r_step + spatial_kernel_bandwidth + largest_edge_length + 1e-6
     
-    if verbose:
-        print("Computing node-node distances...")
-    if low_memory:
-        all_network_distances = batched_dijkstra(this_network, object_indices_A, batch_size=1000, weight=edge_weight_name, limit=distance_upper_bound,verbose=verbose)
-    else:
-        
-        nodes = list(this_network.nodes())
-        node_idx = {node: i for i, node in enumerate(nodes)}
+    
+    all_network_distances = node_node_distance(this_network,object_indices_A, weight=edge_weight_name,limit=distance_upper_bound,low_memory=low_memory,verbose=verbose)
+    
+    if False:
+        if verbose:
+            print("Computing node-node distances...")
+        if low_memory:
+            all_network_distances = batched_dijkstra(this_network, object_indices_A, batch_size=1000, weight=edge_weight_name, limit=distance_upper_bound,verbose=verbose)
+        else:
+            
+            nodes = list(this_network.nodes())
+            node_idx = {node: i for i, node in enumerate(nodes)}
 
-        sparse_adj_mat = nx.to_scipy_sparse_array(this_network, weight=edge_weight_name, nodelist=nodes, format='csr')
-        
-        # Get indices of sources
-        sources_idx = [node_idx[s] for s in object_indices_A]
-        
-        # Run Dijkstra from multiple sources independently
-        dist_matrix = dijkstra(sparse_adj_mat, directed=False, unweighted=False, indices=sources_idx, limit=distance_upper_bound, min_only=False)
-        
-        # Convert back to dict form if needed
-        all_network_distances = {object_indices_A[i]: {nodes[j]: dist for j, dist in zip(np.flatnonzero(~np.isinf(row)), row[~np.isinf(row)]) } for i, row in enumerate(dist_matrix)}
-        
+            sparse_adj_mat = nx.to_scipy_sparse_array(this_network, weight=edge_weight_name, nodelist=nodes, format='csr')
+            
+            # Get indices of sources
+            sources_idx = [node_idx[s] for s in object_indices_A]
+            
+            # Run Dijkstra from multiple sources independently
+            dist_matrix = dijkstra(sparse_adj_mat, directed=False, unweighted=False, indices=sources_idx, limit=distance_upper_bound, min_only=False)
+            
+            # Convert back to dict form if needed
+            all_network_distances = {object_indices_A[i]: {nodes[j]: dist for j, dist in zip(np.flatnonzero(~np.isinf(row)), row[~np.isinf(row)]) } for i, row in enumerate(dist_matrix)}
+            
     r = np.arange(r_min, r_max + r_step, r_step)
     contributions= np.empty((len(object_indices_A), len(r)))
     

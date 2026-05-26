@@ -8,7 +8,7 @@ from copy import deepcopy
 # bespoke imports
 from spacenet.pcf.helpers.compute_weighted_contributions import compute_weighted_contributions
 from spacenet.pcf.helpers.compute_weighted_contributions_parallel import compute_weighted_contributions_parallel   
-from spacenet.pcf.helpers.batched_dijkstra import batched_dijkstra
+from spacenet.helpers.batched_dijkstra import batched_dijkstra
 from spacenet.pcf.helpers.spatial_bootstrap import spatial_bootstrap
 from spacenet.pcf.helpers.polynomial_kernel import polynomial_kernel
 from spacenet.pcf.helpers.is_connected_filter import is_connected_filter
