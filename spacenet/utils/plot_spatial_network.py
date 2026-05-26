@@ -8,7 +8,6 @@ from spacenet.helpers import get_nodes_and_labels
 
 def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None,ax=None,edge_width=1,marker_size=10,add_node_cbar=True,edge_weight_name='Distance',edge_cmap='Greys_r',edge_vmin=None,edge_vmax=None,add_edge_cbar=False,scatter_kwargs={},figure_kwargs={}):
     """
-    
     Plots a spatial network with nodes positioned according to the provided points.
     Nodes can be colored based on provided labels, and edges can be colored based on their weights. 
 

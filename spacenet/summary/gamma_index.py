@@ -12,14 +12,9 @@ def gamma_index(spatial_network,is_planar=True):
     is_planar : bool, optional
         Indicates if the network is planar, by default True.
     
-    Raises
-    ------
-    RuntimeError
-        If the network name is not in the list of generated networks.
-    
     Returns
     -------
-    float
+    gamma : float
         The gamma index of the network.
     """
     

@@ -436,6 +436,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="spacenet.utils.print_network_properties.html">spacenet.utils.print_network_properties</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.summary.html">spacenet.summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.pcf.html">spacenet.pcf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.datasets.html">spacenet.datasets</a></li>
@@ -514,17 +515,17 @@ document.write(`
 <h1>spacenet.utils.plot_spatial_network<a class="headerlink" href="#spacenet-utils-plot-spatial-network" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.utils.plot_spatial_network">
-<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_legend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">continuous_labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'labels'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_to_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_node_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
 <dd><p>Plots a spatial network with nodes positioned according to the provided points.
 Nodes can be colored based on provided labels, and edges can be colored based on their weights.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl class="simple">
+<dd class="field-odd"><dl>
 <dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network to be plotted. Edges should have a weight attribute corresponding to the distance between nodes.</p>
 </dd>
-<dt><strong>points</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An (n, 2) or (n, 3) array of coordinates for the n nodes in the spatial network. The order of points should correspond to the order of nodes in the spatial network.</p>
+<dt><strong>node_label_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the node attribute in the spatial network that corresponds to the labels for coloring nodes. If None, nodes will not be colored based on labels. Default is None.</p>
 </dd>
-<dt><strong>labels</strong><span class="classifier">array-like, optional</span></dt><dd><p>An array of labels for the nodes, used for coloring. If None, all nodes will be colored the same. Default is None.</p>
+<dt><strong>nodes_to_plot</strong><span class="classifier">list, tuple, or numpy array, optional</span></dt><dd><p>A list, tuple, or numpy array of node indices to plot. If None, all nodes in the spatial network will be plotted. Default is None.</p>
 </dd>
 <dt><strong>ax</strong><span class="classifier">matplotlib.axes.Axes, optional</span></dt><dd><p>An existing matplotlib Axes object to plot on. If None, a new figure and axes will be created. Default is None.</p>
 </dd>
@@ -532,7 +533,7 @@ Nodes can be colored based on provided labels, and edges can be colored based on
 </dd>
 <dt><strong>marker_size</strong><span class="classifier">float, optional</span></dt><dd><p>The size of the node markers in the plot. Default is 10.</p>
 </dd>
-<dt><strong>add_legend</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a legend for the node labels. Default is False.</p>
+<dt><strong>add_node_cbar</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a legend for the node labels. Default is False.</p>
 </dd>
 <dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
 </dd>
@@ -542,13 +543,13 @@ Nodes can be colored based on provided labels, and edges can be colored based on
 </dd>
 <dt><strong>edge_vmax</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum value for edge weight coloring. If None, the maximum edge weight will be used. Default is None.</p>
 </dd>
-<dt><strong>add_edge_cbar</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a colorbar for the edge weights. Default is False.</p>
+<dt><strong>add_edge_cbar</strong><span class="classifier">bool, optional</span></dt><dd><blockquote>
+<div><p>Whether to add a colorbar for the edge weights. Default is False.</p>
+</div></blockquote>
+<dl class="simple">
+<dt>scatter_kwargs<span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.</p>
 </dd>
-<dt><strong>continuous_labels</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether the node labels are continuous values that should be colored using a colormap (True) or discrete categories that should be colored separately (False). Default is False.</p>
-</dd>
-<dt><strong>label_name</strong><span class="classifier">str, optional</span></dt><dd><p>The label for the colorbar if continuous_labels is True. Default is ‘labels’.</p>
-</dd>
-<dt><strong>scatter_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.</p>
+</dl>
 </dd>
 <dt><strong>figure_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to plt.figure() when creating a new figure. Default is an empty dictionary.</p>
 </dd>

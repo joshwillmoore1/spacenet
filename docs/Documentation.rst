@@ -38,6 +38,7 @@ All of the modules are listed below, and each module has its own documentation p
    :maxdepth: 4
    
    spacenet.utils
+   spacenet.summary
    spacenet.pcf
    spacenet.partition
    spacenet.datasets

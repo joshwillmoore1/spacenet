@@ -436,6 +436,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="spacenet.utils.print_network_properties.html">spacenet.utils.print_network_properties</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.summary.html">spacenet.summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.pcf.html">spacenet.pcf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.datasets.html">spacenet.datasets</a></li>
@@ -518,7 +519,8 @@ document.write(`
 <dd><p>Generate a spatial network using set of points.
 Edges will be created between objects based on the selected network type and distance constraints.
 Edge weights for ‘Distance’ and ‘Inverse Distance’ will be added to the network. 
-Node indices correspond to the indices of the input points array.</p>
+Node indices correspond to the indices of the input points array.
+Nodes will have a ‘position’ attribute corresponding to their spatial coordinates from the input points array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">

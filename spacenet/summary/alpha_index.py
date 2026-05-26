@@ -1,8 +1,9 @@
 def alpha_index(spatial_network):
     """    
+    
     The alpha index, also knowned as the meshedness coefficient, is a metric used to evaluate and measure the connectivity of a network. 
     It is calculated as the ratio between the actual number of fundamental circuits (cycles) and the maximum possible number of circuits in that network.
-     A tree-like network has alpha ~0 and a max planar network has alpha ~1.
+    A tree-like network has alpha ~0 and a max planar network has alpha ~1.
     
     Parameters
     ----------
@@ -11,7 +12,7 @@ def alpha_index(spatial_network):
     
     Returns
     -------
-    float
+    alpha : float
         The alpha index of the network.
 
     """

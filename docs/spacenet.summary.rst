@@ -11,3 +11,6 @@ Summary metrics for spatial networks
    :toctree: generated/
    :nosignatures:
 
+   alpha_index
+   cyclomatic_number
+   gamma_index
