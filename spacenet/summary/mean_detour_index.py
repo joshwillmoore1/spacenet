@@ -2,9 +2,9 @@ import numpy as np
 from spacenet.helpers.node_node_distance import node_node_distance
 from scipy.spatial import KDTree
 
-def detour_index(spatial_network,edge_weight_name='Distance',max_distance=np.inf,low_memory=False):
+def mean_detour_index(spatial_network,edge_weight_name='Distance',max_distance=np.inf,low_memory=False):
     """
-    Computes the detour index of a spatial network, which is defined as the average ratio of the shortest path distance between pairs of nodes to the direct distance between those nodes in space, for all pairs of nodes that are within a specified maximum distance of each other.
+    Computes the mean detour index of a spatial network, which is defined as the average ratio of the shortest path distance between pairs of nodes to the direct distance between those nodes in space, for all pairs of nodes that are within a specified maximum distance of each other.
     The euclidean distance between nodes is used as a direct distance metric, and the shortest path distance is computed using Dijkstra's algorithm with edge weights specified by edge_weight_name.
     
     
@@ -22,7 +22,7 @@ def detour_index(spatial_network,edge_weight_name='Distance',max_distance=np.inf
     Returns
     -------
     
-    detour_index : float
+    mean_detour_index : float
         The detour index of the spatial network, which is defined as the average ratio of the shortest path distance between pairs of nodes to the direct distance between those nodes in space, for all pairs of nodes that are within the specified maximum distance of each other.
     """
     

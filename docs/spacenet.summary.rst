@@ -16,4 +16,5 @@ Summary metrics for spatial networks
    beta_index
    gamma_index
    cyclomatic_number
-   detour_index
+   mean_detour_index
+   mean_clustering_coefficient
