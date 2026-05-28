@@ -12,7 +12,7 @@ from spacenet.helpers.batched_dijkstra import batched_dijkstra
 from spacenet.pcf.helpers.spatial_bootstrap import spatial_bootstrap
 from spacenet.pcf.helpers.polynomial_kernel import polynomial_kernel
 from spacenet.pcf.helpers.is_connected_filter import is_connected_filter
-
+from spacenet.helpers.node_node_distance import node_node_distance
 
 def cross_weighted_pair_correlation_function(spatial_network,labels_for_objects_A,labels_for_objects_B, object_indices_A=None,object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1):
     """
@@ -136,28 +136,10 @@ def cross_weighted_pair_correlation_function(spatial_network,labels_for_objects_
         node_to_edges[edge[0]].append((edge, weight))
         node_to_edges[edge[1]].append((edge, weight))
        
-    all_network_distances=dict()
+    #all_network_distances=dict()
+    
+    all_network_distances = node_node_distance(this_network,object_indices_A, weight=edge_weight_name,limit=distance_upper_bound,low_memory=low_memory,verbose=verbose)
 
-    if verbose:
-        print("Computing node-node distances...")
-    if low_memory:
-        all_network_distances = batched_dijkstra(this_network, object_indices_A, batch_size=1000, weight=edge_weight_name, limit=distance_upper_bound)
-    else:
-        
-        nodes = list(this_network.nodes())
-        node_idx = {node: i for i, node in enumerate(nodes)}
-
-        sparse_adj_mat = nx.to_scipy_sparse_array(this_network, weight=edge_weight_name, nodelist=nodes, format='csr')
-        
-        # Get indices of sources
-        sources_idx = [node_idx[s] for s in object_indices_A]
-        
-        # Run Dijkstra from multiple sources independently
-        dist_matrix = dijkstra(sparse_adj_mat, directed=False, unweighted=False, indices=sources_idx, limit=distance_upper_bound, min_only=False)
-        
-        # Convert back to dict form if needed
-        all_network_distances = {object_indices_A[i]: {nodes[j]: dist for j, dist in zip(np.flatnonzero(~np.isinf(row)), row[~np.isinf(row)]) } for i, row in enumerate(dist_matrix)}
-        
     r = np.arange(r_min, r_max + r_step, r_step)
     
     # contributions are 

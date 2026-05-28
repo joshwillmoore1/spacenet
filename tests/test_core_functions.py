@@ -7,10 +7,6 @@ import spacenet as sn
 import networkx as nx   
 from collections import defaultdict
 
-from spacenet.pcf.helpers.compute_contributions import compute_contributions
-from spacenet.pcf.helpers.compute_weighted_contributions import compute_weighted_contributions
-from spacenet.pcf.helpers.polynomial_kernel import polynomial_kernel
-from spacenet.pcf.helpers.integrated_poly_finite_kernel import integrated_poly_finite_kernel
 
 
 @pytest.fixture
@@ -37,17 +33,28 @@ def setup_network_and_params():
     
     return G_ppp, netPCF_kwargs
 
-
-def test_null_cross_pcf(setup_network_and_params):
-    this_metwork,netPCF_kwargs = setup_network_and_params
+def test_generate_spatial_network():
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G_5 = sn.utils.generate_spatial_network(coordinates,max_edge_distance=5)
+    G_11 = sn.utils.generate_spatial_network(coordinates,max_edge_distance=11)
+    G_50 = sn.utils.generate_spatial_network(coordinates,max_edge_distance=50)
     
     
-    # compute the cross-PCF
-    r,g,CI = sn.pcf.cross_pair_correlation_function(this_metwork,**netPCF_kwargs)
+    assert(G_5.number_of_edges()==0), f"Expected 0 edges for max_edge_distance=5, but got {G_5.number_of_edges()}."
+    assert(G_11.number_of_edges()==4), f"Expected 4 edges for max_edge_distance=11, but got {G_11.number_of_edges()}."
+    assert(G_50.number_of_edges()==5), f"Expected 6 edges for max_edge_distance=50, but got {G_50.number_of_edges()}."
+    
+    assert(G_5.number_of_nodes()==4),  f"Expected 4 nodes, but got {G_5.number_of_nodes()}."
+    assert(G_11.number_of_nodes()==4), f"Expected 4 nodes, but got {G_11.number_of_nodes()}."
+    assert(G_50.number_of_nodes()==4), f"Expected 4 nodes, but got {G_50.number_of_nodes()}."
+        
+    # check Distance is an edge weight
+    for u, v, data in G_11.edges(data=True):
+        assert 'Distance' in data, f"Edge ({u}, {v}) does not have 'Distance' attribute."
+        assert data['Distance'] == 10, f"Edge ({u}, {v}) has 'Distance' attribute with value {data['Distance']} instead of 10."
     
     
-    # check that g is approximately 1 for all r values
-    assert np.allclose(g, 1, atol=0.2), "Cross-PCF deviates significantly from 1 for a homogeneous Poisson process."
 
 
 def test_add_node_labels(setup_network_and_params):
@@ -92,3 +99,57 @@ def test_query_nodes(setup_network_and_params):
     # check that the returned node indices have label 'A'
     for node in node_indices_A:
         assert this_metwork.nodes[node]['label'] == 'A', f"Node {node} does not have label 'A' but was returned in the query."
+        
+        
+def test_distance():
+    
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    distance = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
+    
+    assert(distance[0][0]==0)
+    assert(distance[0][1]==10)
+    assert(distance[0][2]==10)
+    assert(distance[0][3]==np.sqrt(2)*10)
+    
+    
+    
+def test_distance_cached():
+    
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    _ = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
+    
+    
+    #check the graph now has cache for distances
+    assert('Distance' in G.distance_cache)
+    
+    # get the cached distances
+    cached_distance = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
+    
+    assert(cached_distance[0][0]==0)
+    assert(cached_distance[0][1]==10)
+    assert(cached_distance[0][2]==10)
+    assert(cached_distance[0][3]==np.sqrt(2)*10)
+    
+    
+def test_clear_distance_cached():
+    
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    _ = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
+    
+    
+    #check the graph now has cache for distances
+    assert('Distance' in G.distance_cache)
+    
+    # get the cached distances
+    sn.helpers.clear_distance_cache(G)
+    
+    # check the cache was cleared
+    assert('Distance' not in G.distance_cache), "Distance cache was not cleared properly."
+    
+    

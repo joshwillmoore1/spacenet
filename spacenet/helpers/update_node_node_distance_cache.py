@@ -23,7 +23,9 @@ def update_node_node_distance_cache(spatial_network,sources,network_distances,we
 
     """
     
-    # distance cache structure: {'weight' :   {'distances': ... ,'source_nodes': array_of_sources, 'current_limit': array_of_limits }       } where distance_dict is a dict of dicts: {source_node: {target_node: distance, ...}, ...}
+    # distance cache structure: {'weight' :   {'distances': ... ,'source_nodes': array_of_sources, 'current_limit': array_of_limits }       } 
+    # where distance_dict is a dict of dicts: {source_node: {target_node: distance, ...}, ...}
+    # so ['weight']['distances'][0][1] = dist_value from source node 0 to target node 1
     
     # check if the network has a node-node distance cache for this weight
     if weight in spatial_network.distance_cache: 
@@ -40,9 +42,13 @@ def update_node_node_distance_cache(spatial_network,sources,network_distances,we
         
         # now get the left over sources 
         new_sources = sources[~np.isin(sources,cached_sources,assume_unique=True)]
+                
         if len(new_sources)>0:
             cached_sources = np.concatenate([cached_sources, new_sources])  # combine cached sources and new sources
             cached_limit = np.concatenate([cached_limit, np.array([limit]*len(new_sources))])
+        
+        spatial_network.distance_cache[weight]['source_nodes'] = cached_sources
+        spatial_network.distance_cache[weight]['current_limit'] = cached_limit
         
         # now update the cache with the new distances
         for source in sources:
