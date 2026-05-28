@@ -59,7 +59,7 @@ def update_node_node_distance_cache(spatial_network,sources,network_distances,we
         # no cache for this weight, create one
         spatial_network.distance_cache[weight] = {'distances': None, 'source_nodes': None, 'current_limit': None}
         sources_for_cache = np.asarray(list(network_distances.keys()))
-        these_limits = np.asarray([limit]*len(sources_for_cache))
+        these_limits = np.asarray([limit]*len(sources_for_cache),dtype=float)
         
         # update the cache with the new distances, sources, and limits
         spatial_network.distance_cache[weight]['distances'] = network_distances

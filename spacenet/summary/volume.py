@@ -1,4 +1,4 @@
-import networkx as nx
+from spacenet.helpers.get_edge_weights import get_edge_weights
 
 def volume(spatial_network, edge_weight_name='Distance'):
     """
@@ -24,7 +24,7 @@ def volume(spatial_network, edge_weight_name='Distance'):
         raise ValueError(f"Edge weight '{edge_weight_name}' not found in the graph. Please provide a valid edge weight name.")
     
     # get the volume of the network, which is the sum of the edge weights
-    distances = [data for _, _, data in spatial_network.edges(data=edge_weight_name)]
+    distances = get_edge_weights(spatial_network, weight=edge_weight_name)
     total_volume = sum(distances)
     
     return total_volume
