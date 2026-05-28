@@ -196,3 +196,37 @@ def test_node_to_dataframe():
 
             actual_celltype_restricted = test_df.loc[node_id, 'celltype - restricted']
             assert expected_celltype_restricted == actual_celltype_restricted, f"Node {node_id} has incorrect celltype - restricted in the dataframe. Expected {expected_celltype_restricted}, got {actual_celltype_restricted}."
+            
+            
+def test_subnetwork():
+    
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    
+    # add some labels
+    sn.utils.add_node_labels(G,labels=['A','B','C','D'],node_label_name='celltype')
+    sn.utils.add_node_labels(G,labels=['A'],node_label_name='celltype - restricted',nodes=np.array([0]))
+    
+    _ = sn.helpers.node_node_distance(G)
+    
+    subnet = sn.utils.subnetwork(G,nodes=np.array([0,3]))
+    
+    
+    # make sure we have 1 edge between node 0 and 3
+    assert(subnet.number_of_edges()==1), f"Expected 1 edge in the subnetwork, but got {subnet.number_of_edges()}."
+    assert(subnet.has_edge(0,3)), "Expected an edge between node 0 and 3 in the subnetwork, but it is missing."
+    
+    # check only has two nodes
+    assert(subnet.number_of_nodes()==2), f"Expected 2 nodes in the subnetwork, but got {subnet.number_of_nodes()}."
+    
+    # check that the distance cache was updated
+    sub_source_nodes = subnet.distance_cache['Distance']['source_nodes']
+    assert set(sub_source_nodes) == {0, 3}, f"Expected distance cache to have source nodes {0, 3}, but got {set(sub_source_nodes)}."
+    assert subnet.distance_cache['Distance']['distances'][0][3] == 10*np.sqrt(2), f"Expected distance between node 0 and 3 in the subnetwork to be {10*np.sqrt(2)}, but got {subnet.distance_cache['Distance']['distances'][0][3]}."
+    
+    
+    
+    
+    
+    

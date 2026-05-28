@@ -5,7 +5,7 @@ from spacenet.helpers.batched_dijkstra import batched_dijkstra
 from spacenet.helpers.update_node_node_distance_cache import update_node_node_distance_cache    
 from spacenet.helpers.get_node_node_distance import get_node_node_distance
 
-def node_node_distance(spatial_network,sources, weight='Distance',limit=np.inf,low_memory=False,verbose=False):
+def node_node_distance(spatial_network,sources=None, weight='Distance',limit=np.inf,low_memory=False,verbose=False):
     """
     Computes the shortest path distances from a set of source nodes to all other nodes in a spatial network, with optional caching to avoid redundant computations. 
     The function can use a low-memory implementation of Dijkstra's algorithm that computes distances in batches, which can be useful for large networks that do not fit in memory. 
@@ -16,7 +16,7 @@ def node_node_distance(spatial_network,sources, weight='Distance',limit=np.inf,l
     spatial_network : NetworkX graph
         The spatial network for which to compute node-node distances.
     sources : array-like
-        A list or array of source node indices for which to compute shortest path distances to all other nodes in the graph.
+        A list or array of source node indices for which to compute shortest path distances to all other nodes in the graph. If None, distances will be computed for all nodes in the graph. Default is None.
     weight : str, optional
         The name of the edge attribute to use as the weight for computing shortest path distances. Default is 'Distance'.
     limit : float, optional
@@ -32,6 +32,9 @@ def node_node_distance(spatial_network,sources, weight='Distance',limit=np.inf,l
         A dictionary mapping each source node to a dictionary of shortest path distances to all other nodes in the graph. The inner dictionary maps target node indices to their corresponding shortest path distances from the source node.
     
     """
+    
+    if sources is None:
+        sources = list(spatial_network.nodes())
             
     # ensure sources is a numpy array for easier processing        
     sources = np.asarray(sources)

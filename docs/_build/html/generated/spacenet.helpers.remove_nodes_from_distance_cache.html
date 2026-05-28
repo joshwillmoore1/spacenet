@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>spacenet.helpers.clear_distance_cache &#8212; SpaceNet</title>
+    <title>spacenet.helpers.remove_nodes_from_distance_cache &#8212; SpaceNet</title>
   
   
   
@@ -62,12 +62,12 @@
                 gtag('js', new Date());
                 gtag('config', 'G-HQ98Y5N0C9');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.helpers.clear_distance_cache';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.helpers.remove_nodes_from_distance_cache';</script>
     <link rel="icon" href="../_static/fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spacenet.helpers.batched_dijkstra" href="spacenet.helpers.batched_dijkstra.html" />
-    <link rel="prev" title="spacenet.helpers.remove_nodes_from_distance_cache" href="spacenet.helpers.remove_nodes_from_distance_cache.html" />
+    <link rel="next" title="spacenet.helpers.clear_distance_cache" href="spacenet.helpers.clear_distance_cache.html" />
+    <link rel="prev" title="spacenet.helpers.update_node_node_distance_cache" href="spacenet.helpers.update_node_node_distance_cache.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -438,8 +438,8 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.get_node_node_distance.html">spacenet.helpers.get_node_node_distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.node_node_distance.html">spacenet.helpers.node_node_distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.update_node_node_distance_cache.html">spacenet.helpers.update_node_node_distance_cache</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.remove_nodes_from_distance_cache.html">spacenet.helpers.remove_nodes_from_distance_cache</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.helpers.clear_distance_cache</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.helpers.remove_nodes_from_distance_cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.clear_distance_cache.html">spacenet.helpers.clear_distance_cache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.helpers.batched_dijkstra.html">spacenet.helpers.batched_dijkstra</a></li>
 </ul>
 </details></li>
@@ -513,22 +513,26 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="spacenet-helpers-clear-distance-cache">
-<h1>spacenet.helpers.clear_distance_cache<a class="headerlink" href="#spacenet-helpers-clear-distance-cache" title="Link to this heading">#</a></h1>
+  <section id="spacenet-helpers-remove-nodes-from-distance-cache">
+<h1>spacenet.helpers.remove_nodes_from_distance_cache<a class="headerlink" href="#spacenet-helpers-remove-nodes-from-distance-cache" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="spacenet.helpers.clear_distance_cache">
-<span class="sig-prename descclassname"><span class="pre">spacenet.helpers.</span></span><span class="sig-name descname"><span class="pre">clear_distance_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.helpers.clear_distance_cache" title="Link to this definition">#</a></dt>
-<dd><p>Clear the distance cache of a spatial network. This is useful if you have modified the network (e.g. added or removed edges) and want to ensure that distance calculations are updated accordingly.</p>
+<dt class="sig sig-object py" id="spacenet.helpers.remove_nodes_from_distance_cache">
+<span class="sig-prename descclassname"><span class="pre">spacenet.helpers.</span></span><span class="sig-name descname"><span class="pre">remove_nodes_from_distance_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_to_remove</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.helpers.remove_nodes_from_distance_cache" title="Link to this definition">#</a></dt>
+<dd><p>Removes specified nodes from the distance cache of a spatial network. 
+This function is used to maintain the integrity of the distance cache when nodes are removed from the spatial network, ensuring that any cached distances involving the removed nodes are also removed from the cache.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network for which to clear the distance cache.</p>
+<dt><strong>spatial_network</strong><span class="classifier">NetworkX graph</span></dt><dd><p>The spatial network for which to remove nodes from the distance cache.</p>
+</dd>
+<dt><strong>nodes_to_remove</strong><span class="classifier">array-like, optional</span></dt><dd><p>A list or array of node indices to remove from the distance cache. If None, no nodes will be removed from the cache. Default is None.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt>None</dt><dd></dd>
+<dt>None</dt><dd><p>This function modifies the distance cache of the spatial network in place and does not return any value.</p>
+</dd>
 </dl>
 </dd>
 </dl>
@@ -558,7 +562,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.helpers.clear_distance_cache"><code class="docutils literal notranslate"><span class="pre">clear_distance_cache()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.helpers.remove_nodes_from_distance_cache"><code class="docutils literal notranslate"><span class="pre">remove_nodes_from_distance_cache()</span></code></a></li>
 </ul>
   </nav></div>
 

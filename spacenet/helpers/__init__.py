@@ -5,3 +5,4 @@ from .update_node_node_distance_cache import update_node_node_distance_cache
 from .get_node_node_distance import get_node_node_distance
 from .node_node_distance import node_node_distance
 from .batched_dijkstra import batched_dijkstra
+from .remove_nodes_from_distance_cache import remove_nodes_from_distance_cache
