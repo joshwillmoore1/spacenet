@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>spacenet.summary.gamma_index &#8212; SpaceNet</title>
+    <title>spacenet.summary.detour_index &#8212; SpaceNet</title>
   
   
   
@@ -62,12 +62,12 @@
                 gtag('js', new Date());
                 gtag('config', 'G-HQ98Y5N0C9');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.summary.gamma_index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.summary.detour_index';</script>
     <link rel="icon" href="../_static/fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spacenet.summary.cyclomatic_number" href="spacenet.summary.cyclomatic_number.html" />
-    <link rel="prev" title="spacenet.summary.beta_index" href="spacenet.summary.beta_index.html" />
+    <link rel="next" title="spacenet.pcf" href="../spacenet.pcf.html" />
+    <link rel="prev" title="spacenet.summary.cyclomatic_number" href="spacenet.summary.cyclomatic_number.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -432,9 +432,9 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.volume.html">spacenet.summary.volume</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.alpha_index.html">spacenet.summary.alpha_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.beta_index.html">spacenet.summary.beta_index</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.summary.gamma_index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.summary.gamma_index.html">spacenet.summary.gamma_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.cyclomatic_number.html">spacenet.summary.cyclomatic_number</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.summary.detour_index.html">spacenet.summary.detour_index</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.summary.detour_index</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.pcf.html">spacenet.pcf</a></li>
@@ -511,26 +511,29 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="spacenet-summary-gamma-index">
-<h1>spacenet.summary.gamma_index<a class="headerlink" href="#spacenet-summary-gamma-index" title="Link to this heading">#</a></h1>
+  <section id="spacenet-summary-detour-index">
+<h1>spacenet.summary.detour_index<a class="headerlink" href="#spacenet-summary-detour-index" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="spacenet.summary.gamma_index">
-<span class="sig-prename descclassname"><span class="pre">spacenet.summary.</span></span><span class="sig-name descname"><span class="pre">gamma_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_planar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.summary.gamma_index" title="Link to this definition">#</a></dt>
-<dd><p>The Gamma Index is a fundamental metric that measures a network’s connectivity by comparing the actual number of edges to the maximum possible number of edges.
-A value close to 0 indicates poor connectivity, with relatively few connections.
-A value close to 1 indicates high connectivity, approaching the theoretical maximum for a planar network.</p>
+<dt class="sig sig-object py" id="spacenet.summary.detour_index">
+<span class="sig-prename descclassname"><span class="pre">spacenet.summary.</span></span><span class="sig-name descname"><span class="pre">detour_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.summary.detour_index" title="Link to this definition">#</a></dt>
+<dd><p>Computes the detour index of a spatial network, which is defined as the average ratio of the shortest path distance between pairs of nodes to the direct distance between those nodes in space, for all pairs of nodes that are within a specified maximum distance of each other.
+The euclidean distance between nodes is used as a direct distance metric, and the shortest path distance is computed using Dijkstra’s algorithm with edge weights specified by edge_weight_name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network for which to compute the gamma index.</p>
+<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network for which to compute the detour index. The graph should have edge weights corresponding to the distance between nodes, and node attributes corresponding to the position of each node in space.</p>
 </dd>
-<dt><strong>is_planar</strong><span class="classifier">bool, optional</span></dt><dd><p>Indicates if the network is planar, by default True.</p>
+<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the graph that corresponds to the distance between nodes. Default is ‘Distance’.</p>
+</dd>
+<dt><strong>max_distance</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum distance to consider when computing the detour index. Only pairs of nodes that are within this distance of each other will be included in the computation. Default is np.inf (no limit).</p>
+</dd>
+<dt><strong>low_memory</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to use a low-memory implementation of Dijkstra’s algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>gamma</strong><span class="classifier">float</span></dt><dd><p>The gamma index of the network.</p>
+<dt><strong>detour_index</strong><span class="classifier">float</span></dt><dd><p>The detour index of the spatial network, which is defined as the average ratio of the shortest path distance between pairs of nodes to the direct distance between those nodes in space, for all pairs of nodes that are within the specified maximum distance of each other.</p>
 </dd>
 </dl>
 </dd>
@@ -561,7 +564,7 @@ A value close to 1 indicates high connectivity, approaching the theoretical maxi
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.summary.gamma_index"><code class="docutils literal notranslate"><span class="pre">gamma_index()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.summary.detour_index"><code class="docutils literal notranslate"><span class="pre">detour_index()</span></code></a></li>
 </ul>
   </nav></div>
 

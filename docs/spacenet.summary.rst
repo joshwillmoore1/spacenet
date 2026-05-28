@@ -13,5 +13,7 @@ Summary metrics for spatial networks
 
    volume
    alpha_index
-   cyclomatic_number
+   beta_index
    gamma_index
+   cyclomatic_number
+   detour_index

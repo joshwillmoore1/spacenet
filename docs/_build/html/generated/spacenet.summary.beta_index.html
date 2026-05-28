@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>spacenet.summary.gamma_index &#8212; SpaceNet</title>
+    <title>spacenet.summary.beta_index &#8212; SpaceNet</title>
   
   
   
@@ -62,12 +62,12 @@
                 gtag('js', new Date());
                 gtag('config', 'G-HQ98Y5N0C9');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.summary.gamma_index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.summary.beta_index';</script>
     <link rel="icon" href="../_static/fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spacenet.summary.cyclomatic_number" href="spacenet.summary.cyclomatic_number.html" />
-    <link rel="prev" title="spacenet.summary.beta_index" href="spacenet.summary.beta_index.html" />
+    <link rel="next" title="spacenet.summary.gamma_index" href="spacenet.summary.gamma_index.html" />
+    <link rel="prev" title="spacenet.summary.alpha_index" href="spacenet.summary.alpha_index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -431,8 +431,8 @@ document.write(`
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../spacenet.summary.html">spacenet.summary</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.volume.html">spacenet.summary.volume</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.alpha_index.html">spacenet.summary.alpha_index</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.summary.beta_index.html">spacenet.summary.beta_index</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.summary.gamma_index</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.summary.beta_index</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.summary.gamma_index.html">spacenet.summary.gamma_index</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.cyclomatic_number.html">spacenet.summary.cyclomatic_number</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.summary.detour_index.html">spacenet.summary.detour_index</a></li>
 </ul>
@@ -511,26 +511,23 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="spacenet-summary-gamma-index">
-<h1>spacenet.summary.gamma_index<a class="headerlink" href="#spacenet-summary-gamma-index" title="Link to this heading">#</a></h1>
+  <section id="spacenet-summary-beta-index">
+<h1>spacenet.summary.beta_index<a class="headerlink" href="#spacenet-summary-beta-index" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="spacenet.summary.gamma_index">
-<span class="sig-prename descclassname"><span class="pre">spacenet.summary.</span></span><span class="sig-name descname"><span class="pre">gamma_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_planar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.summary.gamma_index" title="Link to this definition">#</a></dt>
-<dd><p>The Gamma Index is a fundamental metric that measures a network’s connectivity by comparing the actual number of edges to the maximum possible number of edges.
-A value close to 0 indicates poor connectivity, with relatively few connections.
-A value close to 1 indicates high connectivity, approaching the theoretical maximum for a planar network.</p>
+<dt class="sig sig-object py" id="spacenet.summary.beta_index">
+<span class="sig-prename descclassname"><span class="pre">spacenet.summary.</span></span><span class="sig-name descname"><span class="pre">beta_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.summary.beta_index" title="Link to this definition">#</a></dt>
+<dd><p>The beta index is the ratio of edges to nodes in a spatial network.
+It is a measure of the connectivity of the network, with higher values indicating a more connected network.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network for which to compute the gamma index.</p>
-</dd>
-<dt><strong>is_planar</strong><span class="classifier">bool, optional</span></dt><dd><p>Indicates if the network is planar, by default True.</p>
+<dt><strong>spatial_network</strong><span class="classifier">NetworkX graph</span></dt><dd><p>The spatial network for which to calculate the beta index.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>gamma</strong><span class="classifier">float</span></dt><dd><p>The gamma index of the network.</p>
+<dt><strong>beta_index</strong><span class="classifier">float</span></dt><dd><p>The beta index of the spatial network.</p>
 </dd>
 </dl>
 </dd>
@@ -561,7 +558,7 @@ A value close to 1 indicates high connectivity, approaching the theoretical maxi
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.summary.gamma_index"><code class="docutils literal notranslate"><span class="pre">gamma_index()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.summary.beta_index"><code class="docutils literal notranslate"><span class="pre">beta_index()</span></code></a></li>
 </ul>
   </nav></div>
 

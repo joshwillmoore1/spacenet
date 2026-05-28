@@ -38,11 +38,13 @@ def subnetwork(spatial_network, nodes=None):
         # get the nodes to remove
         nodes_to_remove = original_nodes - nodes
         
+        nodes_to_remove = list(nodes_to_remove)
+        
         # remove the nodes from the subnetwork
-        subnetwork.remove_nodes_from(list(nodes_to_remove))
+        subnetwork.remove_nodes_from(nodes_to_remove)
         
         # remove the corresponding entries from the distance cache
-        remove_nodes_from_distance_cache(subnetwork, list(nodes_to_remove))
+        remove_nodes_from_distance_cache(subnetwork, nodes_to_remove)
         
     return subnetwork
     
