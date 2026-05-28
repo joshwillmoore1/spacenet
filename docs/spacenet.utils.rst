@@ -31,4 +31,12 @@ Viewing data
    :nosignatures:
 
    plot_spatial_network
-   print_network_properties 
+   print_network_properties
+
+Exporting data
+--------------
+.. autosummary::
+   :toctree: generated/
+   :nosignatures:
+
+   nodes_to_dataframe 

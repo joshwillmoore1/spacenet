@@ -5,6 +5,7 @@ import pytest
 import numpy as np
 import spacenet as sn
 import networkx as nx   
+import pandas as pd
 from collections import defaultdict
 
 
@@ -153,3 +154,45 @@ def test_clear_distance_cached():
     assert('Distance' not in G.distance_cache), "Distance cache was not cleared properly."
     
     
+    
+def test_node_to_dataframe():
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    
+    # add some labels
+    sn.utils.add_node_labels(G,labels=['A','B','C','D'],node_label_name='celltype')
+    sn.utils.add_node_labels(G,labels=['A'],node_label_name='celltype - restricted',nodes=np.array([0]))
+    
+    test_columns = ['position', 'celltype', 'celltype - restricted']
+    
+    test_df = sn.utils.nodes_to_dataframe(G)
+    
+    for col in test_columns:
+        assert col in test_df.columns, f"Expected column '{col}' in the node dataframe, but it is missing."
+        
+    # check that the position column is correct
+    for node in G.nodes(data=True):
+        node_id = node[0]
+        attributes = node[1]
+        expected_position = attributes['position']
+        actual_position = test_df.loc[node_id, 'position']
+        assert np.array_equal(expected_position, actual_position), f"Node {node_id} has incorrect position in the dataframe. Expected {expected_position}, got {actual_position}."
+        
+    # check that the celltype column is correct
+    for node in G.nodes(data=True):
+        node_id = node[0]
+        attributes = node[1]
+        expected_celltype = attributes['celltype']
+        actual_celltype = test_df.loc[node_id, 'celltype']
+        assert expected_celltype == actual_celltype, f"Node {node_id} has incorrect celltype in the dataframe. Expected {expected_celltype}, got {actual_celltype}."
+    
+    # check that the celltype - restricted column is correct    
+    for node in G.nodes(data=True):
+        node_id = node[0]
+        attributes = node[1]
+        if 'celltype - restricted' in attributes:
+            expected_celltype_restricted = attributes['celltype - restricted']
+
+            actual_celltype_restricted = test_df.loc[node_id, 'celltype - restricted']
+            assert expected_celltype_restricted == actual_celltype_restricted, f"Node {node_id} has incorrect celltype - restricted in the dataframe. Expected {expected_celltype_restricted}, got {actual_celltype_restricted}."
