@@ -1,0 +1,12 @@
+#betweenness
+#closeness
+#harmonic
+#eigenvector
+#pagerank
+#katz
+#straightness
+#information_centrality
+#angular_betweenness
+#metric_betweenness
+#spatial_closeness
+#reachability

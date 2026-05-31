@@ -13,8 +13,8 @@ The subpackages are listed below, along with a brief description of each one.
     - Description
   * - :ref:`utils<utils>`
     - A useful collection of utility functions for spatial network analysis.
-  * - :ref:`summary<summary>`
-    - Summary metrics for spatial networks.
+  * - :ref:`global_metrics<global_metrics>`
+    - Global metrics for spatial networks.
   * - :ref:`pcf<pcf>`
     - Pair correlation functions for spatial networks.
   * - :ref:`partition<partition>`
@@ -38,7 +38,7 @@ All of the modules are listed below, and each module has its own documentation p
    :maxdepth: 4
    
    spacenet.utils
-   spacenet.summary
+   spacenet.global_metrics
    spacenet.pcf
    spacenet.partition
    spacenet.datasets

@@ -428,7 +428,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="spacenet.utils.html">spacenet.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.summary.html">spacenet.summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.global_metrics.html">spacenet.global_metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.html">spacenet.pcf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.datasets.html">spacenet.datasets</a></li>
@@ -439,6 +439,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.helpers.node_node_distance.html">spacenet.helpers.node_node_distance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.helpers.update_node_node_distance_cache.html">spacenet.helpers.update_node_node_distance_cache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.helpers.remove_nodes_from_distance_cache.html">spacenet.helpers.remove_nodes_from_distance_cache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.helpers.shortest_path_length_node_a_to_node_b.html">spacenet.helpers.shortest_path_length_node_a_to_node_b</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.helpers.clear_distance_cache.html">spacenet.helpers.clear_distance_cache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.helpers.batched_dijkstra.html">spacenet.helpers.batched_dijkstra</a></li>
 </ul>
@@ -534,10 +535,13 @@ document.write(`
 <tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.helpers.remove_nodes_from_distance_cache.html#spacenet.helpers.remove_nodes_from_distance_cache" title="spacenet.helpers.remove_nodes_from_distance_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_nodes_from_distance_cache</span></code></a></p></td>
 <td><p>Removes specified nodes from the distance cache of a spatial network.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.helpers.clear_distance_cache.html#spacenet.helpers.clear_distance_cache" title="spacenet.helpers.clear_distance_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_distance_cache</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.helpers.shortest_path_length_node_a_to_node_b.html#spacenet.helpers.shortest_path_length_node_a_to_node_b" title="spacenet.helpers.shortest_path_length_node_a_to_node_b"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shortest_path_length_node_a_to_node_b</span></code></a></p></td>
+<td><p>Computes the shortest path distance from node_a to node_b in a spatial network using Dijkstra's algorithm, with the specified edge weight.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.helpers.clear_distance_cache.html#spacenet.helpers.clear_distance_cache" title="spacenet.helpers.clear_distance_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_distance_cache</span></code></a></p></td>
 <td><p>Clear the distance cache of a spatial network.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.helpers.batched_dijkstra.html#spacenet.helpers.batched_dijkstra" title="spacenet.helpers.batched_dijkstra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">batched_dijkstra</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.helpers.batched_dijkstra.html#spacenet.helpers.batched_dijkstra" title="spacenet.helpers.batched_dijkstra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">batched_dijkstra</span></code></a></p></td>
 <td><p>Compute shortest path distances from multiple source nodes to all other nodes in the graph using Dijkstra's algorithm in batches.</p></td>
 </tr>
 </tbody>

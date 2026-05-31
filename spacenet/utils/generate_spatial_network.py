@@ -5,7 +5,7 @@ from itertools import chain
 import copy
 
 
-def generate_spatial_network(points,network_type='Delaunay',inverse_distance_function=None,min_edge_distance=0,max_edge_distance=np.inf,number_of_nearest_neighbours=10):
+def generate_spatial_network(points,network_type='Delaunay',inverse_distance_function=None,min_edge_distance=0,max_edge_distance=np.inf,number_of_nearest_neighbours=10,node_ids=None):
     """
     Generate a spatial network using set of points.
     Edges will be created between objects based on the selected network type and distance constraints.
@@ -27,6 +27,8 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
         Maximum edge distance, by default np.inf.
     number_of_nearest_neighbours : int, optional
         Number of nearest neighbours for KNN. Only used for KNN networks, by default 10.
+    node_ids : array-like, optional 
+        An array of custom node identifiers corresponding to the input points. If None, enumerated node indices will be used as identifiers. Default is None.
    
     Returns
     -------
@@ -73,9 +75,18 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     if min_edge_distance > max_edge_distance:
         raise ValueError(f"Minimum edge distance {min_edge_distance} is greater than maximum edge distance {max_edge_distance}")
     
-    
+    # extract the positions of the objects from the domain and store in an array
     object_positions=points
-    object_indices=np.arange(len(points),dtype=int)
+    
+    if node_ids is not None:
+        if isinstance(node_ids, (list, np.ndarray)):
+            if len(node_ids) != len(points):
+                raise ValueError(f"Length of node_ids {len(node_ids)} does not match number of points {len(points)}")
+            object_indices=np.array(node_ids)
+        else:
+            raise ValueError(f"node_ids must be a list or array of node identifiers corresponding to the input points, got {type(node_ids)}")
+    else:
+        object_indices=np.arange(len(points),dtype=int)
     
     if network_type.lower()=='delaunay':
         
@@ -230,8 +241,8 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     G.add_weighted_edges_from(final_edge_list_inv, weight='Inverse Distance')
 
     # add positions as node attributes
-    for i in range(len(object_positions)):
-        G.nodes[i]['position'] = object_positions[i]
+    for i,id in enumerate(object_indices):
+        G.nodes[id]['position'] = object_positions[i]
         
     # add an empty distance cache
     G.distance_cache = {}

@@ -19,13 +19,13 @@ def setup_network_and_params():
 
 def test_spatial_network_volume(setup_network_and_params):
     G = setup_network_and_params
-    total_volume = sn.summary.volume(G)
+    total_volume = sn.global_metrics.volume(G)
     
     assert(total_volume==10*4 + 10*np.sqrt(2))
     
     
 def test_alpha_index(setup_network_and_params):
     G = setup_network_and_params
-    alpha_index = sn.summary.alpha_index(G)
+    alpha_index = sn.global_metrics.alpha_index(G)
     
     assert(alpha_index==2/3)

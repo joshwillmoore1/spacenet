@@ -1,1 +1,2 @@
 from .compact_volume_partition import compact_volume_partition
+from .modularity_partition import modularity_partition

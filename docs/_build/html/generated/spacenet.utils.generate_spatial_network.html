@@ -437,7 +437,7 @@ document.write(`
 <li class="toctree-l2"><a class="reference internal" href="spacenet.utils.nodes_to_dataframe.html">spacenet.utils.nodes_to_dataframe</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="../spacenet.summary.html">spacenet.summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.global_metrics.html">spacenet.global_metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.pcf.html">spacenet.pcf</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.datasets.html">spacenet.datasets</a></li>
@@ -516,7 +516,7 @@ document.write(`
 <h1>spacenet.utils.generate_spatial_network<a class="headerlink" href="#spacenet-utils-generate-spatial-network" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.utils.generate_spatial_network">
-<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">generate_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Delaunay'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse_distance_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_edge_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_edge_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_nearest_neighbours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.generate_spatial_network" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">generate_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Delaunay'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse_distance_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_edge_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_edge_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_nearest_neighbours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.generate_spatial_network" title="Link to this definition">#</a></dt>
 <dd><p>Generate a spatial network using set of points.
 Edges will be created between objects based on the selected network type and distance constraints.
 Edge weights for ‘Distance’ and ‘Inverse Distance’ will be added to the network. 
@@ -536,6 +536,8 @@ Nodes will have a ‘position’ attribute corresponding to their spatial coordi
 <dt><strong>max_edge_distance</strong><span class="classifier">float, optional</span></dt><dd><p>Maximum edge distance, by default np.inf.</p>
 </dd>
 <dt><strong>number_of_nearest_neighbours</strong><span class="classifier">int, optional</span></dt><dd><p>Number of nearest neighbours for KNN. Only used for KNN networks, by default 10.</p>
+</dd>
+<dt><strong>node_ids</strong><span class="classifier">array-like, optional</span></dt><dd><p>An array of custom node identifiers corresponding to the input points. If None, enumerated node indices will be used as identifiers. Default is None.</p>
 </dd>
 </dl>
 </dd>

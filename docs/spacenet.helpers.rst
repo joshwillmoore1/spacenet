@@ -18,5 +18,6 @@ Helper functions for spatial networks
    node_node_distance
    update_node_node_distance_cache
    remove_nodes_from_distance_cache
+   shortest_path_length_node_a_to_node_b
    clear_distance_cache
    batched_dijkstra

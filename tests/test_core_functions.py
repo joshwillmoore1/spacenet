@@ -226,7 +226,11 @@ def test_subnetwork():
     assert subnet.distance_cache['Distance']['distances'][0][3] == 10*np.sqrt(2), f"Expected distance between node 0 and 3 in the subnetwork to be {10*np.sqrt(2)}, but got {subnet.distance_cache['Distance']['distances'][0][3]}."
     
     
+def test_shortest_path_cached():
     
-    
-    
-    
+    # test a square network with 4 nodes and edges of length 10
+    coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
+    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    distance_a_to_b = sn.helpers.shortest_path_length_node_a_to_node_b(G,node_a=0,node_b=3)
+
+    assert(distance_a_to_b==np.sqrt(2)*10)

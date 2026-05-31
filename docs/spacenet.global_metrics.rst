@@ -1,10 +1,10 @@
-.. _summary:
-spacenet.summary
+.. _global_metrics:
+spacenet.global_metrics
 ================
 
-.. currentmodule:: spacenet.summary
+.. currentmodule:: spacenet.global_metrics
 
-Summary metrics for spatial networks
+Global metrics for spatial networks
 ------------------------------------
 
 .. autosummary::
