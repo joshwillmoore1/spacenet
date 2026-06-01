@@ -1,6 +1,3 @@
-#degree(G)
-#clustering_coefficient(G)
-#local_efficiency(G)
-#ego_density(G)
-# eccentricity
-
+from .degree import degree
+from .clustering_coefficient import clustering_coefficient  
+from .eccentricity import eccentricity

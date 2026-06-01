@@ -1,8 +1,8 @@
-import numpy as np
+from spacenet.node_metrics.degree import degree
 from spacenet.global_metrics import volume
 from spacenet.utils import add_node_labels
 
-def degree(spatial_network,nodes=None,edge_weight_name='Distance',add_as_node_label=False,node_label_name='degree'):
+def degree_centrality(spatial_network,nodes=None,edge_weight_name='Distance',add_as_node_label=False,node_label_name='degree'):
     """
     Computes the degree centrality for the nodes in the spatial network.
     The degree centrality of a node is defined as the sum of the weights of the edges connected to that node, normalized by the total volume of the network.
@@ -31,30 +31,8 @@ def degree(spatial_network,nodes=None,edge_weight_name='Distance',add_as_node_la
         
     """
     
-    # if no nodes give run on all
-    if nodes is None:
-        nodes = np.array(list(spatial_network.nodes))
-    elif isinstance(nodes,(list,np.ndarray)):
-        nodes = np.array(nodes)
-        
-        # validate nodes
-        all_nodes = np.array(list(spatial_network.nodes))
-        valid_nodes_check = np.isin(nodes,all_nodes,assume_unique=True)
-        
-        if np.sum(valid_nodes_check)!=len(nodes):
-            raise ValueError(f'Nodes passed that are not nodes of this spatial network. These nodes are {nodes[~valid_nodes_check]}')
-    else:
-        raise ValueError(f'nodes not of the correct type. Acceptable types are list or array of node ids but given here f{type(nodes)}.')
-    
-    
-    degree_values = np.zeros(len(nodes))
-    for i, node in enumerate(nodes):
-        connected_nodes = spatial_network[node]
-        this_degree = 0
-        for target in connected_nodes:
-            this_degree += connected_nodes[target][edge_weight_name]
-        
-        degree_values[i] = this_degree
+    # compute the degree values for the nodes
+    degree_values , nodes = degree(spatial_network,nodes=nodes,edge_weight_name=edge_weight_name,add_as_node_label=False)
     
     # normalise for the total possible degree
     total_volume = volume(spatial_network,edge_weight_name=edge_weight_name)

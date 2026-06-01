@@ -1,5 +1,5 @@
-import networkx as nx
 import numpy as np  
+from spacenet.node_metrics.clustering_coefficient import clustering_coefficient
 
 def mean_clustering_coefficient(spatial_network,edge_weight_name='Distance'):
     """
@@ -20,7 +20,7 @@ def mean_clustering_coefficient(spatial_network,edge_weight_name='Distance'):
         The mean cluster coefficient of the spatial network, which is the average of the clustering coefficients of all nodes in the graph.
         
     """
-    cluster_coefficients = nx.clustering(spatial_network, weight=edge_weight_name)
-    mean_clustering_coefficient_value = np.mean(list(cluster_coefficients.values()))
+    cluster_coefficients,_ = clustering_coefficient(spatial_network,edge_weight_name=edge_weight_name)
+    mean_clustering_coefficient_value = np.mean(cluster_coefficients)
     
     return mean_clustering_coefficient_value

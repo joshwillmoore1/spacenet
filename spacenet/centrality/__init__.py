@@ -12,6 +12,6 @@
 #reachability
 
 from .closeness import closeness
-from .degree import degree  
+from .degree_centrality import degree_centrality  
 from .laplacian import laplacian
 from .node_reach import node_reach

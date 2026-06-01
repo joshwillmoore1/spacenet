@@ -4,9 +4,6 @@ sys.path.append('..')
 import pytest
 import numpy as np
 import spacenet as sn
-import networkx as nx   
-import pandas as pd
-from collections import defaultdict
 
 
 
@@ -33,7 +30,7 @@ def test_laplacian(setup_network_and_params):
 def test_degree_centrality(setup_network_and_params):
     G = setup_network_and_params
     
-    degree_centrality,node_ids_3 = sn.centrality.degree(G,add_as_node_label=True,node_label_name='degree_centrality')
+    degree_centrality,node_ids_3 = sn.centrality.degree_centrality(G,add_as_node_label=True,node_label_name='degree_centrality')
     assert((degree_centrality == np.array([0.25, 0.5, 0.5, 0.5, 0.25])).all())
     
 def test_closeness(setup_network_and_params):
