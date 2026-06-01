@@ -5,3 +5,4 @@ from .volume import volume
 from .beta_index import beta_index
 from .mean_detour_index import mean_detour_index
 from .mean_clustering_coefficient import mean_clustering_coefficient
+from .diameter import diameter

@@ -12,3 +12,4 @@ Spatial network partitioning
    :nosignatures:
 
    compact_volume_partition
+   modularity_partition

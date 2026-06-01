@@ -2,4 +2,5 @@
 #clustering_coefficient(G)
 #local_efficiency(G)
 #ego_density(G)
+# eccentricity
 

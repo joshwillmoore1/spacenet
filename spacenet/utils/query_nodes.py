@@ -39,6 +39,9 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
     # check node_label_value is a number, string or list
     if not isinstance(node_label_value, (int, float, str, list)):
         raise ValueError("node_label_value must be a number, string, or list.")
+    
+    
+    #TODO: should account for if the nodes don't have the label
         
     # using a node label, return a list of node indices meet the relation and value criteria
     if relation in ['is', '==']:

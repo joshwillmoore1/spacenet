@@ -12,6 +12,7 @@ Global metrics for spatial networks
    :nosignatures:
 
    volume
+   diameter
    alpha_index
    beta_index
    gamma_index
