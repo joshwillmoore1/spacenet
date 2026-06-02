@@ -15,8 +15,12 @@ The subpackages are listed below, along with a brief description of each one.
     - A useful collection of utility functions for spatial network analysis.
   * - :ref:`global_metrics<global_metrics>`
     - Global metrics for spatial networks.
-  * - :ref:`pcf<pcf>`
-    - Pair correlation functions for spatial networks.
+  * - :ref:`node_metrics<node_metrics>`
+    - Node-based metrics for spatial networks.
+  * - :ref:`centrality<centrality>`
+    - Centralities for spatial networks.
+  * - :ref:`point_patterns<point_patterns>`
+    - Point pattern analysis for spatial networks.
   * - :ref:`partition<partition>`
     - Methods for partitioning spatial networks.
   * - :ref:`datasets<datasets>`
@@ -39,7 +43,9 @@ All of the modules are listed below, and each module has its own documentation p
    
    spacenet.utils
    spacenet.global_metrics
-   spacenet.pcf
+   spacenet.node_metrics
+   spacenet.centrality
+   spacenet.point_patterns
    spacenet.partition
    spacenet.datasets
    spacenet.helpers

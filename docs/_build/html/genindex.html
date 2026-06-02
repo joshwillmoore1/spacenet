@@ -29,7 +29,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bdbcc2a0" />
@@ -457,6 +457,7 @@ document.write(`
  | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
  | <a href="#L"><strong>L</strong></a>
@@ -500,21 +501,25 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/spacenet.helpers.clear_distance_cache.html#spacenet.helpers.clear_distance_cache">clear_distance_cache() (in module spacenet.helpers)</a>
 </li>
+      <li><a href="generated/spacenet.centrality.closeness.html#spacenet.centrality.closeness">closeness() (in module spacenet.centrality)</a>
+</li>
+      <li><a href="generated/spacenet.node_metrics.clustering_coefficient.html#spacenet.node_metrics.clustering_coefficient">clustering_coefficient() (in module spacenet.node_metrics)</a>
+</li>
       <li><a href="generated/spacenet.partition.compact_volume_partition.html#spacenet.partition.compact_volume_partition">compact_volume_partition() (in module spacenet.partition)</a>
 </li>
-      <li><a href="generated/spacenet.pcf.helpers.compute_contributions.html#spacenet.pcf.helpers.compute_contributions">compute_contributions() (in module spacenet.pcf.helpers)</a>
-</li>
-      <li><a href="generated/spacenet.pcf.helpers.compute_contributions_parallel.html#spacenet.pcf.helpers.compute_contributions_parallel">compute_contributions_parallel() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.compute_contributions.html#spacenet.point_patterns.helpers.compute_contributions">compute_contributions() (in module spacenet.point_patterns.helpers)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/spacenet.pcf.helpers.compute_weighted_contributions.html#spacenet.pcf.helpers.compute_weighted_contributions">compute_weighted_contributions() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.compute_contributions_parallel.html#spacenet.point_patterns.helpers.compute_contributions_parallel">compute_contributions_parallel() (in module spacenet.point_patterns.helpers)</a>
 </li>
-      <li><a href="generated/spacenet.pcf.helpers.compute_weighted_contributions_parallel.html#spacenet.pcf.helpers.compute_weighted_contributions_parallel">compute_weighted_contributions_parallel() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.compute_weighted_contributions.html#spacenet.point_patterns.helpers.compute_weighted_contributions">compute_weighted_contributions() (in module spacenet.point_patterns.helpers)</a>
 </li>
-      <li><a href="generated/spacenet.pcf.cross_pair_correlation_function.html#spacenet.pcf.cross_pair_correlation_function">cross_pair_correlation_function() (in module spacenet.pcf)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.compute_weighted_contributions_parallel.html#spacenet.point_patterns.helpers.compute_weighted_contributions_parallel">compute_weighted_contributions_parallel() (in module spacenet.point_patterns.helpers)</a>
 </li>
-      <li><a href="generated/spacenet.pcf.cross_weighted_pair_correlation_function.html#spacenet.pcf.cross_weighted_pair_correlation_function">cross_weighted_pair_correlation_function() (in module spacenet.pcf)</a>
+      <li><a href="generated/spacenet.point_patterns.cross_pair_correlation_function.html#spacenet.point_patterns.cross_pair_correlation_function">cross_pair_correlation_function() (in module spacenet.point_patterns)</a>
+</li>
+      <li><a href="generated/spacenet.point_patterns.cross_weighted_pair_correlation_function.html#spacenet.point_patterns.cross_weighted_pair_correlation_function">cross_weighted_pair_correlation_function() (in module spacenet.point_patterns)</a>
 </li>
       <li><a href="generated/spacenet.global_metrics.cyclomatic_number.html#spacenet.global_metrics.cyclomatic_number">cyclomatic_number() (in module spacenet.global_metrics)</a>
 </li>
@@ -524,7 +529,23 @@ document.write(`
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="generated/spacenet.node_metrics.degree.html#spacenet.node_metrics.degree">degree() (in module spacenet.node_metrics)</a>
+</li>
+      <li><a href="generated/spacenet.centrality.degree_centrality.html#spacenet.centrality.degree_centrality">degree_centrality() (in module spacenet.centrality)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/spacenet.utils.delete_node_labels.html#spacenet.utils.delete_node_labels">delete_node_labels() (in module spacenet.utils)</a>
+</li>
+      <li><a href="generated/spacenet.global_metrics.diameter.html#spacenet.global_metrics.diameter">diameter() (in module spacenet.global_metrics)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="generated/spacenet.node_metrics.eccentricity.html#spacenet.node_metrics.eccentricity">eccentricity() (in module spacenet.node_metrics)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -550,17 +571,21 @@ document.write(`
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/spacenet.pcf.helpers.integrated_poly_finite_kernel.html#spacenet.pcf.helpers.integrated_poly_finite_kernel">integrated_poly_finite_kernel() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html#spacenet.point_patterns.helpers.integrated_poly_finite_kernel">integrated_poly_finite_kernel() (in module spacenet.point_patterns.helpers)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/spacenet.pcf.helpers.is_connected_filter.html#spacenet.pcf.helpers.is_connected_filter">is_connected_filter() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.is_connected_filter.html#spacenet.point_patterns.helpers.is_connected_filter">is_connected_filter() (in module spacenet.point_patterns.helpers)</a>
 </li>
   </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="generated/spacenet.centrality.laplacian.html#spacenet.centrality.laplacian">laplacian() (in module spacenet.centrality)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/spacenet.datasets.load_dataset.html#spacenet.datasets.load_dataset">load_dataset() (in module spacenet.datasets)</a>
 </li>
@@ -576,6 +601,8 @@ document.write(`
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="generated/spacenet.global_metrics.mean_detour_index.html#spacenet.global_metrics.mean_detour_index">mean_detour_index() (in module spacenet.global_metrics)</a>
 </li>
+      <li><a href="generated/spacenet.partition.modularity_partition.html#spacenet.partition.modularity_partition">modularity_partition() (in module spacenet.partition)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -586,6 +613,8 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="generated/spacenet.centrality.node_reach.html#spacenet.centrality.node_reach">node_reach() (in module spacenet.centrality)</a>
+</li>
       <li><a href="generated/spacenet.utils.nodes_to_dataframe.html#spacenet.utils.nodes_to_dataframe">nodes_to_dataframe() (in module spacenet.utils)</a>
 </li>
   </ul></td>
@@ -598,7 +627,7 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/spacenet.pcf.helpers.polynomial_kernel.html#spacenet.pcf.helpers.polynomial_kernel">polynomial_kernel() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.polynomial_kernel.html#spacenet.point_patterns.helpers.polynomial_kernel">polynomial_kernel() (in module spacenet.point_patterns.helpers)</a>
 </li>
       <li><a href="generated/spacenet.utils.print_network_properties.html#spacenet.utils.print_network_properties">print_network_properties() (in module spacenet.utils)</a>
 </li>
@@ -628,7 +657,7 @@ document.write(`
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/spacenet.pcf.helpers.spatial_bootstrap.html#spacenet.pcf.helpers.spatial_bootstrap">spatial_bootstrap() (in module spacenet.pcf.helpers)</a>
+      <li><a href="generated/spacenet.point_patterns.helpers.spatial_bootstrap.html#spacenet.point_patterns.helpers.spatial_bootstrap">spatial_bootstrap() (in module spacenet.point_patterns.helpers)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -652,7 +681,7 @@ document.write(`
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="generated/spacenet.pcf.weighted_pair_correlation_function.html#spacenet.pcf.weighted_pair_correlation_function">weighted_pair_correlation_function() (in module spacenet.pcf)</a>
+      <li><a href="generated/spacenet.point_patterns.weighted_pair_correlation_function.html#spacenet.point_patterns.weighted_pair_correlation_function">weighted_pair_correlation_function() (in module spacenet.point_patterns)</a>
 </li>
   </ul></td>
 </tr></table>

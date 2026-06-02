@@ -1,11 +1,11 @@
 .. _global_metrics:
 spacenet.global_metrics
-================
+=======================
 
 .. currentmodule:: spacenet.global_metrics
 
 Global metrics for spatial networks
-------------------------------------
+-----------------------------------
 
 .. autosummary::
    :toctree: generated/

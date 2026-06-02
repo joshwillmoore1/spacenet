@@ -431,7 +431,9 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="spacenet.utils.html">spacenet.utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.global_metrics.html">spacenet.global_metrics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.html">spacenet.pcf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.node_metrics.html">spacenet.node_metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.centrality.html">spacenet.centrality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.point_patterns.html">spacenet.point_patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.partition.html">spacenet.partition</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.datasets.html">spacenet.datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spacenet.helpers.html">spacenet.helpers</a></li>
@@ -516,8 +518,14 @@ The subpackages are listed below, along with a brief description of each one.</p
 <tr class="row-odd"><td><p><a class="reference internal" href="spacenet.global_metrics.html#global-metrics"><span class="std std-ref">global_metrics</span></a></p></td>
 <td><p>Global metrics for spatial networks.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="spacenet.pcf.html#pcf"><span class="std std-ref">pcf</span></a></p></td>
-<td><p>Pair correlation functions for spatial networks.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="spacenet.node_metrics.html#node-metrics"><span class="std std-ref">node_metrics</span></a></p></td>
+<td><p>Node-based metrics for spatial networks.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="spacenet.centrality.html#centrality"><span class="std std-ref">centrality</span></a></p></td>
+<td><p>Centralities for spatial networks.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="spacenet.point_patterns.html#point-patterns"><span class="std std-ref">point_patterns</span></a></p></td>
+<td><p>Point pattern analysis for spatial networks.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="spacenet.partition.html#partition"><span class="std std-ref">partition</span></a></p></td>
 <td><p>Methods for partitioning spatial networks.</p></td>
@@ -585,6 +593,10 @@ The subpackages are listed below, along with a brief description of each one.</p
 <li class="toctree-l4"><a class="reference internal" href="generated/spacenet.global_metrics.volume.html#spacenet.global_metrics.volume"><code class="docutils literal notranslate"><span class="pre">volume()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.global_metrics.diameter.html">spacenet.global_metrics.diameter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.global_metrics.diameter.html#spacenet.global_metrics.diameter"><code class="docutils literal notranslate"><span class="pre">diameter()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="generated/spacenet.global_metrics.alpha_index.html">spacenet.global_metrics.alpha_index</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="generated/spacenet.global_metrics.alpha_index.html#spacenet.global_metrics.alpha_index"><code class="docutils literal notranslate"><span class="pre">alpha_index()</span></code></a></li>
 </ul>
@@ -613,53 +625,93 @@ The subpackages are listed below, along with a brief description of each one.</p
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="spacenet.pcf.html">spacenet.pcf</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.pcf.html#pair-correlation-functions">Pair correlation functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.cross_pair_correlation_function.html">spacenet.pcf.cross_pair_correlation_function</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.cross_pair_correlation_function.html#spacenet.pcf.cross_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.node_metrics.html">spacenet.node_metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.node_metrics.html#node-metrics-for-spatial-networks">Node metrics for spatial networks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.node_metrics.degree.html">spacenet.node_metrics.degree</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.node_metrics.degree.html#spacenet.node_metrics.degree"><code class="docutils literal notranslate"><span class="pre">degree()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.weighted_pair_correlation_function.html">spacenet.pcf.weighted_pair_correlation_function</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.weighted_pair_correlation_function.html#spacenet.pcf.weighted_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">weighted_pair_correlation_function()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.node_metrics.eccentricity.html">spacenet.node_metrics.eccentricity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.node_metrics.eccentricity.html#spacenet.node_metrics.eccentricity"><code class="docutils literal notranslate"><span class="pre">eccentricity()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.cross_weighted_pair_correlation_function.html">spacenet.pcf.cross_weighted_pair_correlation_function</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.cross_weighted_pair_correlation_function.html#spacenet.pcf.cross_weighted_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_weighted_pair_correlation_function()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.node_metrics.clustering_coefficient.html">spacenet.node_metrics.clustering_coefficient</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.node_metrics.clustering_coefficient.html#spacenet.node_metrics.clustering_coefficient"><code class="docutils literal notranslate"><span class="pre">clustering_coefficient()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.pcf.html#correlation-helper-functions">Correlation helper functions</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.spatial_bootstrap.html">spacenet.pcf.helpers.spatial_bootstrap</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.spatial_bootstrap.html#spacenet.pcf.helpers.spatial_bootstrap"><code class="docutils literal notranslate"><span class="pre">spatial_bootstrap()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.polynomial_kernel.html">spacenet.pcf.helpers.polynomial_kernel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.polynomial_kernel.html#spacenet.pcf.helpers.polynomial_kernel"><code class="docutils literal notranslate"><span class="pre">polynomial_kernel()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.centrality.html">spacenet.centrality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.centrality.html#centralities-for-spatial-networks">Centralities for spatial networks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.centrality.closeness.html">spacenet.centrality.closeness</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.centrality.closeness.html#spacenet.centrality.closeness"><code class="docutils literal notranslate"><span class="pre">closeness()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.integrated_poly_finite_kernel.html">spacenet.pcf.helpers.integrated_poly_finite_kernel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.integrated_poly_finite_kernel.html#spacenet.pcf.helpers.integrated_poly_finite_kernel"><code class="docutils literal notranslate"><span class="pre">integrated_poly_finite_kernel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.centrality.degree_centrality.html">spacenet.centrality.degree_centrality</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.centrality.degree_centrality.html#spacenet.centrality.degree_centrality"><code class="docutils literal notranslate"><span class="pre">degree_centrality()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.is_connected_filter.html">spacenet.pcf.helpers.is_connected_filter</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.is_connected_filter.html#spacenet.pcf.helpers.is_connected_filter"><code class="docutils literal notranslate"><span class="pre">is_connected_filter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.centrality.laplacian.html">spacenet.centrality.laplacian</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.centrality.laplacian.html#spacenet.centrality.laplacian"><code class="docutils literal notranslate"><span class="pre">laplacian()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_contributions.html">spacenet.pcf.helpers.compute_contributions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_contributions.html#spacenet.pcf.helpers.compute_contributions"><code class="docutils literal notranslate"><span class="pre">compute_contributions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.centrality.node_reach.html">spacenet.centrality.node_reach</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.centrality.node_reach.html#spacenet.centrality.node_reach"><code class="docutils literal notranslate"><span class="pre">node_reach()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_weighted_contributions.html">spacenet.pcf.helpers.compute_weighted_contributions</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_weighted_contributions.html#spacenet.pcf.helpers.compute_weighted_contributions"><code class="docutils literal notranslate"><span class="pre">compute_weighted_contributions()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_contributions_parallel.html">spacenet.pcf.helpers.compute_contributions_parallel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_contributions_parallel.html#spacenet.pcf.helpers.compute_contributions_parallel"><code class="docutils literal notranslate"><span class="pre">compute_contributions_parallel()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_weighted_contributions_parallel.html">spacenet.pcf.helpers.compute_weighted_contributions_parallel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.pcf.helpers.compute_weighted_contributions_parallel.html#spacenet.pcf.helpers.compute_weighted_contributions_parallel"><code class="docutils literal notranslate"><span class="pre">compute_weighted_contributions_parallel()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="spacenet.point_patterns.html">spacenet.point_patterns</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.html#pair-correlation-functions">Pair correlation functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.cross_pair_correlation_function.html">spacenet.point_patterns.cross_pair_correlation_function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.cross_pair_correlation_function.html#spacenet.point_patterns.cross_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.weighted_pair_correlation_function.html">spacenet.point_patterns.weighted_pair_correlation_function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.weighted_pair_correlation_function.html#spacenet.point_patterns.weighted_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">weighted_pair_correlation_function()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.cross_weighted_pair_correlation_function.html">spacenet.point_patterns.cross_weighted_pair_correlation_function</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.cross_weighted_pair_correlation_function.html#spacenet.point_patterns.cross_weighted_pair_correlation_function"><code class="docutils literal notranslate"><span class="pre">cross_weighted_pair_correlation_function()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.html#correlation-helper-functions">Correlation helper functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.spatial_bootstrap.html">spacenet.point_patterns.helpers.spatial_bootstrap</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.spatial_bootstrap.html#spacenet.point_patterns.helpers.spatial_bootstrap"><code class="docutils literal notranslate"><span class="pre">spatial_bootstrap()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.polynomial_kernel.html">spacenet.point_patterns.helpers.polynomial_kernel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.polynomial_kernel.html#spacenet.point_patterns.helpers.polynomial_kernel"><code class="docutils literal notranslate"><span class="pre">polynomial_kernel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html">spacenet.point_patterns.helpers.integrated_poly_finite_kernel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html#spacenet.point_patterns.helpers.integrated_poly_finite_kernel"><code class="docutils literal notranslate"><span class="pre">integrated_poly_finite_kernel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.is_connected_filter.html">spacenet.point_patterns.helpers.is_connected_filter</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.is_connected_filter.html#spacenet.point_patterns.helpers.is_connected_filter"><code class="docutils literal notranslate"><span class="pre">is_connected_filter()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_contributions.html">spacenet.point_patterns.helpers.compute_contributions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_contributions.html#spacenet.point_patterns.helpers.compute_contributions"><code class="docutils literal notranslate"><span class="pre">compute_contributions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_weighted_contributions.html">spacenet.point_patterns.helpers.compute_weighted_contributions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_weighted_contributions.html#spacenet.point_patterns.helpers.compute_weighted_contributions"><code class="docutils literal notranslate"><span class="pre">compute_weighted_contributions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_contributions_parallel.html">spacenet.point_patterns.helpers.compute_contributions_parallel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_contributions_parallel.html#spacenet.point_patterns.helpers.compute_contributions_parallel"><code class="docutils literal notranslate"><span class="pre">compute_contributions_parallel()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_weighted_contributions_parallel.html">spacenet.point_patterns.helpers.compute_weighted_contributions_parallel</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.compute_weighted_contributions_parallel.html#spacenet.point_patterns.helpers.compute_weighted_contributions_parallel"><code class="docutils literal notranslate"><span class="pre">compute_weighted_contributions_parallel()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -670,6 +722,10 @@ The subpackages are listed below, along with a brief description of each one.</p
 <li class="toctree-l2"><a class="reference internal" href="spacenet.partition.html#spatial-network-partitioning">Spatial network partitioning</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/spacenet.partition.compact_volume_partition.html">spacenet.partition.compact_volume_partition</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="generated/spacenet.partition.compact_volume_partition.html#spacenet.partition.compact_volume_partition"><code class="docutils literal notranslate"><span class="pre">compact_volume_partition()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="generated/spacenet.partition.modularity_partition.html">spacenet.partition.modularity_partition</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/spacenet.partition.modularity_partition.html#spacenet.partition.modularity_partition"><code class="docutils literal notranslate"><span class="pre">modularity_partition()</span></code></a></li>
 </ul>
 </li>
 </ul>
