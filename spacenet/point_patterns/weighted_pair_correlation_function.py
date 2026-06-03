@@ -79,10 +79,58 @@ def weighted_pair_correlation_function(spatial_network, node_label_name_b=None, 
     Notes
     -----
     
-    For details, see the reference paper...
+    TODO: add reference to paper
     
     Examples
     --------
+    
+    Computing the weighted pair correlation function for a spatial network with a continuous node label (marker) and plotting the results:
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+        import numpy as np
+        import matplotlib.pyplot as plt 
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+        categorical_labels = sprial_df['Marker (categorical)'].values
+        continuous_labels = sprial_df['Marker (continuous)'].values
+
+        # generate a spatial network using the delaunay method and add labels
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (categorical)')
+        sn.utils.add_node_labels(G,continuous_labels,node_label_name='Marker (continuous)')
+
+        # get the node ids for the nodes with categorical label A
+        nodes_a = sn.utils.query_nodes(G,node_label_name='Marker (categorical)',relation='is',node_label_value='A')
+
+        # compute the weighted-PCF for the spatial network between nodes_a and all nodes with continuous label 'Marker (continuous)'
+        tau,radius,pcf_values,con_interval = sn.point_patterns.weighted_pair_correlation_function(G,
+                                                                                                node_label_name_b='Marker (continuous)',
+                                                                                                nodes_a=nodes_a,
+                                                                                                spatial_kernel_bandwidth=80,
+                                                                                                r_max=1000,
+                                                                                                return_confidence_interval=True)
+
+        # plot the PCF for the weighted pair correlation function at target mark of 0 and 1
+        tau_index_0=np.where(tau==0)[0][0]
+        tau_index_1=np.where(tau==1)[0][0]
+
+        fig,ax=plt.subplots()
+        ax.axhline(1,linestyle='dashed',color='grey')
+        ax.plot(radius,pcf_values[tau_index_0,:],label='Target mark, $\\tau=0$',color='tab:blue')
+        ax.fill_between(radius,con_interval[0,tau_index_0,:],con_interval[1,tau_index_0,:],alpha=0.2,color='tab:blue')
+
+        ax.plot(radius,pcf_values[tau_index_1,:],label='Target mark, $\\tau=1$',color='tab:orange')
+        ax.fill_between(radius,con_interval[0,tau_index_1,:],con_interval[1,tau_index_1,:],alpha=0.2,color='tab:orange')
+
+        ax.set_xlabel('Radius')
+        ax.set_ylabel('Weighted Pair Correlation')
+        ax.set_ylim(0,3)
+        ax.set_xlim(0,1000)   
+        ax.legend()
     
     
     """

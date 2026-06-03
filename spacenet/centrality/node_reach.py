@@ -33,6 +33,27 @@ def node_reach(spatial_network,nodes=None, max_distance=np.inf, edge_weight_name
         An array of the node ids for which the node reach centrality values were computed. The order of the nodes corresponds to the order of the values in the 'reach_values' array.
     
     
+    Examples
+    --------
+    You can compute the node reach centrality of nodes in a spatial network using the `node_reach` function. Below is an example of how to use this function to compute the node reach centrality for all nodes in a spatial network generated from a set of points.
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # Load the spiral dataset and extract the 'x' and 'y' columns as points
+        spiral_data = sn.datasets.load_dataset('spiral')
+        points = spiral_data[['x', 'y']].to_numpy()
+
+        # generate a spatial network
+        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+
+        # compute the node reach for each node in the spatial network and add it as a node label
+        node_reach_vals,node_ids=sn.centrality.node_reach(G,max_distance=200,add_as_node_label=True,node_label_name='node_reach')
+
+        # plot the spatial network and with the node label 'node_reach' to visualise the node reach centrality values
+        sn.utils.plot_spatial_network(G,node_label_name='node_reach')
+    
     """
     
     # if no nodes give run on all

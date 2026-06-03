@@ -13,9 +13,11 @@ from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import po
 def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1):
     """
     
-    Computes the pair correlation function (PCF) and cross-PCF between on nodes in a spatial network.
-    The PCF is computed when nodes_a and nodes_b are the same set of node indices.     
-    The cross-PCF is computed when nodes_a and nodes_b are different sets of node indices. The cross-PCF measures the spatial correlation between two different populations of nodes in the network, while the PCF measures the spatial correlation within a single population of nodes.
+    Computes the pair correlation function (PCF) or cross-pair correlation function (cross-PCF) for nodes in a spatial network.
+    
+    The PCF is computed when nodes_a and nodes_b refer to the same set of nodes, and quantifies spatial dependence within a single node population.
+    
+    The cross-PCF is computed when nodes_a and nodes_b refer to different node populations, and quantifies spatial dependence between those populations.
     
     Parameters
     ----------
@@ -59,15 +61,72 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
     
     Notes
     -----
-    For a pair correlation function (not cross) on a spatial network set nodes_a and nodes_b to be the same set of node indices. 
-    For details, see the reference paper...
+    
+    
+    TODO: add reference to paper
 
     
     Examples
     --------
     
+    Computing the pair correlation function for a single population of nodes:
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+        import matplotlib.pyplot as plt 
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+
+        # generate a spatial network using the delaunay method
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+
+        # compute the PCF for the spatial network over all nodes
+        radius,pcf_values,con_interval = sn.point_patterns.cross_pair_correlation_function(G,spatial_kernel_bandwidth=80,r_max=1000,return_confidence_interval=True)
+
+        # plot the PCF
+        fig,ax=plt.subplots()
+        ax.axhline(1,linestyle='dashed',color='grey')
+        ax.plot(radius,pcf_values)
+        ax.fill_between(radius,con_interval[0],con_interval[1],alpha=0.2)
+        ax.set_xlabel('Radius')
+        ax.set_ylabel('Pair Correlation')
+        ax.set_ylim(0,2)  
     
     
+    Computing the cross pair correlation function for a two populations of nodes:
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+        import matplotlib.pyplot as plt 
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+        categorical_labels = sprial_df['Marker (categorical)'].values
+
+        # generate a spatial network using the delaunay method and add labels
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (categorical)')
+
+        # get the node ids for the two categories
+        nodes_a = sn.utils.query_nodes(G,node_label_name='Marker (categorical)',relation='is',node_label_value='A')
+        nodes_b = sn.utils.query_nodes(G,node_label_name='Marker (categorical)',relation='is',node_label_value='B') 
+
+        # compute the cross-PCF for the spatial network between nodes_a and nodes_b
+        radius,pcf_values,con_interval = sn.point_patterns.cross_pair_correlation_function(G,nodes_a=nodes_a,nodes_b=nodes_b,spatial_kernel_bandwidth=80,r_max=1000,return_confidence_interval=True)
+
+        # plot the PCF
+        fig,ax=plt.subplots()
+        ax.axhline(1,linestyle='dashed',color='grey')
+        ax.plot(radius,pcf_values)
+        ax.fill_between(radius,con_interval[0],con_interval[1],alpha=0.2)
+        ax.set_xlabel('Radius')
+        ax.set_ylabel('Pair Correlation')
+        ax.set_ylim(0,3)    
     
     """
     

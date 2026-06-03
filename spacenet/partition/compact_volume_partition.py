@@ -113,6 +113,47 @@ def compact_volume_partition(
         - iterations: The number of iterations taken in the local moving phase until convergence or reaching max_iter.
     
     
+    Notes
+    -----
+    
+    TODO: add reference to paper
+    
+    
+    Examples
+    --------
+    
+    Compact volume partitioning can be used to create spatially contiguous and volume-balanced communities in a spatial network.
+    Below is an example of how to use the `compact_volume_partition` function with a spatial network generated from the Spiral dataset. 
+    The resulting partition labels are added to the spatial network and visualised.
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+
+        # generate a spatial network using the delaunay method and add labels
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+
+        # compute a compact volume partition for the spatial network with 5 partitions
+        cv_partition = sn.partition.compact_volume_partition(G,k=5)
+
+        #get the labels and nodes associated with each partition
+        partition_label_dict = cv_partition.labels
+        nodes_partition,labels_partition = list(partition_label_dict.keys()),list(partition_label_dict.values())
+
+        # add the partition labels to the spatial network
+        sn.utils.add_node_labels(G,
+                                labels=labels_partition,
+                                nodes=nodes_partition,
+                                node_label_name='volume_partition (5)')
+
+        # plot the spatial network with nodes coloured by their partition label
+        sn.utils.plot_spatial_network(G,node_label_name='volume_partition (5)')
+    
+    
     """
     
     if G.is_directed():

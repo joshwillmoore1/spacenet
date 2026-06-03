@@ -28,6 +28,28 @@ def eccentricity(spatial_network,nodes=None,edge_weight_name='Distance',add_as_n
         An array of eccentricity values for the specified nodes in the spatial network. The order of the values corresponds to the order of the nodes in the 'nodes' parameter.
     nodes : np.ndarray
         An array of the node ids for which the eccentricity values were computed. The order of the nodes corresponds to the order of the values in the 'eccentricity_values' array.
+        
+    Examples
+    --------
+    
+    You can compute the eccentricity of nodes in a spatial network using the `eccentricity` function. Below is an example of how to use this function to compute the eccentricity for all nodes in a spatial network generated from a set of points.
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # Load the spiral dataset and extract the 'x' and 'y' columns as points
+        spiral_data = sn.datasets.load_dataset('spiral')
+        points = spiral_data[['x', 'y']].to_numpy()
+
+        # generate a spatial network
+        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+
+        # compute eccentricity for all nodes and add as node label
+        ecc_vals,node_ids=sn.node_metrics.eccentricity(G,add_as_node_label=True,node_label_name='eccentricity')
+
+        # plot the spatial network with the node label 'eccentricity'
+        sn.utils.plot_spatial_network(G,node_label_name='eccentricity')
     
     """
     # if no nodes give run on all

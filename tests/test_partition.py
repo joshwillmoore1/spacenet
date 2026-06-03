@@ -13,7 +13,6 @@ def setup_network_and_params():
     
     points = np.array([[0, 0], [1, 0], [0.5,0.5], [2,0],[2.5,0.5],[3,0]])
     G = sn.utils.generate_spatial_network(points,network_type='proximity',max_edge_distance=1.5)
-    sn.utils.plot_spatial_network(G,edge_weight_name=None)
     
     return G
 

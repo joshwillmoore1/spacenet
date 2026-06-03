@@ -69,6 +69,8 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
         Whether to use a low-memory implementation of Dijkstra's algorithm that computes distances in batches. This can be useful for large networks that do not fit in memory. Default is False.
     verbose : bool, optional
         Whether to print progress messages during computation. Default is True.
+    n_jobs : int, optional
+        The number of parallel jobs to run when computing contributions. If n_jobs > 1, the contributions will be computed in parallel across multiple CPU cores. Default is 1 (no parallelization).
     
     Returns
     -------
@@ -87,10 +89,57 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
     Notes
     -----
     
-    For details, see the reference paper...
+    TODO: add reference to paper
     
     Examples
     --------
+    
+    Compute the cross weighted pair correlation function for the Spiral dataset, where the contributions of each point to the pair correlation function are weighted by a kernel function based on their continuous marker levels. 
+    The example computes the pair correlation function across a range of distances and target marker values, and plots the results for specific target marker combinations.
+    
+    .. code-block:: python  
+    
+        import spacenet as sn
+        import numpy as np
+        import matplotlib.pyplot as plt 
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+        continuous_labels = sprial_df['Marker (continuous)'].values
+
+        # generate a spatial network using the delaunay method and add labels
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        sn.utils.add_node_labels(G,continuous_labels,node_label_name='Marker (continuous)')
+
+        # compute the cross weighted-PCF for the spatial network continuous label 'Marker (continuous)'
+        tau_a,tau_b,radius,pcf_values,con_interval = sn.point_patterns.cross_weighted_pair_correlation_function(G,
+                                                                                                                node_label_name_a='Marker (continuous)',
+                                                                                                                node_label_name_b='Marker (continuous)',
+                                                                                                                spatial_kernel_bandwidth=80,
+                                                                                                                r_max=1000,
+                                                                                                                return_confidence_interval=True)
+
+        # plot the PCF for the cross weighted pair correlation function at target mark of 0 and 1
+        tau_a_index_0=np.where(tau_a==0)[0][0]
+        tau_a_index_1=np.where(tau_a==1)[0][0]
+
+        tau_b_index_0=np.where(tau_b==0)[0][0]
+
+        fig,ax=plt.subplots()
+        ax.axhline(1,linestyle='dashed',color='grey')
+        ax.plot(radius,pcf_values[tau_a_index_0,tau_b_index_0,:],label='Target marks, $\\tau_{a}=0, \\, \\tau_{b}=0$',color='tab:blue')
+        ax.fill_between(radius,con_interval[0,tau_a_index_0,tau_b_index_0,:],con_interval[1,tau_a_index_0,tau_b_index_0,:],alpha=0.2,color='tab:blue')
+
+        ax.plot(radius,pcf_values[tau_a_index_1,tau_b_index_0,:],label='Target marks, $\\tau_{a}=1, \\, \\tau_{b}=0$',color='tab:orange')
+        ax.fill_between(radius,con_interval[0,tau_a_index_1,tau_b_index_0,:],con_interval[1,tau_a_index_1,tau_b_index_0,:],alpha=0.2,color='tab:orange')
+
+        ax.set_xlabel('Radius')
+        ax.set_ylabel('Cross Weighted Pair Correlation')
+        ax.set_ylim(0,2.5)
+        ax.set_xlim(0,1000)   
+        ax.legend()
+    
     
     """
     

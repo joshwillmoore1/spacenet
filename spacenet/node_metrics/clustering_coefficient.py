@@ -30,6 +30,29 @@ def clustering_coefficient(spatial_network,nodes=None,edge_weight_name='Distance
     nodes : np.ndarray
         An array of the node ids for which the clustering coefficient values were computed. The order of the nodes corresponds to the order of the values in the 'clustering_coefficients' array.
     
+    
+    Examples
+    --------
+    
+    You can compute the clustering coefficient of nodes in a spatial network using the `clustering_coefficient` function. Below is an example of how to use this function to compute the clustering coefficient for all nodes in a spatial network generated from a set of points.
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # Load the spiral dataset and extract the 'x' and 'y' columns as points
+        spiral_data = sn.datasets.load_dataset('spiral')
+        points = spiral_data[['x', 'y']].to_numpy()
+
+        # generate a spatial network
+        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+
+        # compute the clustering coefficient for each node in the spatial network and add it as a node label
+        cluster_vals,node_ids=sn.node_metrics.clustering_coefficient(G,add_as_node_label=True,node_label_name='clustering')
+
+        # plot the spatial network
+        sn.utils.plot_spatial_network(G,node_label_name='clustering')
+    
     """
     
      # if no nodes give run on all

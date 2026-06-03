@@ -22,6 +22,52 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
     -------
     np.ndarray
         An array of node indices that meet the specified relation and value criteria.
+        
+        
+    Examples
+    --------
+    
+    You can use the `query_nodes` function to filter nodes in a spatial network based on their attributes. Below are examples of how to use this function to query nodes with specific categorical and continuous labels.
+    The first example demonstrates how to query nodes with a categorical label.
+    
+    .. code-block:: python  
+    
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+        categorical_labels = sprial_df['Marker (categorical)'].values
+
+        # generate a spatial network using the delaunay method and add labels
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (categorical)')
+
+        # use query to get node ids for nodes with categorical label A
+        nodes_a = sn.utils.query_nodes(G,node_label_name='Marker (categorical)',relation='is',node_label_value='A')
+
+        print(f'First 10 Nodes with categorical label A: {nodes_a[0:10]}')
+        
+    
+    This example shows how to query nodes with a continuous labels using relational comparisons.
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('spiral')
+        points = sprial_df[['x','y']].values
+        categorical_labels = sprial_df['Marker (continuous)'].values
+
+        # generate a spatial network using the delaunay method and add labels
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (continuous)')
+
+        # use query to get node ids for nodes with continuous label > 0.5
+        nodes_of_interest = sn.utils.query_nodes(G,node_label_name='Marker (continuous)',relation='>',node_label_value=0.5)
+
+        print(f'First 10 Nodes with continuous label > 0.5: {nodes_a[0:10]}')
     
     """
     

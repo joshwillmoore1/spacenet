@@ -49,12 +49,71 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
     Examples
     --------
     
-    Example of generating a Delaunay network from all objects in the domain:
+    Example of generating a spatial Delaunay network from set of point locations:
     
     .. code-block:: python
     
-        # To complete later...
-                           
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('Spiral')
+        points = sprial_df[['x','y']].values
+
+        # generate a spatial network using the Delaunay triangulation method
+        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+
+        # visualise the spatial network
+        sn.utils.plot_spatial_network(G,edge_weight_name=None)
+        
+    Example of generating a spatial proximity network from set of point locations:
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('Spiral')
+        points = sprial_df[['x','y']].values
+
+        # generate a spatial network using the pure distance-based method
+        G = sn.utils.generate_spatial_network(points,network_type='proximity',max_edge_distance=75)
+
+        # visualise the spatial network
+        sn.utils.plot_spatial_network(G,edge_weight_name=None)
+        
+    Example of generating a spatial KNN network from set of point locations:
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('Spiral')
+        points = sprial_df[['x','y']].values
+
+        # generate a spatial network using the knn method
+        G = sn.utils.generate_spatial_network(points,network_type='knn',number_of_nearest_neighbours=10)
+
+        # visualise the spatial network
+        sn.utils.plot_spatial_network(G,edge_weight_name=None)
+        
+    Example of generating a spatial RNG network from set of point locations:
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # get data from the Spiral dataset
+        sprial_df = sn.datasets.load_dataset('Spiral')
+        points = sprial_df[['x','y']].values
+
+        # generate a spatial network using the relative neighbourhood method
+        G = sn.utils.generate_spatial_network(points,network_type='rng',max_edge_distance=75)
+
+        # visualise the spatial network
+        sn.utils.plot_spatial_network(G,edge_weight_name=None)
+
+                            
     """
     
     

@@ -35,6 +35,28 @@ def closeness(spatial_network, nodes=None,edge_weight_name='Distance',max_distan
         An array of the node ids for which the node reach centrality values were computed. The order of the nodes corresponds to the order of the values in the 'closenss_values' array.
     
     
+    Examples
+    --------
+    
+    You can compute the closeness centrality of nodes in a spatial network using the `closeness` function. Below is an example of how to use this function to compute the closeness centrality for all nodes in a spatial network generated from a set of points.
+    
+    .. code-block:: python
+    
+        import spacenet as sn
+
+        # Load the spiral dataset and extract the 'x' and 'y' columns as points
+        spiral_data = sn.datasets.load_dataset('spiral')
+        points = spiral_data[['x', 'y']].to_numpy()
+
+        # generate a spatial network
+        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+
+        # compute the closeness for each node in the spatial network and add it as a node label
+        closeness_vals,node_ids=sn.centrality.closeness(G,max_distance=200,add_as_node_label=True,node_label_name='closeness')
+
+        # plot the spatial network with the closeness node label
+        sn.utils.plot_spatial_network(G,node_label_name='closeness')
+    
     """
     
     

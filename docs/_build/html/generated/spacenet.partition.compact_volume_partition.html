@@ -562,6 +562,38 @@ Convergence is achieved when no single node can be moved to a different communit
 </dl>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<p>TODO: add reference to paper</p>
+<p class="rubric">Examples</p>
+<p>Compact volume partitioning can be used to create spatially contiguous and volume-balanced communities in a spatial network.
+Below is an example of how to use the <cite>compact_volume_partition</cite> function with a spatial network generated from the Spiral dataset. 
+The resulting partition labels are added to the spatial network and visualised.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the delaunay method and add labels</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># compute a compact volume partition for the spatial network with 5 partitions</span>
+<span class="n">cv_partition</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">partition</span><span class="o">.</span><span class="n">compact_volume_partition</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="c1">#get the labels and nodes associated with each partition</span>
+<span class="n">partition_label_dict</span> <span class="o">=</span> <span class="n">cv_partition</span><span class="o">.</span><span class="n">labels</span>
+<span class="n">nodes_partition</span><span class="p">,</span><span class="n">labels_partition</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition_label_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span><span class="nb">list</span><span class="p">(</span><span class="n">partition_label_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># add the partition labels to the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span>
+                        <span class="n">labels</span><span class="o">=</span><span class="n">labels_partition</span><span class="p">,</span>
+                        <span class="n">nodes</span><span class="o">=</span><span class="n">nodes_partition</span><span class="p">,</span>
+                        <span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;volume_partition (5)&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network with nodes coloured by their partition label</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;volume_partition (5)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

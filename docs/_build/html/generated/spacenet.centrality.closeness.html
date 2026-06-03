@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bdbcc2a0" />
@@ -544,6 +544,24 @@ The closeness centrality of a node is defined as the reciprocal of the average s
 </dl>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>You can compute the closeness centrality of nodes in a spatial network using the <cite>closeness</cite> function. Below is an example of how to use this function to compute the closeness centrality for all nodes in a spatial network generated from a set of points.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># Load the spiral dataset and extract the &#39;x&#39; and &#39;y&#39; columns as points</span>
+<span class="n">spiral_data</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">spiral_data</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># generate a spatial network</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># compute the closeness for each node in the spatial network and add it as a node label</span>
+<span class="n">closeness_vals</span><span class="p">,</span><span class="n">node_ids</span><span class="o">=</span><span class="n">sn</span><span class="o">.</span><span class="n">centrality</span><span class="o">.</span><span class="n">closeness</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">max_distance</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">add_as_node_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;closeness&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network with the closeness node label</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;closeness&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

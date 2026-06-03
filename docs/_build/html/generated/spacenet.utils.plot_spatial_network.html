@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bdbcc2a0" />
@@ -518,12 +518,12 @@ document.write(`
 <h1>spacenet.utils.plot_spatial_network<a class="headerlink" href="#spacenet-utils-plot-spatial-network" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.utils.plot_spatial_network">
-<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_to_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_node_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">plot_spatial_network</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_to_plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_node_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_cmap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Greys_r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_vmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_edge_cbar</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scatter_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figure_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.plot_spatial_network" title="Link to this definition">#</a></dt>
 <dd><p>Plots a spatial network with nodes positioned according to the provided points.
 Nodes can be colored based on provided labels, and edges can be colored based on their weights.</p>
-<dl class="field-list">
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><dl>
+<dd class="field-odd"><dl class="simple">
 <dt><strong>spatial_network</strong><span class="classifier">networkx.Graph</span></dt><dd><p>The spatial network to be plotted. Edges should have a weight attribute corresponding to the distance between nodes.</p>
 </dd>
 <dt><strong>node_label_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the node attribute in the spatial network that corresponds to the labels for coloring nodes. If None, nodes will not be colored based on labels. Default is None.</p>
@@ -538,7 +538,7 @@ Nodes can be colored based on provided labels, and edges can be colored based on
 </dd>
 <dt><strong>add_node_cbar</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a legend for the node labels. Default is False.</p>
 </dd>
-<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is ‘Distance’.</p>
+<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the spatial network that corresponds to the distance between nodes. Default is None.</p>
 </dd>
 <dt><strong>edge_cmap</strong><span class="classifier">str or matplotlib.colors.Colormap, optional</span></dt><dd><p>The colormap to use for coloring edges based on their weights. Default is ‘Greys_r’.</p>
 </dd>
@@ -546,13 +546,9 @@ Nodes can be colored based on provided labels, and edges can be colored based on
 </dd>
 <dt><strong>edge_vmax</strong><span class="classifier">float, optional</span></dt><dd><p>The maximum value for edge weight coloring. If None, the maximum edge weight will be used. Default is None.</p>
 </dd>
-<dt><strong>add_edge_cbar</strong><span class="classifier">bool, optional</span></dt><dd><blockquote>
-<div><p>Whether to add a colorbar for the edge weights. Default is False.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>scatter_kwargs<span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.</p>
+<dt><strong>add_edge_cbar</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add a colorbar for the edge weights. Default is False.</p>
 </dd>
-</dl>
+<dt><strong>scatter_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to the scatter function when plotting nodes. Default is an empty dictionary.</p>
 </dd>
 <dt><strong>figure_kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>Additional keyword arguments to pass to plt.figure() when creating a new figure. Default is an empty dictionary.</p>
 </dd>
@@ -567,6 +563,68 @@ Nodes can be colored based on provided labels, and edges can be colored based on
 </dl>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<p>You can use the <cite>plot_spatial_network</cite> function to visualize a spatial network with nodes colored by their labels and edges colored by their weights. Below is a few examples of how to use this function to plot a spatial network generated from a set of points.
+The basic usage of the function is as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the delaunay method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same functionality works for 3D spatial networks as well.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Cylinder dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;cylinder&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the delaunay method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Node labels can also be shown on these plots by providing the node_label_name argument, the visualisation will infer whether this is a categorical or continuous label. For example, if we have a categorical label called ‘Marker (categorical)’ in the spatial network, we can plot the spatial network with nodes colored by this label as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">categorical_labels</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[</span><span class="s1">&#39;Marker (categorical)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the delaunay method and add labels</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">categorical_labels</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;Marker (categorical)&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network with nodes coloured by their categorical label</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;Marker (categorical)&#39;</span><span class="p">,</span><span class="n">add_node_cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If we have a continuous label called ‘Marker (continuous)’ in the spatial network, we can plot the spatial network with nodes colored by this label as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Cylinder dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;cylinder&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">categorical_labels</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[</span><span class="s1">&#39;Marker (continuous)&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the delaunay method and add labels</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">35</span><span class="p">)</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">categorical_labels</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;Marker (continuous)&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network with nodes coloured by their continuous label</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;Marker (continuous)&#39;</span><span class="p">,</span><span class="n">add_node_cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

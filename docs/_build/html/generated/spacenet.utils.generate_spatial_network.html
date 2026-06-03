@@ -558,8 +558,60 @@ Nodes will have a ‘position’ attribute corresponding to their spatial coordi
 <li><p>Relative Neighbourhood Graph (RNG) esimtates the natural connectivity of points in space. MuSpAn implements the Urquhart approximation to the RNG for computational efficiency. See <a class="reference external" href="https://en.wikipedia.org/wiki/Relative_neighborhood_graph">RNGs</a> for more information.</p></li>
 </ul>
 <p class="rubric">Examples</p>
-<p>Example of generating a Delaunay network from all objects in the domain:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># To complete later...</span>
+<p>Example of generating a spatial Delaunay network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the Delaunay triangulation method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example of generating a spatial proximity network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the pure distance-based method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;proximity&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example of generating a spatial KNN network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the knn method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;knn&#39;</span><span class="p">,</span><span class="n">number_of_nearest_neighbours</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example of generating a spatial RNG network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the relative neighbourhood method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">generate_spatial_network</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;rng&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
