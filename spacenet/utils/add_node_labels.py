@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 
 def add_node_labels(spatial_network,labels,node_label_name='label',nodes=None):
@@ -31,8 +32,9 @@ def add_node_labels(spatial_network,labels,node_label_name='label',nodes=None):
         nodes_to_add_labels_to = np.asarray(list(spatial_network.nodes))
     elif isinstance(nodes, np.ndarray):
         nodes_to_add_labels_to = nodes
-    elif isinstance(nodes, list):
+    elif isinstance(nodes, (list,pd.arrays.StringArray, pd.Series,pd.Categorical,pd.Index)):
         nodes_to_add_labels_to = np.asarray(nodes)
+
     else:
         raise ValueError(f'Nodes should be a list or numpy array of node indices. Got {type(nodes)} instead.')
     
