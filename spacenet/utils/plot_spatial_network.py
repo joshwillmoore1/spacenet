@@ -154,12 +154,11 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         not_null_labels = [label for label in labels if label != 'null']
         if len(not_null_labels) == 0:
             raise ValueError(f"No valid labels found for node_label_name '{node_label_name}'.")
-   
-        if isinstance(not_null_labels[0], (str,int)):
+        if isinstance(not_null_labels[0], (str,int,np.integer,np.strings)):
             continuous_labels = False
         else:
             continuous_labels = True
-        
+                    
     else:
         labels = None   
         
@@ -262,7 +261,7 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
             
         else:
             unique_labels = np.unique(not_null_labels)
-            unique_labels_all = np.concatenate((unique_labels, ['null']))
+            unique_labels_all = list(unique_labels) +  ['null']
             if 'cmap' not in scatter_kwargs:
                 colormap = plt.get_cmap('tab10')
             else:
