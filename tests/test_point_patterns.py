@@ -10,8 +10,8 @@ def setup_network_and_params():
     
     sprial_df = sn.datasets.load_dataset('Spiral')
     points = sprial_df[['x','y']].values
-    labels = sprial_df['Marker (categorical)'].values.to_numpy()
-    labels_cont = sprial_df['Marker (continuous)'].values.to_numpy()
+    labels = sprial_df['Marker (categorical)'].values
+    labels_cont = sprial_df['Marker (continuous)'].values
 
     G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
     sn.utils.add_node_labels(G,labels,node_label_name='Marker (categorical)')
