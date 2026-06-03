@@ -14,7 +14,7 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
     node_label_name : str
         The name of the node attribute to query. This should be a valid node attribute in the spatial network.
     relation : str
-        The relation to use for querying. Supported relations include 'is' (or '=='), 'contains' (or 'in'), 'is not' (or '!='), 'does not contain' (or 'not in'), 'greater than' (or '>'), and 'less than' (or '<').
+        The relation to use for querying. Supported relations include: 'is' (or '=='), 'contains' (or 'in'), 'is not' (or '!='), 'does not contain' (or 'not in'), 'greater than' (or '>'), 'less than' (or '<'), 'greater than or equal to' (or '>='), and 'less than or equal to' (or '<=').
     node_label_value : int, float, str, or list
         The value to compare the node attribute against. The type of this value should be compatible with the type of the node attribute being queried.
     
@@ -86,9 +86,7 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
     if not isinstance(node_label_value, (int, float, str, list)):
         raise ValueError("node_label_value must be a number, string, or list.")
     
-    
-    #TODO: should account for if the nodes don't have the label
-        
+            
     # using a node label, return a list of node indices meet the relation and value criteria
     if relation in ['is', '==']:
         node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) == node_label_value]
@@ -102,10 +100,14 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
     # Note: The following comparisons assume that the node label values are numeric. If they are not, this will raise an error.
     elif relation in ['greater than','>']:
         node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) > node_label_value]
+    elif relation in ['greater than or equal to','>=']:
+        node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) >= node_label_value]
     elif relation in ['less than','<']:
         node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) < node_label_value]
+    elif relation in ['less than or equal to','<=']:
+        node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) <= node_label_value]
     else:
-        raise ValueError(f"Unsupported relation: {relation}. The following relations are supported: 'is' (or '=='), 'contains' (or 'in'), 'is not' (or '!='), 'does not contain' (or 'not in'), 'greater than' (or '>'), and 'less than' (or '<').")
+        raise ValueError(f"Unsupported relation: {relation}. The following relations are supported: 'is' (or '=='), 'contains' (or 'in'), 'is not' (or '!='), 'does not contain' (or 'not in'), 'greater than' (or '>'), 'less than' (or '<'), 'greater than or equal to' (or '>='), and 'less than or equal to' (or '<=').")
     
     return np.asarray(node_indices)
     

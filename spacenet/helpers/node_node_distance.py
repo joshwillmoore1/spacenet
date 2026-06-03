@@ -39,6 +39,10 @@ def node_node_distance(spatial_network,sources=None, weight='Distance',limit=np.
     # ensure sources is a numpy array for easier processing        
     sources = np.asarray(sources)
     
+    # check the network has a distance cache, if not create one
+    if not hasattr(spatial_network,'distance_cache'):
+        spatial_network.distance_cache = {}
+    
     # check if the there is a cache already, use source nodes and current limit to check if we need recompute distances
     recompute_needed=False
     if weight not in spatial_network.distance_cache:
