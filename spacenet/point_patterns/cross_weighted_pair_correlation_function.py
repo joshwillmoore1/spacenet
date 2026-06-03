@@ -1,6 +1,4 @@
 import numpy as np
-import networkx as nx
-from scipy.sparse.csgraph import dijkstra
 from collections import defaultdict
 from tqdm import tqdm  # optional progress bar
 from copy import deepcopy   
@@ -8,30 +6,30 @@ from copy import deepcopy
 # bespoke imports
 from spacenet.point_patterns.helpers.compute_weighted_contributions import compute_weighted_contributions
 from spacenet.point_patterns.helpers.compute_weighted_contributions_parallel import compute_weighted_contributions_parallel   
-from spacenet.helpers.batched_dijkstra import batched_dijkstra
 from spacenet.point_patterns.helpers.spatial_bootstrap import spatial_bootstrap
 from spacenet.point_patterns.helpers.polynomial_kernel import polynomial_kernel
 from spacenet.point_patterns.helpers.is_connected_filter import is_connected_filter
 from spacenet.helpers.node_node_distance import node_node_distance
+from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import polynomial_kernel_bandwidth_scale
 
-def cross_weighted_pair_correlation_function(spatial_network,labels_for_objects_A,labels_for_objects_B, object_indices_A=None,object_indices_B=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1):
+
+def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,node_label_name_b, nodes_a=None,nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1):
     """
     
     Compute the cross weighted pair correlation function between two populations of objects (A and B) on a spatial network, where the contributions of each object to the pair correlation function are weighted by a kernel function based on their marker levels.
-    Polynomial kernels are used to weight contributions based on marker levels, and the pair correlation function is computed across a range of distances (r) and target marker values for both populations. 
-    The function can also compute confidence intervals using spatial bootstrapping.
+    Polynomial kernels are used to weight contributions based on marked levels, and the pair correlation function is computed across a range of distances (r) and target marker values for both populations. 
     
     Parameters
     ----------
     spatial_network : networkx.Graph    
         The spatial network on which to compute the pair correlation function. Edges should have a weight attribute corresponding to the distance between nodes.
-    labels_for_objects_A : np.array
-        An array of continuous marker values for the objects in population A. The length of this array should match the number of nodes in the network, and the values should correspond to the marker levels for each node.
-    labels_for_objects_B : np.array
-        An array of continuous marker values for the objects in population B. The length of this array should match the number of nodes in the network, and the values should correspond to the marker levels for each node.
-    object_indices_A : array-like, optional
+    node_label_name_a : str or array-like
+        A continuous label for each object in population A. This should be the name of labels associated with a continous label on the name. Alternatively, this can be an array of continous values of the same length as nodes_b, where each entry corresponds to the label of the respective object in population A.
+    node_label_name_b : str or array-like
+        A continuous label for each object in population B. This should be the name of labels associated with a continous label on the name. Alternatively, this can be an array of continous values of the same length as nodes_b, where each entry corresponds to the label of the respective object in population B.
+    nodes_a : array-like, optional
         The indices of the nodes in population A. If None, all nodes in the network will be considered as part of population A. Default is None.
-    object_indices_B : array-like, optional
+    nodes_b : array-like, optional
         The indices of the nodes in population B. If None, all nodes in the network will be considered as part of population B. Default is None.
     spatial_kernel_bandwidth : float, optional
         The bandwidth parameter for the spatial kernel function. This controls the smoothness of the pair correlation function. Default is 10.
@@ -96,69 +94,113 @@ def cross_weighted_pair_correlation_function(spatial_network,labels_for_objects_
     
     """
     
-    orginal_object_indices_A = deepcopy(object_indices_A)
-    orginal_object_indices_B = deepcopy(object_indices_B)
+    all_node_ids = np.asarray(list(spatial_network.nodes))
+    
+    if nodes_a is None:
+        nodes_a = all_node_ids
+    if nodes_b is None:
+        nodes_b = all_node_ids
+    
+    orginal_nodes_a = deepcopy(nodes_a)
+    orginal_nodes_b = deepcopy(nodes_b)
 
     # filter to the largest connected component if the network is not connected
-    this_network,object_indices_A,object_indices_B = is_connected_filter(spatial_network,object_indices_A,object_indices_B,filter_largest_connected=True)
+    this_network,nodes_a,nodes_b = is_connected_filter(spatial_network,nodes_a,nodes_b,filter_largest_connected=True)
 
     # check if the populations are empty
-    number_of_objects_A = len(object_indices_A)
-    number_of_objects_B = len(object_indices_B)
+    number_of_objects_A = len(nodes_a)
+    number_of_objects_B = len(nodes_b)
     
     if number_of_objects_A == 0:
-        raise RuntimeError(f'The object_indices_A is empty following filteration of node check.')
+        raise RuntimeError(f'The nodes_a is empty following filteration of node check.')
     
     if number_of_objects_B == 0:
-        raise RuntimeError(f'The object_indices_B is empty following filteration of node check.')    
+        raise RuntimeError(f'The nodes_b is empty following filteration of node check.')  
+    
+    # grab the continuous labels for objects A
+    if isinstance(node_label_name_a, str):
+        labels_for_objects_A = np.array([this_network.nodes[node][node_label_name_a] for node in orginal_nodes_a]) 
+    elif isinstance(node_label_name_a, (list, np.ndarray)):
+        if len(node_label_name_a) != len(orginal_nodes_a):
+            raise ValueError(f'If node_label_name_b is an array, it must be the same length as nodes_b. Got length {len(node_label_name_b)} for node_label_name_b and length {len(orginal_nodes_b)} for nodes_b.')
+        labels_for_objects_A = np.array(node_label_name_a)
+    else:
+        raise ValueError(f'node_label_name_b must be either a string (the name of the node attribute corresponding to the continuous labels for objects B) or an array of continuous values for objects B. Got type {type(node_label_name_b)} for node_label_name_b.')  
 
+    
+    # grab the continuous labels for objects B
+    if isinstance(node_label_name_b, str):
+        labels_for_objects_B = np.array([this_network.nodes[node][node_label_name_b] for node in orginal_nodes_b]) 
+    elif isinstance(node_label_name_b, (list, np.ndarray)):
+        if len(node_label_name_b) != len(orginal_nodes_b):
+            raise ValueError(f'If node_label_name_b is an array, it must be the same length as nodes_b. Got length {len(node_label_name_b)} for node_label_name_b and length {len(orginal_nodes_b)} for nodes_b.')
+        labels_for_objects_B = np.array(node_label_name_b)
+    else:
+        raise ValueError(f'node_label_name_b must be either a string (the name of the node attribute corresponding to the continuous labels for objects B) or an array of continuous values for objects B. Got type {type(node_label_name_b)} for node_label_name_b.')  
+  
+
+    # check that the labels are continuous
+    if not np.issubdtype(labels_for_objects_A.dtype, np.number):
+        raise ValueError(f'The labels for objects A must be continuous (numeric). Got dtype {labels_for_objects_A.dtype} for labels_for_objects_A.')
+    if not np.issubdtype(labels_for_objects_B.dtype, np.number):
+        raise ValueError(f'The labels for objects B must be continuous (numeric). Got dtype {labels_for_objects_B.dtype} for labels_for_objects_B.')
+    
+    
     # filter labels if pop has been filtered
-    these_continuous_labels_A=labels_for_objects_A[np.isin(orginal_object_indices_A,object_indices_A,assume_unique=True)]
-    these_continuous_labels=labels_for_objects_B[np.isin(orginal_object_indices_B,object_indices_B,assume_unique=True)]
+    these_continuous_labels_A=labels_for_objects_A[np.isin(orginal_nodes_a,nodes_a,assume_unique=True)]
+    these_continuous_labels=labels_for_objects_B[np.isin(orginal_nodes_b,nodes_b,assume_unique=True)]
     
     # pre compute the kernel of marker contributions for all target markers
     tau_B = np.arange(marker_min_B, marker_max_B + marker_step_B, marker_step_B)
     
     # each column of the marker contrubutions weighting matrix is the kernel for a different target marker
-    marker_contributions_weighting= np.empty((len(object_indices_B), len(tau_B)))
+    marker_contributions_weighting= np.empty((len(nodes_b), len(tau_B)))
     for i, t in enumerate(tau_B):
         marker_contributions_weighting[:,i] = polynomial_kernel(np.abs(these_continuous_labels - t), n=marker_kernel_n_B, delta_r=marker_kernel_bandwidth_B)
         
-    # total length of the network
-    total_length = this_network.size(weight=edge_weight_name)   
-    largest_edge_length = max(data for _, _, data in this_network.edges(data=edge_weight_name))
-    distance_upper_bound = r_max + r_step + spatial_kernel_bandwidth + largest_edge_length + 1e-6
     # Create a dictionary of all edges with their data for static pass
     edges_with_data = { (u, v): data for u, v, data in this_network.edges(data=edge_weight_name)}
+    
+    # get the edge values as a numpy array for efficient computation of statistics
+    edge_values = np.array(list(edges_with_data.values()))
+    largest_edge_length = np.max(edge_values)
+    total_length = np.sum(edge_values)
+    mean_edge_length = np.mean(edge_values) 
+    
+    discrete_check_lower_bound = polynomial_kernel_bandwidth_scale(spatial_kernel_n,proportion_kernel_mass=0.75)*mean_edge_length
+    
+    if spatial_kernel_bandwidth < discrete_check_lower_bound:
+        print(f"Warning: The spatial kernel bandwidth is set to {spatial_kernel_bandwidth}, which may be too small relative to the mean edge length of the network ({mean_edge_length:.2f}). This could lead to a pair correlation function that is dominated by discrete effects. Consider increasing the spatial kernel bandwidth to at least {discrete_check_lower_bound:.2f} to mitigate this issue.")
+
+    distance_upper_bound = r_max + r_step + spatial_kernel_bandwidth + largest_edge_length + 1e-6
+
     
     node_to_edges = defaultdict(list)
     for edge, weight in edges_with_data.items():
         node_to_edges[edge[0]].append((edge, weight))
         node_to_edges[edge[1]].append((edge, weight))
-       
-    #all_network_distances=dict()
-    
-    all_network_distances = node_node_distance(this_network,object_indices_A, weight=edge_weight_name,limit=distance_upper_bound,low_memory=low_memory,verbose=verbose)
+           
+    all_network_distances = node_node_distance(this_network,nodes_a, weight=edge_weight_name,limit=distance_upper_bound,low_memory=low_memory,verbose=verbose)
 
     r = np.arange(r_min, r_max + r_step, r_step)
     
     # contributions are 
-    contributions= np.empty((len(object_indices_A),len(tau_B), len(r)))    
+    contributions= np.empty((len(nodes_a),len(tau_B), len(r)))    
     if n_jobs == 1:
-        for i, obj_a in enumerate(tqdm(object_indices_A, desc="Computing contributions", unit="contributions", disable=not verbose)):
+        for i, obj_a in enumerate(tqdm(nodes_a, desc="Computing contributions", unit="contributions", disable=not verbose)):
    
-            contributions[i,:,:] = compute_weighted_contributions(obj_a, object_indices_B, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances[obj_a],marker_contributions_weighting,node_to_edges)
-            #compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict):
+            contributions[i,:,:] = compute_weighted_contributions(obj_a, nodes_b, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances[obj_a],marker_contributions_weighting,node_to_edges)
+            #compute_weighted_contributions(object_id_A: np.array, nodes_b: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict):
     else:
-        contributions = np.array(compute_weighted_contributions_parallel(object_indices_A, object_indices_B, r, spatial_kernel_bandwidth,
+        contributions = np.array(compute_weighted_contributions_parallel(nodes_a, nodes_b, r, spatial_kernel_bandwidth,
                                    spatial_kernel_n, total_length, all_network_distances,marker_contributions_weighting,node_to_edges, n_jobs=n_jobs,verbose=verbose))
     
     # now compute the weighting for objects A
     tau_A = np.arange(marker_min_A, marker_max_A + marker_step_A, marker_step_A)
     
     # each column of the marker contrubutions weighting matrix is the kernel for a different target marker
-    marker_contributions_weighting_A= np.empty((len(object_indices_A), len(tau_A)))
-    weighted_contributions = np.empty((len(object_indices_A),  len(tau_A)  ,len(tau_B), len(r)))
+    marker_contributions_weighting_A= np.empty((len(nodes_a), len(tau_A)))
+    weighted_contributions = np.empty((len(nodes_a),  len(tau_A)  ,len(tau_B), len(r)))
 
     # compute the marker contributions and apply to the spatial contributions
     for i, t in enumerate(tau_A):
@@ -176,7 +218,7 @@ def cross_weighted_pair_correlation_function(spatial_network,labels_for_objects_
     # add a method for spatial contributions
     if return_confidence_interval:
         # spatial bootstrap needs to accomodate the tensor
-        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,object_indices_A,weighted_contributions,weight_matrix=marker_contributions_weighting_A)
+        confidence_interval=spatial_bootstrap(this_network,edge_weight_name,nodes_a,weighted_contributions,weight_matrix=marker_contributions_weighting_A)
         return tau_A, tau_B, r, g , confidence_interval
 
     else:

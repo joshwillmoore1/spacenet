@@ -12,7 +12,7 @@ The subpackages are listed below, along with a brief description of each one.
   * - Subpackage
     - Description
   * - :ref:`utils<utils>`
-    - A useful collection of utility functions for spatial network analysis.
+    - A collection of utility functions for spatial network analysis.
   * - :ref:`global_metrics<global_metrics>`
     - Global metrics for spatial networks.
   * - :ref:`node_metrics<node_metrics>`
