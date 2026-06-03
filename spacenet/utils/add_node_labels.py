@@ -45,7 +45,7 @@ def add_node_labels(spatial_network,labels,node_label_name='label',nodes=None):
     labels_to_add = []  
     if isinstance(labels, np.ndarray):
         labels_to_add = labels
-    elif isinstance(labels, list):
+    elif isinstance(labels, (list,pd.arrays.StringArray, pd.Series,pd.Categorical,pd.Index)):
         labels_to_add = np.asarray(labels)
     else:
         raise ValueError(f'Labels should be a list or numpy array of labels. Got {type(labels)} instead.')
