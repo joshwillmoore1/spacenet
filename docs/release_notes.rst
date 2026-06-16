@@ -27,7 +27,7 @@ This is the list of changes to SpaceNet between each version:
     :maxdepth: 1
 
 
-Test Summary
+Test summary
 ------------
 Our test suite is designed to ensure the reliability and correctness of SpaceNet. Our test suite is regularly reviewed and updated to cover new features and edge cases. Below is a summary of the test results from our latest test run.
 

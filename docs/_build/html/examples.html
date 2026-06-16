@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/nbsphinx-gallery.css?v=26227f6e" />
@@ -63,11 +63,13 @@
                 gtag('js', new Date());
                 gtag('config', 'G-HQ98Y5N0C9');
             </script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples';</script>
     <link rel="icon" href="_static/fav.svg"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="references.html" />
+    <link rel="next" title="Generating Spatial Networks from Points" href="_collections/getting_started/generating_spatial_networks_1.html" />
     <link rel="prev" title="spacenet.helpers.batched_dijkstra" href="generated/spacenet.helpers.batched_dijkstra.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -427,7 +429,25 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_collections/getting_started/generating_spatial_networks_1.html">Generating Spatial Networks from Points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_collections/getting_started/generating_spatial_networks_2.html">Generating Spatial Networks from Edge Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_collections/getting_started/node_labels.html">Adding node data (labels)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_collections/getting_started/querying_node_labels.html">Querying node using labels</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_collections/point_patterns/pair_correlation_functions.html">Pair Correlation Functions (netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_collections/point_patterns/cross_pair_correlation_function.html">Cross Pair Correlation Functions (cross-netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_collections/point_patterns/weighted_pair_correlation_functions.html">Weighted Pair Correlation Functions (weighted-netPCF)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_collections/partition/compact_volume_partitions.html">Tiling a spatial network: compact, volume-balanced partitions</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_collections/misc/visualising_spatial_networks.html">Visualising spatial networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_collections/misc/exporting_to_dataframe.html">Export spatial network to dataframe</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -494,19 +514,52 @@ document.write(`
 <span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
 <p>This section provides a collection of examples and tutorials demonstrating how to use
 SpaceNet for spatial network analysis. The examples range from basic usage to more
-advanced methods, including pair correlation functions and partitioning techniques.</p>
+advanced methods.</p>
 <p>Browse the sections below to explore different workflows and applications.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>These examples are only a subset of the available functionality in SpaceNet.
+Our example gallery is continuously growing, if you have an example you would like to share, please submit a pull request on our <a class="reference external" href="https://github.com/joshwillmoore1/spacenet/pulls">GitHub repository</a>.</p>
+</div>
 <section id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <div class="nbsphinx-gallery">
+<a class="reference internal" href="_collections/getting_started/generating_spatial_networks_1.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Generating Spatial Networks from Points</div>
+</a>
+<a class="reference internal" href="_collections/getting_started/generating_spatial_networks_2.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Generating Spatial Networks from Edge Lists</div>
+</a>
+<a class="reference internal" href="_collections/getting_started/node_labels.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Adding node data (labels)</div>
+</a>
+<a class="reference internal" href="_collections/getting_started/querying_node_labels.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Querying node using labels</div>
+</a>
 </div>
 </div>
 </section>
-<section id="pair-correlation-functions">
-<h2>Pair correlation functions<a class="headerlink" href="#pair-correlation-functions" title="Link to this heading">#</a></h2>
+<section id="point-pattern-analysis">
+<h2>Point pattern analysis<a class="headerlink" href="#point-pattern-analysis" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <div class="nbsphinx-gallery">
+<a class="reference internal" href="_collections/point_patterns/pair_correlation_functions.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Pair Correlation Functions (netPCF)</div>
+</a>
+<a class="reference internal" href="_collections/point_patterns/cross_pair_correlation_function.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Cross Pair Correlation Functions (cross-netPCF)</div>
+</a>
+<a class="reference internal" href="_collections/point_patterns/weighted_pair_correlation_functions.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Weighted Pair Correlation Functions (weighted-netPCF)</div>
+</a>
 </div>
 </div>
 </section>
@@ -514,6 +567,10 @@ advanced methods, including pair correlation functions and partitioning techniqu
 <h2>Partitioning methods<a class="headerlink" href="#partitioning-methods" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <div class="nbsphinx-gallery">
+<a class="reference internal" href="_collections/partition/compact_volume_partitions.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Tiling a spatial network: compact, volume-balanced partitions</div>
+</a>
 </div>
 </div>
 </section>
@@ -521,6 +578,14 @@ advanced methods, including pair correlation functions and partitioning techniqu
 <h2>Miscellaneous examples<a class="headerlink" href="#miscellaneous-examples" title="Link to this heading">#</a></h2>
 <div class="toctree-wrapper compound">
 <div class="nbsphinx-gallery">
+<a class="reference internal" href="_collections/misc/visualising_spatial_networks.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Visualising spatial networks</div>
+</a>
+<a class="reference internal" href="_collections/misc/exporting_to_dataframe.html">
+  <div><img alt="" src="./_static/nbsphinx-no-thumbnail.svg"></div>
+  <div>Export spatial network to dataframe</div>
+</a>
 </div>
 </div>
 </section>
@@ -548,8 +613,8 @@ advanced methods, including pair correlation functions and partitioning techniqu
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting Started</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pair-correlation-functions">Pair correlation functions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-started">Getting started</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#point-pattern-analysis">Point pattern analysis</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partitioning-methods">Partitioning methods</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#miscellaneous-examples">Miscellaneous examples</a></li>
 </ul>

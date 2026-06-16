@@ -64,12 +64,44 @@ Below is a minimal example demonstrating how to import SpaceNet and begin workin
 The output of this snippet will be a plot of the spatial network generated from the spiral dataset. 
 The nodes of the network correspond to the points in the dataset, and edges are drawn between nodes that are within a specified distance of each other.
 
-
 Next steps
 ----------
 
-- Explore the :doc:`examples` for detailed tutorials and examples.
+.. grid:: 1 1 1 2
+    :gutter: 2 3 4 4
 
-- Explore the :doc:`Documentation` for full function documentation.
+    .. grid-item-card::
+        :img-top: _static/images/examples.svg
+        :text-align: center
 
+        **Using SpaceNet**
+        ^^^
 
+        Examples of how to use SpaceNet for different applications can be found in the examples section. 
+        The examples are a great way to get started with SpaceNet and to learn how to use it for your own projects.
+
+        +++
+
+        .. button-ref:: examples
+            :color: secondary
+            :click-parent:
+
+            To the examples
+
+    .. grid-item-card::
+        :img-top: _static/images/docs.svg
+        :text-align: center
+
+        **API reference**
+        ^^^
+
+        Explore the full API reference for SpaceNet, including detailed documentation for all functions, classes, and modules. 
+        This is the go-to resource for understanding the capabilities of SpaceNet and how to use them effectively.
+
+        +++
+
+        .. button-ref:: documentation
+            :color: secondary
+            :click-parent:
+
+            To the documentation

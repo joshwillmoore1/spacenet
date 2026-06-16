@@ -112,3 +112,40 @@ html_theme_options = {
     #    "version_match": release,
     #},
 }
+
+
+
+collections = {
+    'basic_tutorials': {
+        'driver': 'copy_folder',
+        'source': '../../spacenet_docs_tutorials/getting_started',
+        'target': 'getting_started/',
+        'ignore': ['*.py', '.sh'],
+    },
+    
+    
+    'misc_tutorials': {
+        'driver': 'copy_folder',
+        'source': '../../spacenet_docs_tutorials/misc',
+        'target': 'misc/',
+        'ignore': ['*.py', '.sh'],
+    },
+    
+    'pp_tutorials': {
+        'driver': 'copy_folder',
+        'source': '../../spacenet_docs_tutorials/point_patterns',
+        'target': 'point_patterns/',
+        'ignore': ['*.py', '.sh'],
+    },
+    
+    'part_tutorials': {
+        'driver': 'copy_folder',
+        'source': '../../spacenet_docs_tutorials/partition',
+        'target': 'partition/',
+        'ignore': ['*.py', '.sh'],
+    },
+
+    
+    
+}
+
