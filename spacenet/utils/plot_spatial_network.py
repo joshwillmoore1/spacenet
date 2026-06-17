@@ -63,7 +63,7 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the delaunay method
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
 
         # plot the spatial network
         sn.utils.plot_spatial_network(G)
@@ -79,7 +79,7 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         points = sprial_df[['x','y','z']].values
 
         # generate a spatial network using the delaunay method
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=30)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=30)
 
         # plot the spatial network
         sn.utils.plot_spatial_network(G)
@@ -96,7 +96,7 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         categorical_labels = sprial_df['Marker (categorical)'].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
         sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (categorical)')
 
         # plot the spatial network with nodes coloured by their categorical label
@@ -115,7 +115,7 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         categorical_labels = sprial_df['Marker (continuous)'].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=35)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=35)
         sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (continuous)')
 
         # plot the spatial network with nodes coloured by their continuous label
@@ -154,7 +154,8 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         not_null_labels = [label for label in labels if label != 'null']
         if len(not_null_labels) == 0:
             raise ValueError(f"No valid labels found for node_label_name '{node_label_name}'.")
-        if isinstance(not_null_labels[0], (str,int,np.integer,np.strings)):
+        
+        if isinstance(not_null_labels[0], (str,int,np.integer)):
             continuous_labels = False
         else:
             continuous_labels = True

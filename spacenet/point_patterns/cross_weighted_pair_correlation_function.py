@@ -109,7 +109,7 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
         continuous_labels = sprial_df['Marker (continuous)'].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
         sn.utils.add_node_labels(G,continuous_labels,node_label_name='Marker (continuous)')
 
         # compute the cross weighted-PCF for the spatial network continuous label 'Marker (continuous)'

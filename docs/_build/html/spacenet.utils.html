@@ -66,7 +66,7 @@
     <link rel="icon" href="_static/fav.svg"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="spacenet.utils.generate_spatial_network" href="generated/spacenet.utils.generate_spatial_network.html" />
+    <link rel="next" title="spacenet.utils.spatial_network_from_points" href="generated/spacenet.utils.spatial_network_from_points.html" />
     <link rel="prev" title="Documentation" href="Documentation.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -428,7 +428,9 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">spacenet.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.generate_spatial_network.html">spacenet.utils.generate_spatial_network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.spatial_network_from_points.html">spacenet.utils.spatial_network_from_points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.spatial_network_from_edgelist.html">spacenet.utils.spatial_network_from_edgelist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.spatial_network_from_adjacency.html">spacenet.utils.spatial_network_from_adjacency</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.add_node_labels.html">spacenet.utils.add_node_labels</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.delete_node_labels.html">spacenet.utils.delete_node_labels</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.utils.query_nodes.html">spacenet.utils.query_nodes</a></li>
@@ -517,8 +519,14 @@ document.write(`
 <h2>Creating and modifying spatial networks<a class="headerlink" href="#creating-and-modifying-spatial-networks" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.generate_spatial_network.html#spacenet.utils.generate_spatial_network" title="spacenet.utils.generate_spatial_network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_spatial_network</span></code></a></p></td>
-<td><p>Generate a spatial network using set of points.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.spatial_network_from_points.html#spacenet.utils.spatial_network_from_points" title="spacenet.utils.spatial_network_from_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_network_from_points</span></code></a></p></td>
+<td><p>Generate a spatial network using set of node coordinates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.utils.spatial_network_from_edgelist.html#spacenet.utils.spatial_network_from_edgelist" title="spacenet.utils.spatial_network_from_edgelist"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_network_from_edgelist</span></code></a></p></td>
+<td><p>Generates a spatial network from a given edgelist and node coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.utils.spatial_network_from_adjacency.html#spacenet.utils.spatial_network_from_adjacency" title="spacenet.utils.spatial_network_from_adjacency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_network_from_adjacency</span></code></a></p></td>
+<td><p>Generates a spatial network from a given adjacency matrix and node coordinates.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.utils.add_node_labels.html#spacenet.utils.add_node_labels" title="spacenet.utils.add_node_labels"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_node_labels</span></code></a></p></td>
 <td><p>A function to add labels to nodes in a spatial network.</p></td>

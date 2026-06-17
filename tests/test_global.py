@@ -13,7 +13,7 @@ def setup_network_and_params():
     
     # grid of points 
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     
     return G
 

@@ -43,7 +43,7 @@ def eccentricity(spatial_network,nodes=None,edge_weight_name='Distance',add_as_n
         points = spiral_data[['x', 'y']].to_numpy()
 
         # generate a spatial network
-        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+        G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
 
         # compute eccentricity for all nodes and add as node label
         ecc_vals,node_ids=sn.node_metrics.eccentricity(G,add_as_node_label=True,node_label_name='eccentricity')

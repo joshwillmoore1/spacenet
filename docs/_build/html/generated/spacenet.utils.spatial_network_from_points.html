@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>spacenet.node_metrics.eccentricity &#8212; SpaceNet</title>
+    <title>spacenet.utils.spatial_network_from_points &#8212; SpaceNet</title>
   
   
   
@@ -62,12 +62,12 @@
                 gtag('js', new Date());
                 gtag('config', 'G-HQ98Y5N0C9');
             </script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.node_metrics.eccentricity';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.utils.spatial_network_from_points';</script>
     <link rel="icon" href="../_static/fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spacenet.node_metrics.clustering_coefficient" href="spacenet.node_metrics.clustering_coefficient.html" />
-    <link rel="prev" title="spacenet.node_metrics.degree" href="spacenet.node_metrics.degree.html" />
+    <link rel="next" title="spacenet.utils.spatial_network_from_edgelist" href="spacenet.utils.spatial_network_from_edgelist.html" />
+    <link rel="prev" title="spacenet.utils" href="../spacenet.utils.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -427,14 +427,20 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../spacenet.utils.html">spacenet.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../spacenet.global_metrics.html">spacenet.global_metrics</a></li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../spacenet.node_metrics.html">spacenet.node_metrics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="spacenet.node_metrics.degree.html">spacenet.node_metrics.degree</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.node_metrics.eccentricity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.node_metrics.clustering_coefficient.html">spacenet.node_metrics.clustering_coefficient</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../spacenet.utils.html">spacenet.utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.utils.spatial_network_from_points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.spatial_network_from_edgelist.html">spacenet.utils.spatial_network_from_edgelist</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.spatial_network_from_adjacency.html">spacenet.utils.spatial_network_from_adjacency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.add_node_labels.html">spacenet.utils.add_node_labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.delete_node_labels.html">spacenet.utils.delete_node_labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.query_nodes.html">spacenet.utils.query_nodes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.plot_spatial_network.html">spacenet.utils.plot_spatial_network</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.print_network_properties.html">spacenet.utils.print_network_properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.utils.nodes_to_dataframe.html">spacenet.utils.nodes_to_dataframe</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.global_metrics.html">spacenet.global_metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../spacenet.node_metrics.html">spacenet.node_metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.centrality.html">spacenet.centrality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.point_patterns.html">spacenet.point_patterns</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../spacenet.partition.html">spacenet.partition</a></li>
@@ -491,9 +497,9 @@ document.write(`
     <li class="breadcrumb-item"><a href="../Documentation.html" class="nav-link">Documentation</a></li>
     
     
-    <li class="breadcrumb-item"><a href="../spacenet.node_metrics.html" class="nav-link">spacenet.node_metrics</a></li>
+    <li class="breadcrumb-item"><a href="../spacenet.utils.html" class="nav-link">spacenet.utils</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">spacenet.nod...</li>
+    <li class="breadcrumb-item active" aria-current="page">spacenet.uti...</li>
   </ul>
 </nav>
 </div>
@@ -510,54 +516,104 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="spacenet-node-metrics-eccentricity">
-<h1>spacenet.node_metrics.eccentricity<a class="headerlink" href="#spacenet-node-metrics-eccentricity" title="Link to this heading">#</a></h1>
+  <section id="spacenet-utils-spatial-network-from-points">
+<h1>spacenet.utils.spatial_network_from_points<a class="headerlink" href="#spacenet-utils-spatial-network-from-points" title="Link to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="spacenet.node_metrics.eccentricity">
-<span class="sig-prename descclassname"><span class="pre">spacenet.node_metrics.</span></span><span class="sig-name descname"><span class="pre">eccentricity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_as_node_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'eccentricity'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.node_metrics.eccentricity" title="Link to this definition">#</a></dt>
-<dd><p>Computes the eccentricity for the nodes in the spatial network.
-The eccentricity of a node is defined as the maximum distance from that node to any other node in the network.
-It provides a measure of how far a node is from the furthest node in the network, and can be used to identify nodes that are central or peripheral in terms of their distance to other nodes.</p>
+<dt class="sig sig-object py" id="spacenet.utils.spatial_network_from_points">
+<span class="sig-prename descclassname"><span class="pre">spacenet.utils.</span></span><span class="sig-name descname"><span class="pre">spatial_network_from_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">network_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Delaunay'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inverse_distance_function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_edge_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_edge_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_of_nearest_neighbours</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.utils.spatial_network_from_points" title="Link to this definition">#</a></dt>
+<dd><p>Generates a spatial network using set of node coordinates.
+Edges will be created between objects based on the selected network type and distance constraints.
+Edge weights for ‘Distance’ and ‘Inverse Distance’ will be added to the network. 
+Node indices correspond to the indices of the input points array.
+Nodes will have a ‘position’ attribute corresponding to their spatial coordinates from the input points array.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>spatial_network</strong><span class="classifier">NetworkX graph</span></dt><dd><p>The spatial network for which to calculate the eccentricity.</p>
+<dt><strong>points</strong><span class="classifier">np.array</span></dt><dd><p>An array of coordinates relating to the spatial location of each node to be used for network generation.</p>
 </dd>
-<dt><strong>nodes</strong><span class="classifier">list or np.ndarray, optional</span></dt><dd><p>The set of nodes to compute the eccentricity. Default is ‘None’, computing for all nodes.</p>
+<dt><strong>network_type</strong><span class="classifier">str, optional</span></dt><dd><p>The type of network to generate. Options are ‘Delaunay’ (Delaunay triangulation), ‘KNN’ (K-nearest neighbour), ‘Proximity’ and ‘RNG’ (relative neighbourhood graph).</p>
 </dd>
-<dt><strong>edge_weight_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the edge attribute in the graph that corresponds to the distance between nodes. Default is ‘Distance’.</p>
+<dt><strong>inverse_distance_function</strong><span class="classifier">callable, optional</span></dt><dd><p>Function to compute inverse distance, by default None.</p>
 </dd>
-<dt><strong>add_as_node_label</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to add the computed eccentricity values as a node attribute in the spatial network. Default is False.</p>
+<dt><strong>min_edge_distance</strong><span class="classifier">float, optional</span></dt><dd><p>Minimum edge distance, by default 0.</p>
 </dd>
-<dt><strong>node_label_name</strong><span class="classifier">str, optional</span></dt><dd><p>The name of the node attribute to which to add the computed eccentricity values if add_as_node_label is True. Default is ‘eccentricity’.</p>
+<dt><strong>max_edge_distance</strong><span class="classifier">float, optional</span></dt><dd><p>Maximum edge distance, by default np.inf.</p>
+</dd>
+<dt><strong>number_of_nearest_neighbours</strong><span class="classifier">int, optional</span></dt><dd><p>Number of nearest neighbours for KNN. Only used for KNN networks, by default 10.</p>
+</dd>
+<dt><strong>node_ids</strong><span class="classifier">array-like, optional</span></dt><dd><p>An array of custom node identifiers corresponding to the input points. If None, enumerated node indices will be used as identifiers. Default is None.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>eccentricity_values</strong><span class="classifier">np.ndarray</span></dt><dd><p>An array of eccentricity values for the specified nodes in the spatial network. The order of the values corresponds to the order of the nodes in the ‘nodes’ parameter.</p>
-</dd>
-<dt><strong>nodes</strong><span class="classifier">np.ndarray</span></dt><dd><p>An array of the node ids for which the eccentricity values were computed. The order of the nodes corresponds to the order of the values in the ‘eccentricity_values’ array.</p>
+<dt>networkx.Graph</dt><dd><p>The generated network. KNN networks will return a directed network (networkx.DiGraph).</p>
 </dd>
 </dl>
 </dd>
 </dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>Delaunay networks estimates a natural geometric triangulation for pointclouds. In spatial applications, a Delaunay network approximates contact-based connectivity using only centroid data. See <a class="reference external" href="https://en.wikipedia.org/wiki/Delaunay_triangulation">Delaunay networks</a> for more information.</p></li>
+<li><p>K-Nearest Neighbours (KNN) networks estimates the local connectivity of points in space by connecting any object to it’s k closest objects. See <a class="reference external" href="https://en.wikipedia.org/wiki/Nearest_neighbor_graph">KNN networks</a> for more information.</p></li>
+<li><p>Proximity networks define connectivity purely by distance thresholds. See <a class="reference external" href="https://www.sciencedirect.com/science/article/pii/S037015731000308X">Proximity networks</a> for more information.</p></li>
+<li><p>Relative Neighbourhood Graph (RNG) esimtates the natural connectivity of points in space. MuSpAn implements the Urquhart approximation to the RNG for computational efficiency. See <a class="reference external" href="https://en.wikipedia.org/wiki/Relative_neighborhood_graph">RNGs</a> for more information.</p></li>
+</ul>
 <p class="rubric">Examples</p>
-<p>You can compute the eccentricity of nodes in a spatial network using the <cite>eccentricity</cite> function. Below is an example of how to use this function to compute the eccentricity for all nodes in a spatial network generated from a set of points.</p>
+<p>Example of generating a spatial Delaunay network from set of point locations:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
 
-<span class="c1"># Load the spiral dataset and extract the &#39;x&#39; and &#39;y&#39; columns as points</span>
-<span class="n">spiral_data</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
-<span class="n">points</span> <span class="o">=</span> <span class="n">spiral_data</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
 
-<span class="c1"># generate a spatial network</span>
-<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="c1"># generate a spatial network using the Delaunay triangulation method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;delaunay&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
 
-<span class="c1"># compute eccentricity for all nodes and add as node label</span>
-<span class="n">ecc_vals</span><span class="p">,</span><span class="n">node_ids</span><span class="o">=</span><span class="n">sn</span><span class="o">.</span><span class="n">node_metrics</span><span class="o">.</span><span class="n">eccentricity</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">add_as_node_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;eccentricity&#39;</span><span class="p">)</span>
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example of generating a spatial proximity network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
 
-<span class="c1"># plot the spatial network with the node label &#39;eccentricity&#39;</span>
-<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;eccentricity&#39;</span><span class="p">)</span>
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the pure distance-based method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;proximity&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example of generating a spatial KNN network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the knn method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;knn&#39;</span><span class="p">,</span><span class="n">number_of_nearest_neighbours</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Example of generating a spatial RNG network from set of point locations:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+
+<span class="c1"># get data from the Spiral dataset</span>
+<span class="n">sprial_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;Spiral&#39;</span><span class="p">)</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">sprial_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># generate a spatial network using the relative neighbourhood method</span>
+<span class="n">G</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">network_type</span><span class="o">=</span><span class="s1">&#39;rng&#39;</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># visualise the spatial network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -586,7 +642,7 @@ It provides a measure of how far a node is from the furthest node in the network
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.node_metrics.eccentricity"><code class="docutils literal notranslate"><span class="pre">eccentricity()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#spacenet.utils.spatial_network_from_points"><code class="docutils literal notranslate"><span class="pre">spatial_network_from_points()</span></code></a></li>
 </ul>
   </nav></div>
 

@@ -81,7 +81,7 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the delaunay method
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
 
         # compute the PCF for the spatial network over all nodes
         radius,pcf_values,con_interval = sn.point_patterns.cross_pair_correlation_function(G,spatial_kernel_bandwidth=80,r_max=1000,return_confidence_interval=True)
@@ -109,7 +109,7 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
         categorical_labels = sprial_df['Marker (categorical)'].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
         sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (categorical)')
 
         # get the node ids for the two categories

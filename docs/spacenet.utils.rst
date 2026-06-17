@@ -11,7 +11,9 @@ Creating and modifying spatial networks
    :toctree: generated/
    :nosignatures:
 
-   generate_spatial_network
+   spatial_network_from_points
+   spatial_network_from_edgelist
+   spatial_network_from_adjacency
    add_node_labels
    delete_node_labels
 

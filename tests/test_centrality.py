@@ -11,7 +11,7 @@ import spacenet as sn
 def setup_network_and_params():
     
     points = np.array([[0, 0], [1, 0], [2, 0], [3, 0],[4, 0]])
-    G = sn.utils.generate_spatial_network(points,network_type='proximity',max_edge_distance=1.5)
+    G = sn.utils.spatial_network_from_points(points,network_type='proximity',max_edge_distance=1.5)
     return G
 
 def test_node_reach(setup_network_and_params):

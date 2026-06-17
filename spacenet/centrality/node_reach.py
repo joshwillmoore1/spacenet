@@ -46,7 +46,7 @@ def node_reach(spatial_network,nodes=None, max_distance=np.inf, edge_weight_name
         points = spiral_data[['x', 'y']].to_numpy()
 
         # generate a spatial network
-        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+        G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
 
         # compute the node reach for each node in the spatial network and add it as a node label
         node_reach_vals,node_ids=sn.centrality.node_reach(G,max_distance=200,add_as_node_label=True,node_label_name='node_reach')

@@ -40,7 +40,7 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
         categorical_labels = sprial_df['Marker (categorical)'].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
         sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (categorical)')
 
         # use query to get node ids for nodes with categorical label A
@@ -61,7 +61,7 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
         categorical_labels = sprial_df['Marker (continuous)'].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
         sn.utils.add_node_labels(G,categorical_labels,node_label_name='Marker (continuous)')
 
         # use query to get node ids for nodes with continuous label > 0.5

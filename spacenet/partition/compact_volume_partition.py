@@ -135,7 +135,7 @@ def compact_volume_partition(
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the delaunay method and add labels
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
 
         # compute a compact volume partition for the spatial network with 5 partitions
         cv_partition = sn.partition.compact_volume_partition(G,k=5)

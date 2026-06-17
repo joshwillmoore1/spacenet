@@ -49,7 +49,7 @@ def closeness(spatial_network, nodes=None,edge_weight_name='Distance',max_distan
         points = spiral_data[['x', 'y']].to_numpy()
 
         # generate a spatial network
-        G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+        G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
 
         # compute the closeness for each node in the spatial network and add it as a node label
         closeness_vals,node_ids=sn.centrality.closeness(G,max_distance=200,add_as_node_label=True,node_label_name='closeness')

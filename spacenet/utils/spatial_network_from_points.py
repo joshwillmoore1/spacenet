@@ -5,9 +5,9 @@ from itertools import chain
 import copy
 
 
-def generate_spatial_network(points,network_type='Delaunay',inverse_distance_function=None,min_edge_distance=0,max_edge_distance=np.inf,number_of_nearest_neighbours=10,node_ids=None):
+def spatial_network_from_points(points,network_type='Delaunay',inverse_distance_function=None,min_edge_distance=0,max_edge_distance=np.inf,number_of_nearest_neighbours=10,node_ids=None):
     """
-    Generate a spatial network using set of points.
+    Generates a spatial network using set of node coordinates.
     Edges will be created between objects based on the selected network type and distance constraints.
     Edge weights for 'Distance' and 'Inverse Distance' will be added to the network. 
     Node indices correspond to the indices of the input points array.
@@ -60,7 +60,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the Delaunay triangulation method
-        G = sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
 
         # visualise the spatial network
         sn.utils.plot_spatial_network(G,edge_weight_name=None)
@@ -76,7 +76,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the pure distance-based method
-        G = sn.utils.generate_spatial_network(points,network_type='proximity',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='proximity',max_edge_distance=75)
 
         # visualise the spatial network
         sn.utils.plot_spatial_network(G,edge_weight_name=None)
@@ -92,7 +92,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the knn method
-        G = sn.utils.generate_spatial_network(points,network_type='knn',number_of_nearest_neighbours=10)
+        G = sn.utils.spatial_network_from_points(points,network_type='knn',number_of_nearest_neighbours=10)
 
         # visualise the spatial network
         sn.utils.plot_spatial_network(G,edge_weight_name=None)
@@ -108,7 +108,7 @@ def generate_spatial_network(points,network_type='Delaunay',inverse_distance_fun
         points = sprial_df[['x','y']].values
 
         # generate a spatial network using the relative neighbourhood method
-        G = sn.utils.generate_spatial_network(points,network_type='rng',max_edge_distance=75)
+        G = sn.utils.spatial_network_from_points(points,network_type='rng',max_edge_distance=75)
 
         # visualise the spatial network
         sn.utils.plot_spatial_network(G,edge_weight_name=None)

@@ -30,16 +30,16 @@ def setup_network_and_params():
                         n_jobs=1)  
 
     # a network generated from the points
-    G_ppp=sn.utils.generate_spatial_network(points,network_type='delaunay',max_edge_distance=100)
+    G_ppp=sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=100)
     
     return G_ppp, netPCF_kwargs
 
-def test_generate_spatial_network():
+def test_spatial_network_from_points():
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G_5 = sn.utils.generate_spatial_network(coordinates,max_edge_distance=5)
-    G_11 = sn.utils.generate_spatial_network(coordinates,max_edge_distance=11)
-    G_50 = sn.utils.generate_spatial_network(coordinates,max_edge_distance=50)
+    G_5 = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=5)
+    G_11 = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=11)
+    G_50 = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=50)
     
     
     assert(G_5.number_of_edges()==0), f"Expected 0 edges for max_edge_distance=5, but got {G_5.number_of_edges()}."
@@ -106,7 +106,7 @@ def test_distance():
     
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     distance = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
     
     assert(distance[0][0]==0)
@@ -120,7 +120,7 @@ def test_distance_cached():
     
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     _ = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
     
     
@@ -140,7 +140,7 @@ def test_clear_distance_cached():
     
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     _ = sn.helpers.node_node_distance(G,sources=np.array(list(G.nodes())),limit=200,verbose=False)
     
     
@@ -158,7 +158,7 @@ def test_clear_distance_cached():
 def test_node_to_dataframe():
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     
     # add some labels
     sn.utils.add_node_labels(G,labels=['A','B','C','D'],node_label_name='celltype')
@@ -202,7 +202,7 @@ def test_subnetwork():
     
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     
     # add some labels
     sn.utils.add_node_labels(G,labels=['A','B','C','D'],node_label_name='celltype')
@@ -230,7 +230,73 @@ def test_shortest_path_cached():
     
     # test a square network with 4 nodes and edges of length 10
     coordinates = np.array([[0, 0], [1, 0], [0, 1], [1, 1]])*10
-    G = sn.utils.generate_spatial_network(coordinates,max_edge_distance=40)
+    G = sn.utils.spatial_network_from_points(coordinates,max_edge_distance=40)
     distance_a_to_b = sn.helpers.shortest_path_length_node_a_to_node_b(G,node_a=0,node_b=3)
 
     assert(distance_a_to_b==np.sqrt(2)*10)
+    
+    
+def test_spatial_network_from_edgelist():
+    
+    spiral_data = sn.datasets.load_dataset('spiral')
+    points = spiral_data[['x', 'y']].to_numpy()
+
+    # generate a spatial network
+    G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
+    
+    edge_list = list(G.edges(data=True))
+    this_edge_list = [(edge_list[v][0],edge_list[v][1] ,edge_list[v][2]['Distance']) for v in range(len(edge_list))]  
+    these_points  = [G.nodes[v]['position'] for v in range(len(G.nodes))]
+        
+        
+    new_G = sn.utils.spatial_network_from_edgelist(these_points, this_edge_list, inverse_distance_function=None)
+    
+    assert G.nodes(data=True) == new_G.nodes(data=True), "Node attributes do not match"
+    for edge in G.edges(data=True):
+        u, v, _ = edge
+        assert np.isclose(G[u][v]['Distance'],new_G[u][v]['Distance'],atol=1e-8), f"Distance attribute does not match for edge ({u}, {v})"
+        
+        
+def test_spatial_network_from_adjacency_sparse():
+    
+    spiral_data = sn.datasets.load_dataset('spiral')
+    points = spiral_data[['x', 'y']].to_numpy()
+
+    # generate a spatial network
+    G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
+    these_points  = [G.nodes[v]['position'] for v in range(len(G.nodes))]
+        
+    sparse_mat = nx.to_scipy_sparse_array(G, weight='Distance')
+        
+    G_sparse=sn.utils.spatial_network_from_adjacency(these_points, sparse_mat, inverse_distance_function=None,node_ids=None)
+    
+    
+    for node in G.nodes:
+        assert (G.nodes[node]['position'] == G_sparse.nodes[node]['position']).all()
+
+    for edge in G.edges(data=True):
+        u, v, _ = edge
+        assert np.isclose(G[u][v]['Distance'], G_sparse[u][v]['Distance'], atol=1e-8), f"Distance attribute does not match for edge ({u}, {v})"
+        
+        
+                
+def test_spatial_network_from_adjacency_numpy():
+    
+    spiral_data = sn.datasets.load_dataset('spiral')
+    points = spiral_data[['x', 'y']].to_numpy()
+
+    # generate a spatial network
+    G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
+    
+    these_points  = [G.nodes[v]['position'] for v in range(len(G.nodes))]
+    numpy_array = nx.to_numpy_array(G, weight='Distance')
+        
+    G_numpy=sn.utils.spatial_network_from_adjacency(these_points, numpy_array, inverse_distance_function=None,node_ids=None)
+    
+    
+    for node in G.nodes:
+        assert (G.nodes[node]['position'] == G_numpy.nodes[node]['position']).all()
+
+    for edge in G.edges(data=True):
+        u, v, _ = edge
+        assert np.isclose(G[u][v]['Distance'], G_numpy[u][v]['Distance'], atol=1e-8), f"Distance attribute does not match for edge ({u}, {v})"

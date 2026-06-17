@@ -8,7 +8,7 @@ This guide will help you install **SpaceNet** and run a minimal example.
 Installation
 ------------
 
-SpaceNet is available on PyPI and can be installed using ``pip``, via ``conda`` from the conda-forge channel, or with modern Python package managers such as ``uv`` and ``pixi``. Choose the method that best suits your environment:
+SpaceNet is available on PyPI and can be installed using ``pip`` or with modern Python package managers such as ``uv`` and ``pixi``. Choose the method that best suits your environment:
 
 .. tab-set::
 
@@ -18,13 +18,6 @@ SpaceNet is available on PyPI and can be installed using ``pip``, via ``conda`` 
         .. code-block:: bash
 
             pip install spacenet
-
-    .. tab-item:: conda
-        :sync: conda
-
-        .. code-block:: bash
-
-            conda install -c conda-forge spacenet
 
     .. tab-item:: uv
         :sync: uv
