@@ -216,7 +216,7 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
     total_length = np.sum(edge_values)
     mean_edge_length = np.mean(edge_values) 
     
-    discrete_check_lower_bound = polynomial_kernel_bandwidth_scale(spatial_kernel_n,proportion_kernel_mass=0.75)*mean_edge_length
+    discrete_check_lower_bound = polynomial_kernel_bandwidth_scale(spatial_kernel_n,proportion_kernel_mass=0.9)*mean_edge_length
     
     if spatial_kernel_bandwidth < discrete_check_lower_bound:
         print(f"Warning: The spatial kernel bandwidth is set to {spatial_kernel_bandwidth}, which may be too small relative to the mean edge length of the network ({mean_edge_length:.2f}). This could lead to a pair correlation function that is dominated by discrete effects. Consider increasing the spatial kernel bandwidth to at least {discrete_check_lower_bound:.2f} to mitigate this issue.")

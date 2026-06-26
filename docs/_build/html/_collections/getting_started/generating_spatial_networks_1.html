@@ -428,6 +428,20 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Generating Spatial Networks from Points</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generating_spatial_networks_2.html">Generating Spatial Networks from Edge Lists</a></li>
+<li class="toctree-l1"><a class="reference internal" href="node_labels.html">Adding node data (labels)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="querying_node_labels.html">Querying node using labels</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/pair_correlation_functions.html">Pair Correlation Functions (netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/cross_pair_correlation_function.html">Cross Pair Correlation Functions (cross-netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/weighted_pair_correlation_functions.html">Weighted Pair Correlation Functions (weighted-netPCF)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../partition/compact_volume_partitions.html">Tiling a spatial network: compact, volume-balanced partitions</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../misc/visualising_spatial_networks.html">Visualising spatial networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/exporting_to_dataframe.html">Export spatial network to dataframe</a></li>
 </ul>
 </div>
 </nav></div>
@@ -497,14 +511,157 @@ document.write(`
                   
   <section id="Generating-Spatial-Networks-from-Points">
 <h1>Generating Spatial Networks from Points<a class="headerlink" href="#Generating-Spatial-Networks-from-Points" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<p>Spatial networks can be constructed from point data using a variety of connectivity models, including volume-exclusion, proximity-based, and constrained connection methods. SpaceNet supports each of these approaches, allowing spatial networks to be generated directly from a set of points.</p>
+<p>In this tutorial, we’ll use the <code class="docutils literal notranslate"><span class="pre">spatial_network_from_points()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">utils</span></code> submodule to construct spatial networks. By default, <code class="docutils literal notranslate"><span class="pre">spatial_network_from_points()</span></code> uses the Delaunay triangulation connectivity model, a widely used volume-exclusion method. Let’s start by generating a network from a random set of points and examine the resulting topology.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># generate a set a points</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span>
+
+<span class="c1"># generate a spatial network from the points using the Delaunay model</span>
+<span class="n">spatial_net</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+
+<span class="c1"># visualise the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 1 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_generating_spatial_networks_1_2_1.png" src="../../_images/_collections_getting_started_generating_spatial_networks_1_2_1.png" />
+</div>
+</div>
+<p>The resulting network is the Delaunay triangulation of the input point set, where each point becomes a node and the triangulation defines the network connectivity.</p>
+<p>A spatial network is simply a network whose nodes and edges have an associated spatial embedding. Each node stores its position in space, while each edge represents a spatial connection between two nodes and is weighted by the Euclidean distance separating them. We can inspect these spatial properties directly:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_network_properties</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+------------------
+Network properties
+------------------
+Number of nodes: 1000
+Number of edges: 2981
+Edge weight names: [&#39;Distance&#39;, &#39;Inverse Distance&#39;]
+Node label names: [&#39;position&#39;]
+------------------
+</pre></div></div>
+</div>
+<p>The network stores the spatial position of each node in the <code class="docutils literal notranslate"><span class="pre">position</span></code> attribute and the Euclidean distance associated with each edge in the <code class="docutils literal notranslate"><span class="pre">Distance</span></code> edge attribute. These edge weights can be visualized by specifying the <code class="docutils literal notranslate"><span class="pre">edge_weight_name</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">plot_spatial_network()</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">edge_weight_name</span><span class="o">=</span><span class="s1">&#39;Distance&#39;</span><span class="p">,</span><span class="n">add_edge_cbar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 2 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_generating_spatial_networks_1_6_1.png" src="../../_images/_collections_getting_started_generating_spatial_networks_1_6_1.png" />
+</div>
+</div>
+<p>The Delaunay triangulation can include relatively long edges that may not represent meaningful spatial connectivity in some applications. To address this, <code class="docutils literal notranslate"><span class="pre">spatial_network_from_points()</span></code> provides <code class="docutils literal notranslate"><span class="pre">max_edge_distance</span></code> and <code class="docutils literal notranslate"><span class="pre">min_edge_distance</span></code> parameters for filtering edges by length during network construction.</p>
+<p>Let’s regenerate the network, this time retaining only edges shorter than 100 distance units.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a spatial network from the points using the Delaunay model</span>
+<span class="n">spatial_net_pruned</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># visualise the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 1 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_generating_spatial_networks_1_8_1.png" src="../../_images/_collections_getting_started_generating_spatial_networks_1_8_1.png" />
+</div>
+</div>
+<p>By filtering edges by length, we can tailor the network connectivity to better represent the spatial relationships in our data. These filtering options are equally applicable to three-dimensional point sets.</p>
+<p>Let’s repeat the previous example, this time using points embedded in 3D space.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a set a points</span>
+<span class="n">points_3d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span>
+
+<span class="c1"># generate a spatial network from the points using the Delaunay model</span>
+<span class="n">spatial_net_3d</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points_3d</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+<span class="c1"># visualise the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net_3d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 1000x800 with 1 Axes&gt;, &lt;Axes3D: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_generating_spatial_networks_1_10_1.png" src="../../_images/_collections_getting_started_generating_spatial_networks_1_10_1.png" />
+</div>
+</div>
+<p>In this tutorial, we’ve introduced the basic functionality for generating spatial networks from point data using the Delaunay triangulation connectivity model. SpaceNet also supports a range of alternative connectivity models, including proximity-based, <em>k</em>-nearest neighbour, relative neighbourhood, and others.</p>
+<p>For details on all available connectivity models and their parameters, see the documentation for <code class="docutils literal notranslate"><span class="pre">spatial_network_from_points()</span></code>.</p>
 </section>
 
 

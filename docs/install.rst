@@ -47,7 +47,7 @@ Below is a minimal example demonstrating how to import SpaceNet and begin workin
    points = spiral_data[['x', 'y']].to_numpy()
 
    # generate a spatial network
-   G = sn.utils.generate_spatial_network(points,max_edge_distance=50)
+   G = sn.utils.spatial_network_from_points(points,max_edge_distance=50)
 
    # plot the spatial network
    sn.utils.plot_spatial_network(G)

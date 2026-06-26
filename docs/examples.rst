@@ -19,7 +19,6 @@ Getting started
 ---------------
 .. nbgallery::
     _collections/getting_started/generating_spatial_networks_1
-    _collections/getting_started/generating_spatial_networks_2
     _collections/getting_started/node_labels
     _collections/getting_started/querying_node_labels
 

@@ -235,9 +235,17 @@ def plot_spatial_network(spatial_network,node_label_name=None,nodes_to_plot=None
         
         if continuous_labels:
             
-            
-            max_not_null_label = np.max(not_null_labels)
-            min_not_null_label = np.min(not_null_labels)
+            if 'vmax' not in scatter_kwargs:
+                max_not_null_label = np.max(not_null_labels)
+            else:
+                max_not_null_label = scatter_kwargs['vmax']
+                scatter_kwargs.pop('vmax')
+            if 'vmin' not in scatter_kwargs:
+                min_not_null_label = np.min(not_null_labels)
+            else:
+                min_not_null_label = scatter_kwargs['vmin']
+                scatter_kwargs.pop('vmin')
+                
             null_value = min_not_null_label-1
             labels = np.array([label if label != 'null' else null_value for label in labels])
             

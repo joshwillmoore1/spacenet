@@ -69,6 +69,8 @@
     <link rel="icon" href="../../_static/fav.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Querying node using labels" href="querying_node_labels.html" />
+    <link rel="prev" title="Generating Spatial Networks from Edge Lists" href="generating_spatial_networks_2.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -178,7 +180,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../examples.html">
     Examples
   </a>
@@ -303,9 +305,7 @@ document.write(`
       
       
       
-        
-      
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -334,7 +334,7 @@ document.write(`
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../examples.html">
     Examples
   </a>
@@ -420,6 +420,33 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="generating_spatial_networks_1.html">Generating Spatial Networks from Points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generating_spatial_networks_2.html">Generating Spatial Networks from Edge Lists</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Adding node data (labels)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="querying_node_labels.html">Querying node using labels</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/pair_correlation_functions.html">Pair Correlation Functions (netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/cross_pair_correlation_function.html">Cross Pair Correlation Functions (cross-netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/weighted_pair_correlation_functions.html">Weighted Pair Correlation Functions (weighted-netPCF)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../partition/compact_volume_partitions.html">Tiling a spatial network: compact, volume-balanced partitions</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../misc/visualising_spatial_networks.html">Visualising spatial networks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../misc/exporting_to_dataframe.html">Export spatial network to dataframe</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item"><nav class="sidebar-indices-items" aria-labelledby="pst-indices-navigation-heading-2">
@@ -462,6 +489,9 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../../examples.html" class="nav-link">Examples</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page">Adding node...</li>
   </ul>
 </nav>
@@ -481,14 +511,324 @@ document.write(`
                   
   <section id="Adding-node-data-(labels)">
 <h1>Adding node data (labels)<a class="headerlink" href="#Adding-node-data-(labels)" title="Link to this heading">#</a></h1>
+<p>In many applications, nodes in a spatial network carry additional information beyond their spatial location. These properties, commonly referred to as <em>node attributes</em> in network science, can describe characteristics of each node, such as its type, class, or any other associated metadata. Node attributes may be categorical or continuous (numeric), and they do not need to be available for every node in the network.</p>
+<p>In this tutorial, we’ll walk through how to add node labels to a spatial network. Node labels can be useful for identifying and analysing specific subsets of nodes, as well as for visualising different node populations.</p>
+<p>We’ll begin by loading a reference dataset containing point coordinates together with several categorical and continuous node labels.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># load in the example dataset &#39;sprial&#39;</span>
+<span class="n">spiral_data</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
+
+<span class="c1"># output the dataframe to see some of the properties</span>
+<span class="n">spiral_data</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+      <th>Random marker (categorical)</th>
+      <th>Marker (categorical)</th>
+      <th>Random marker (continuous)</th>
+      <th>Marker (continuous)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>705.221202</td>
+      <td>839.551553</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0.077634</td>
+      <td>0.993924</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>623.482970</td>
+      <td>754.857152</td>
+      <td>B</td>
+      <td>B</td>
+      <td>-0.605651</td>
+      <td>-0.998640</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>413.758752</td>
+      <td>60.720287</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0.820813</td>
+      <td>0.812924</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>668.320495</td>
+      <td>527.512054</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0.391962</td>
+      <td>0.821566</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>21.976947</td>
+      <td>591.338045</td>
+      <td>B</td>
+      <td>C</td>
+      <td>-0.215937</td>
+      <td>0.331704</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1154</th>
+      <td>65.871053</td>
+      <td>316.582439</td>
+      <td>A</td>
+      <td>C</td>
+      <td>0.412209</td>
+      <td>0.552758</td>
+    </tr>
+    <tr>
+      <th>1155</th>
+      <td>349.433537</td>
+      <td>435.757872</td>
+      <td>A</td>
+      <td>A</td>
+      <td>0.329032</td>
+      <td>0.789686</td>
+    </tr>
+    <tr>
+      <th>1156</th>
+      <td>227.878251</td>
+      <td>504.365859</td>
+      <td>B</td>
+      <td>A</td>
+      <td>-0.803192</td>
+      <td>0.648041</td>
+    </tr>
+    <tr>
+      <th>1157</th>
+      <td>593.403352</td>
+      <td>93.866045</td>
+      <td>A</td>
+      <td>C</td>
+      <td>0.033997</td>
+      <td>-0.573464</td>
+    </tr>
+    <tr>
+      <th>1158</th>
+      <td>651.824177</td>
+      <td>288.768760</td>
+      <td>B</td>
+      <td>C</td>
+      <td>-0.636174</td>
+      <td>-0.367643</td>
+    </tr>
+  </tbody>
+</table>
+<p>1159 rows × 6 columns</p>
+</div></div>
+</div>
+<p>The dataframe contains the point coordinates (<code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>) together with several additional columns of node labels. Let’s first extract the coordinates and the categorical label, <code class="docutils literal notranslate"><span class="pre">Marker</span> <span class="pre">(categorical)</span></code>, into a format suitable for constructing a spatial network with SpaceNet.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract the point data</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># extract the categorical labels</span>
+<span class="n">cat_labels</span> <span class="o">=</span> <span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;Marker (categorical)&#39;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
+<p>Now that we have the point coordinates and their corresponding labels in the same order, we can generate a spatial network and add the labels to its nodes using <code class="docutils literal notranslate"><span class="pre">add_node_labels()</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a spatial network</span>
+<span class="n">spatial_net</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">75</span><span class="p">)</span>
+
+<span class="c1"># add the categorical labels to the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">cat_labels</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;demo label (cat)&#39;</span><span class="p">)</span>
+
+<span class="c1"># check the nodes have been added</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_network_properties</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+------------------
+Network properties
+------------------
+Number of nodes: 1159
+Number of edges: 3165
+Edge weight names: [&#39;Distance&#39;, &#39;Inverse Distance&#39;]
+Node label names: [&#39;position&#39;, &#39;demo label (cat)&#39;]
+------------------
+</pre></div></div>
+</div>
+<p>The node labels have now been added to the spatial network. We can visualise them by colouring the nodes according to their label values using the <code class="docutils literal notranslate"><span class="pre">node_label_name</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">plot_spatial_network()</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the spatial network with nodes colored by the demo labels</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;demo label (cat)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 2 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_node_labels_8_1.png" src="../../_images/_collections_getting_started_node_labels_8_1.png" />
+</div>
+</div>
+<p>The nodes are now coloured according to their categorical labels, revealing the sequence of labels (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, and <code class="docutils literal notranslate"><span class="pre">C</span></code>) along the spiral.</p>
+<p>The same workflow also applies to continuous labels. Let’s demonstrate this by extracting the <code class="docutils literal notranslate"><span class="pre">Marker</span> <span class="pre">(continuous)</span></code> values from the dataframe and adding them to the spatial network.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># extract the categorical labels</span>
+<span class="n">cont_labels</span> <span class="o">=</span> <span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;Marker (continuous)&#39;</span><span class="p">]</span>
+
+<span class="c1"># add the categorical labels to the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">cont_labels</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;demo label (cont)&#39;</span><span class="p">)</span>
+
+<span class="c1"># check the nodes have been added</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">print_network_properties</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+------------------
+Network properties
+------------------
+Number of nodes: 1159
+Number of edges: 3165
+Edge weight names: [&#39;Distance&#39;, &#39;Inverse Distance&#39;]
+Node label names: [&#39;position&#39;, &#39;demo label (cat)&#39;, &#39;demo label (cont)&#39;]
+------------------
+</pre></div></div>
+</div>
+<p>Now we have the additional node label ‘demo label (cont)’ and we can visualise this as before.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># visualise the spatial network with continuous labels</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;demo label (cont)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 2 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_node_labels_12_1.png" src="../../_images/_collections_getting_started_node_labels_12_1.png" />
+</div>
+</div>
+<p>Notice that <code class="docutils literal notranslate"><span class="pre">plot_spatial_network()</span></code> automatically distinguishes between categorical and continuous node labels, selecting an appropriate colouring scheme for each. For this example, the default <code class="docutils literal notranslate"><span class="pre">viridis</span></code> colormap is not ideal for the continuous data, but it can easily be replaced with a diverging colormap using the plotting options.</p>
+<p>In some applications, labels are only available for a subset of nodes. This can be handled by specifying the node IDs to associate with the labels using the <code class="docutils literal notranslate"><span class="pre">nodes</span></code> parameter in <code class="docutils literal notranslate"><span class="pre">add_node_labels()</span></code>. In the example below, we’ll add a new label only to the nodes with the <code class="docutils literal notranslate"><span class="pre">Marker</span> <span class="pre">A</span></code> category.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><br/><span></span><span class="c1"># getting a subset of the labels and the node IDs associated with these labels</span>
+<span class="n">cat_labels_subset</span> <span class="o">=</span> <span class="n">cat_labels</span><span class="p">[</span><span class="n">cat_labels</span><span class="o">==</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+<span class="n">nodes_with_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">cat_labels</span><span class="o">==</span><span class="s1">&#39;A&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># add the categorical labels to the network to only a subset</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">cat_labels_subset</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;subset demo label (cat)&#39;</span><span class="p">,</span><span class="n">nodes</span><span class="o">=</span><span class="n">nodes_with_A</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network with the subset labels</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;subset demo label (cat)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 2 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_getting_started_node_labels_14_1.png" src="../../_images/_collections_getting_started_node_labels_14_1.png" />
+</div>
+</div>
+<p>Nodes without an associated label are displayed using the default grey colour.</p>
+<p>In this tutorial, we’ve shown how to add both categorical and continuous node labels to a spatial network. Visualising these labels provides a convenient way to verify that they have been assigned correctly, and they can subsequently be used to query, filter, and analyse specific subsets of nodes.</p>
 </section>
 
 

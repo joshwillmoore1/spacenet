@@ -91,11 +91,11 @@ def query_nodes(spatial_network,node_label_name=None,relation='is',node_label_va
     if relation in ['is', '==']:
         node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) == node_label_value]
     elif relation in ['contains','in']:
-        node_indices = [node for node, data in spatial_network.nodes(data=True) if node_label_value in data.get(node_label_name, '')]
+        node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name, '') in node_label_value]
     elif relation in ['is not','!=']:
         node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name) != node_label_value]
     elif relation in ['does not contain','not in']:
-        node_indices = [node for node, data in spatial_network.nodes(data=True) if node_label_value not in data.get(node_label_name, '')]
+        node_indices = [node for node, data in spatial_network.nodes(data=True) if data.get(node_label_name, '') not in node_label_value]
     
     # Note: The following comparisons assume that the node label values are numeric. If they are not, this will raise an error.
     elif relation in ['greater than','>']:
