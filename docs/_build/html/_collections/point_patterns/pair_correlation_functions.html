@@ -43,7 +43,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=2caa9db7"></script>
+    <script src="../../_static/documentation_options.js?v=5aa371e9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -69,6 +69,8 @@
     <link rel="icon" href="../../_static/fav.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Cross Pair Correlation Functions (cross-netPCF)" href="cross_pair_correlation_function.html" />
+    <link rel="prev" title="Querying nodes with labels" href="../getting_started/querying_node_labels.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -178,7 +180,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../examples.html">
     Examples
   </a>
@@ -303,9 +305,7 @@ document.write(`
       
       
       
-        
-      
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -334,7 +334,7 @@ document.write(`
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../examples.html">
     Examples
   </a>
@@ -420,6 +420,28 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/generating_spatial_networks_1.html">Generating Spatial Networks from Points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/node_labels.html">Adding node data (labels)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/querying_node_labels.html">Querying nodes with labels</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Pair Correlation Functions (netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cross_pair_correlation_function.html">Cross Pair Correlation Functions (cross-netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="weighted_pair_correlation_functions.html">Weighted Pair Correlation Functions (weighted-netPCF)</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../partition/compact_volume_partitions.html">Tiling a spatial network: compact, volume-balanced partitions</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item"><nav class="sidebar-indices-items" aria-labelledby="pst-indices-navigation-heading-2">
@@ -462,6 +484,9 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../../examples.html" class="nav-link">Examples</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page">Pair...</li>
   </ul>
 </nav>
@@ -481,14 +506,305 @@ document.write(`
                   
   <section id="Pair-Correlation-Functions-(netPCF)">
 <h1>Pair Correlation Functions (netPCF)<a class="headerlink" href="#Pair-Correlation-Functions-(netPCF)" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<p>The pair correlation function (PCF) is a widely used tool in spatial statistics for quantifying spatial relationships across multiple length scales. Rather than summarising a point pattern with a single statistic, the PCF measures how the local density of points changes as a function of distance. At each distance, it compares the observed density of points contain within a kernel centred about each point at that distance, with the density expected under a statistical null model of spatial
+positions, providing a scale-dependent measure of spatial organisation.</p>
+<p>Recently, the PCF was extended to spatial networks in:</p>
+<p><strong>Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology.</strong> DOI: …</p>
+<p>The netPCF reformulates the PCF on spatial networks by defining the continuum of space along the network edges and measuring distances using network (geodesic) distance rather than Euclidean distance, using the data itself to define the domain of interest. The statistical null here is Complete Spatial Randomness on the network (a common choice when no prior knowledge of spatial distribution is known), so the interpretation of netPCF is:</p>
+<ul class="simple">
+<li><p>Values greater than <strong>1</strong> indicate clustering (co-localisation) at that distance.</p></li>
+<li><p>Values less than <strong>1</strong> indicate spatial exclusion or inhibition.</p></li>
+<li><p>Values close to <strong>1</strong> indicate spatial randomness.</p></li>
+</ul>
+<p>This notebook introduces the simplest form of the network pair correlation function, <code class="docutils literal notranslate"><span class="pre">netPCF</span></code>, which quantifies the spatial correlations within a single population of nodes. We’ll begin by importing a sample dataset, and creating a spatial network with labels.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.dpi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">150</span>
+
+<span class="c1"># load in the example dataset &#39;sprial&#39;</span>
+<span class="n">spiral_data</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;spiral&#39;</span><span class="p">)</span>
+
+<span class="c1"># extract the point data and labels</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span><span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">cat_labels</span> <span class="o">=</span> <span class="n">spiral_data</span><span class="p">[</span><span class="s1">&#39;Marker (categorical)&#39;</span><span class="p">]</span>
+
+<span class="c1"># generate a spatial network and add the labels</span>
+<span class="n">spatial_net</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">77</span><span class="p">)</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">labels</span><span class="o">=</span><span class="n">cat_labels</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;label (cat)&#39;</span><span class="p">)</span>
+
+<span class="c1"># plot the spatial network with nodes colored by the demo labels</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;label (cat)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 960x720 with 2 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_point_patterns_pair_correlation_functions_2_1.png" src="../../_images/_collections_point_patterns_pair_correlation_functions_2_1.png" />
+</div>
+</div>
+<p>Although we’re computing the single-population network PCF (<code class="docutils literal notranslate"><span class="pre">netPCF</span></code>), we’ll use the <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code> function. This is because <code class="docutils literal notranslate"><span class="pre">netPCF</span></code> is simply a special case of the more general cross-network PCF, which quantifies spatial relationships between two distinct node populations. We’ll introduce the full cross-network formulation in the next tutorial.</p>
+<p>As a simple validation, the points defining the spiral were generated from a Poisson point process. Since a Poisson point process corresponds to complete spatial randomness (CSR), irrespective of the geometry of the underlying domain, we expect the estimated pair correlation function to remain close to <strong>1</strong> across all distances.</p>
+<p>To compute the network PCF, there are three key parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spatial_kernel_bandwidth</span></code>: the one-sided bandwidth of the spatial kernel used to estimate local point densities.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r_max</span></code>: the maximum network distance over which to compute the pair correlation function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">r_step</span></code>: the spacing between successive distance values.</p></li>
+</ul>
+<p>Additional parameters control the choice and shape of the spatial kernel, but we’ll use the default settings in this tutorial.</p>
+<p>Let’s now compute the network PCF for all nodes in the spiral network. By default, <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code> uses every node in the spatial network unless specific node populations are provided.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># estimate the netPCF over all nodes in the spatial network</span>
+<span class="n">radii</span><span class="p">,</span><span class="n">pcf_values</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">point_patterns</span><span class="o">.</span><span class="n">cross_pair_correlation_function</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span>
+                                                                     <span class="n">spatial_kernel_bandwidth</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                                                                     <span class="n">r_max</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                                                                     <span class="n">r_step</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing node-node distances...
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Computing contributions: 100%|██████████| 1159/1159 [00:03&lt;00:00, 299.89contributions/s]
+</pre></div></div>
+</div>
+<p>By default, <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code> returns two outputs:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">radii</span></code>: the network distances at which the pair correlation function is evaluated.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pcf_values</span></code>: the corresponding estimated pair correlation values.</p></li>
+</ol>
+<p>Let’s visualise the result by plotting the estimated pair correlation function alongside the CSR expectation of <strong>1</strong>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the outputs</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:grey&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span><span class="n">pcf_values</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius, r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Pair Correlation&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Pair Correlation&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_point_patterns_pair_correlation_functions_6_1.png" src="../../_images/_collections_point_patterns_pair_correlation_functions_6_1.png" />
+</div>
+</div>
+<p>The estimated pair correlation function remains close to <strong>1</strong> across the full range of network distances, indicating that the point pattern is consistent with complete spatial randomness (CSR) over the spatial network. This is the expected result, as the dataset was generated from a Poisson point process. The slight reduction below <strong>1</strong> at very short distances is a boundary effect caused by the thin spiral geometry, where much of the network lies close to the domain boundary.</p>
+<p>To assess the uncertainty of the estimated pair correlation function, SpaceNet implements a spatial bootstrap procedure for constructing confidence intervals. This approach, originally developed for Euclidean domains and extended to spatial networks in the reference paper, estimates the spatial variability of the correlation function across the network.</p>
+<p>Confidence intervals can be computed by setting <code class="docutils literal notranslate"><span class="pre">return_confidence_interval=True</span></code>, which returns the lower and upper 95% confidence bounds alongside the pair correlation estimate.</p>
+<p>Let’s repeat the analysis, this time requesting the confidence intervals.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># estimate netPCF over all nodes with the confidence interval</span>
+<span class="n">radii</span><span class="p">,</span><span class="n">pcf_values</span><span class="p">,</span><span class="n">con_inter</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">point_patterns</span><span class="o">.</span><span class="n">cross_pair_correlation_function</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span>
+                                                                               <span class="n">spatial_kernel_bandwidth</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                                                                               <span class="n">r_max</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                                                                               <span class="n">r_step</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                                                               <span class="n">return_confidence_interval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Getting cached node-node distances...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Computing contributions: 100%|██████████| 1159/1159 [00:02&lt;00:00, 506.38contributions/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing confidence intervals via spatial bootstrap...
+</pre></div></div>
+</div>
+<p>The function now returns an additional output, <code class="docutils literal notranslate"><span class="pre">con_inter</span></code>, containing the lower and upper 95% confidence bounds for the estimated pair correlation function. We can visualise these confidence intervals as a shaded region around the estimate, as shown below.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the output</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:grey&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span><span class="n">con_inter</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">con_inter</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span><span class="n">pcf_values</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius, r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Pair Correlation&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Pair Correlation&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_point_patterns_pair_correlation_functions_10_1.png" src="../../_images/_collections_point_patterns_pair_correlation_functions_10_1.png" />
+</div>
+</div>
+<p>The confidence intervals are relatively narrow, indicating that the estimated pair correlation function is spatially consistent across the network. In other words, the local correlation estimates obtained from different regions of the network show relatively little variation.</p>
+<p>So far, we’ve computed the network PCF using every node in the spatial network. In many applications, however, we’re interested in the spatial organisation of a specific node population. For example, we may wish to quantify the spatial distribution of only the nodes labelled <code class="docutils literal notranslate"><span class="pre">A</span></code>.</p>
+<p>This can be achieved by passing a subset of node IDs to <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code>. When the same subset is supplied as both the reference and target populations, the function computes the standard network pair correlation function (<code class="docutils literal notranslate"><span class="pre">netPCF</span></code>) for that node population.</p>
+<p><strong>Note:</strong> The analysis domain is defined by the edges of the spatial network, not by the subset of nodes selected for analysis. Consequently, the estimated pair correlation function is always interpreted relative to the complete spatial network supplied to <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code>, even when only a subset of nodes is used to compute the statistic.</p>
+<p>Let’s first use the query functionality to identify the nodes labelled <code class="docutils literal notranslate"><span class="pre">A</span></code>, and then compute the network PCF for this subset.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the node IDs of all nodes with label A</span>
+<span class="n">nodes_A</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">query_nodes</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;label (cat)&#39;</span><span class="p">,</span><span class="n">relation</span><span class="o">=</span><span class="s1">&#39;==&#39;</span><span class="p">,</span><span class="n">node_label_value</span><span class="o">=</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+
+<span class="c1"># estimate netPCF over all points with label A</span>
+<span class="n">radii_a</span><span class="p">,</span><span class="n">pcf_values_a</span><span class="p">,</span><span class="n">con_inter_a</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">point_patterns</span><span class="o">.</span><span class="n">cross_pair_correlation_function</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span>
+                                                                                     <span class="n">nodes_a</span><span class="o">=</span><span class="n">nodes_A</span><span class="p">,</span>
+                                                                                     <span class="n">nodes_b</span><span class="o">=</span><span class="n">nodes_A</span><span class="p">,</span>
+                                                                                     <span class="n">spatial_kernel_bandwidth</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                                                                                     <span class="n">r_max</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+                                                                                     <span class="n">r_step</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                                                                                     <span class="n">return_confidence_interval</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Getting cached node-node distances...
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Computing contributions: 100%|██████████| 326/326 [00:00&lt;00:00, 553.19contributions/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Computing confidence intervals via spatial bootstrap...
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<p>As before, we can plot the estimated pair correlation function together with its corresponding confidence intervals. For comparison, we’ll also include the estimate computed using all nodes in the spatial network.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the PCF curves estimated over the points A and over all nodes for comparison</span>
+<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:grey&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span><span class="n">con_inter</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">con_inter</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radii</span><span class="p">,</span><span class="n">pcf_values</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;netPCF: All nodes&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">radii_a</span><span class="p">,</span><span class="n">con_inter_a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">con_inter_a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">radii_a</span><span class="p">,</span><span class="n">pcf_values_a</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;tab:blue&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;netPCF: A nodes&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">3.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Radius, r&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Pair Correlation&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x167b0b4a0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_point_patterns_pair_correlation_functions_14_1.png" src="../../_images/_collections_point_patterns_pair_correlation_functions_14_1.png" />
+</div>
+</div>
+<p>Unlike the estimate computed using all nodes, the network PCF for the <code class="docutils literal notranslate"><span class="pre">A</span></code>-labelled nodes exhibits alternating peaks and troughs. Peaks (values greater than <strong>1</strong>) indicate clustering at particular network distances, while troughs (values less than <strong>1</strong>) indicate spatial exclusion.</p>
+<p>This behaviour arises because the <code class="docutils literal notranslate"><span class="pre">A</span></code>-labelled nodes are arranged periodically along the spiral. As the pair correlation function is evaluated over increasing network distances, it encounters alternating distances at which <code class="docutils literal notranslate"><span class="pre">A</span></code>-labelled nodes are either more or less likely to occur than expected under complete spatial randomness. The resulting oscillatory pattern reflects the regular spacing of this node population along the network.</p>
+<p>There are many additional parameters that can be explored. In particular, the kernel bandwidth and kernel shape determine the spatial scale over which local point densities are estimated and therefore influence the appearance of the pair correlation function. There is no universally optimal choice of these parameters, so exploring different settings can provide additional insight into the spatial organisation of your data.</p>
+<p>In summary, the network pair correlation function (<code class="docutils literal notranslate"><span class="pre">netPCF</span></code>) provides a principled way to quantify spatial organisation over a spatial network, identifying both the characteristic length scales and the nature of spatial interactions, including clustering and spatial exclusion.</p>
 </section>
 
 

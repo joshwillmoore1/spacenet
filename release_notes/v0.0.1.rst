@@ -1,0 +1,71 @@
+v0.0.1
+======
+
+We are pleased to announce the initial public release of **SpaceNet**, an
+open-source Python package for the spatial analysis of spatial networks.
+
+SpaceNet provides a collection of methods for analysing the structure,
+geometry, and spatial characteristics of embedded networks, with a particular
+focus on supporting methodological development in spatial network analysis.
+The package offers a consistent API built on top of common scientific Python
+libraries and is designed for both research and applied workflows.
+
+
+Global Network Metrics
+----------------------
+
+* Computation of global summary statistics for spatial networks, including
+  measures such as network length, alpha index, and mean detour index.
+
+Node Metrics
+------------
+
+* Functions for computing node-level geometric and topological properties.
+
+Point Pattern Analysis
+----------------------
+
+The first release introduces the **network pair correlation function (netPCF)**
+framework for analysing point patterns defined on spatial networks,
+including:
+
+* Univariate netPCF
+* Cross-netPCF
+* Weighted-netPCF for continuous node attributes
+
+Partition methods
+-----------------
+
+The initial release comes with novel algorithms for node partitions of spatial networks (compact-volume-balanced partitions).
+
+Datasets
+--------
+
+* Example datasets for tutorials, demonstrations, and reproducible examples.
+
+Utilities
+---------
+
+* Helper functions for constructing, validating, and manipulating spatial
+  network objects.
+
+Documentation
+-------------
+
+The documentation includes:
+
+* Installation instructions
+* API reference
+* Worked tutorials
+* Example workflows demonstrating the use of the netPCF framework
+
+Acknowledgements
+----------------
+
+SpaceNet has been developed to support research into spatial network analysis
+and the development of new statistical methodology for spatially embedded
+networks.
+
+We welcome bug reports, feature requests, and community contributions through
+the project's GitHub repository.
+```

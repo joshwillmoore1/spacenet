@@ -145,6 +145,13 @@ collections = {
         'ignore': ['*.py', '.sh'],
     },
 
+    'rel_notes': {
+        'driver': 'copy_folder',
+        'source': '../release_notes',
+        'target': 'release_notes/',
+        'ignore': ['*.py', '.sh'],
+    },
+
     
     
 }

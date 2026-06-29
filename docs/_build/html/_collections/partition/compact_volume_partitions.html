@@ -43,7 +43,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=2caa9db7"></script>
+    <script src="../../_static/documentation_options.js?v=5aa371e9"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -69,6 +69,8 @@
     <link rel="icon" href="../../_static/fav.svg"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="References" href="../../references.html" />
+    <link rel="prev" title="Weighted Pair Correlation Functions (weighted-netPCF)" href="../point_patterns/weighted_pair_correlation_functions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -178,7 +180,7 @@
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../examples.html">
     Examples
   </a>
@@ -303,9 +305,7 @@ document.write(`
       
       
       
-        
-      
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -334,7 +334,7 @@ document.write(`
 </li>
 
 
-<li class="nav-item ">
+<li class="nav-item current active">
   <a class="nav-link nav-internal" href="../../examples.html">
     Examples
   </a>
@@ -420,6 +420,28 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/generating_spatial_networks_1.html">Generating Spatial Networks from Points</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/node_labels.html">Adding node data (labels)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started/querying_node_labels.html">Querying nodes with labels</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/pair_correlation_functions.html">Pair Correlation Functions (netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/cross_pair_correlation_function.html">Cross Pair Correlation Functions (cross-netPCF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../point_patterns/weighted_pair_correlation_functions.html">Weighted Pair Correlation Functions (weighted-netPCF)</a></li>
+</ul>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Tiling a spatial network: compact, volume-balanced partitions</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
       <div class="sidebar-primary-item"><nav class="sidebar-indices-items" aria-labelledby="pst-indices-navigation-heading-2">
@@ -462,6 +484,9 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="../../examples.html" class="nav-link">Examples</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page">Tiling a...</li>
   </ul>
 </nav>
@@ -481,14 +506,211 @@ document.write(`
                   
   <section id="Tiling-a-spatial-network:-compact,-volume-balanced-partitions">
 <h1>Tiling a spatial network: compact, volume-balanced partitions<a class="headerlink" href="#Tiling-a-spatial-network:-compact,-volume-balanced-partitions" title="Link to this heading">#</a></h1>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<p>Partitioning a spatial domain into contiguous regions of similar size is a common task in spatial analysis. Such partitions provide a natural way to perform local analyses, construct spatially resolved statistics, generate subnetworks, or divide large datasets into manageable regions for parallel computation. In Euclidean domains, this is often achieved by tessellating or tiling the underlying space.</p>
+<p>For spatial networks, however, the problem is less straightforward. The domain is defined by the network edges rather than a continuous geometric region, so there is no natural notion of area or volume over which to construct a conventional tessellation. Instead, a useful partitioning algorithm should produce contiguous groups of nodes that each represent a similar amount of the underlying network while remaining spatially compact.</p>
+<p>Although many graph partitioning and community detection algorithms exist, they are generally designed to maximise network modularity or minimise edge cuts, rather than balance the amount of network contained within each partition. Consequently, they do not typically produce partitions that resemble a spatial tiling.</p>
+<p>To address this, SpaceNet implements a compact, volume-balanced partitioning algorithm that adapts the refinement strategy of the Leiden algorithm. Rather than optimising modularity, the algorithm seeks to generate connected partitions that balance the edge volume assigned to each partition while simultaneously promoting spatial compactness in the network distance metric. Together, these objectives produce partitions that closely approximate the desirable properties of a spatial tiling on a
+network.</p>
+<p>Further details of the algorithm are available in:</p>
+<p><strong>Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology.</strong> DOI: …</p>
+<p>In this tutorial, we’ll introduce the compact, volume-balanced partitioning algorithm and demonstrate how it can be used to partition spatial networks for downstream analysis. We’ll begin by generating a spatial network of random points.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
 </pre></div>
 </div>
-<div class="input_area highlight-python notranslate"><div class="highlight"><pre><span></span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># imports and seed setting</span>
+<span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># generate a set of random points</span>
+<span class="n">points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span>
+
+<span class="c1"># construct a spatial network</span>
+<span class="n">spatial_net</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># plot the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 1 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_partition_compact_volume_partitions_2_1.png" src="../../_images/_collections_partition_compact_volume_partitions_2_1.png" />
+</div>
+</div>
+<p>Suppose we would like to partition this spatial network into four contiguous regions with approximately equal edge volume. This can be achieved using the <code class="docutils literal notranslate"><span class="pre">compact_volume_partition()</span></code> function.</p>
+<p>At a high level, the algorithm partitions the network into <code class="docutils literal notranslate"><span class="pre">k</span></code> connected communities while jointly optimising two objectives: balancing the total edge volume assigned to each partition and promoting spatial compactness by minimising the network distance between nodes and their partition medoid. The optimisation iteratively refines the partition until no single node can be reassigned to improve the combined objective, or until the maximum number of iterations is reached.</p>
+<p>The function returns a <code class="docutils literal notranslate"><span class="pre">Partition</span></code> object that stores the resulting partition assignment together with additional information about the optimisation (similar to a cluster object if you’ve ever used scikit-learn for clustering). This object can be used directly for visualisation or as input to downstream analysis functions throughout SpaceNet.</p>
+<p>Let’s apply the algorithm to our example spatial network and generate four partitions by setting <code class="docutils literal notranslate"><span class="pre">k=4</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># partition the spatial network using compact-volume-balanced method - choosing 4 partitions (k=4)</span>
+<span class="n">partition_output</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">partition</span><span class="o">.</span><span class="n">compact_volume_partition</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="c1"># print out the partition_output object and it&#39;s properties</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">partition_output</span><span class="o">.</span><span class="vm">__annotations__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;labels&#39;: &#39;Dict&#39;, &#39;community_lengths&#39;: &#39;Dict[int, float]&#39;, &#39;community_cut_lengths&#39;: &#39;Dict[int, float]&#39;, &#39;community_volumes&#39;: &#39;Dict[int, float]&#39;, &#39;medoids&#39;: &#39;Dict[int, object]&#39;, &#39;T&#39;: &#39;float&#39;, &#39;k&#39;: &#39;int&#39;, &#39;objective&#39;: &#39;float&#39;, &#39;compactness&#39;: &#39;float&#39;, &#39;volume_penalty&#39;: &#39;float&#39;, &#39;total_cut_length&#39;: &#39;float&#39;, &#39;moves&#39;: &#39;int&#39;, &#39;iterations&#39;: &#39;int&#39;, &#39;objective_values&#39;: &#39;List[float]&#39;}
+</pre></div></div>
+</div>
+<p>The returned <code class="docutils literal notranslate"><span class="pre">Partition</span></code> object stores a range of information describing the resulting partitioning, including the volume of each partition, compactness metrics, and other summary statistics.</p>
+<p>One of its most useful attributes is <code class="docutils literal notranslate"><span class="pre">partition_output.labels</span></code>, which is a dictionary mapping each node ID to its assigned partition. Let’s inspect these assignments.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># grab the labels from the partition</span>
+<span class="n">part_labels_dict</span> <span class="o">=</span> <span class="n">partition_output</span><span class="o">.</span><span class="n">labels</span>
+
+<span class="c1"># print out the dictionary of labels</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">part_labels_dict</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{np.int64(0): 3, np.int64(1): 0, np.int64(2): 1, np.int64(3): 3, np.int64(4): 0, np.int64(5): 3, np.int64(6): 2, np.int64(7): 1, np.int64(8): 3, np.int64(9): 1, np.int64(10): 2, np.int64(11): 1, np.int64(12): 3, np.int64(13): 3, np.int64(14): 2, np.int64(15): 2, np.int64(16): 3, np.int64(17): 0, np.int64(18): 1, np.int64(19): 2, np.int64(20): 3, np.int64(21): 3, np.int64(22): 3, np.int64(23): 3, np.int64(24): 2, np.int64(25): 0, np.int64(26): 0, np.int64(27): 0, np.int64(28): 1, np.int64(29): 1, np.int64(30): 1, np.int64(31): 2, np.int64(32): 3, np.int64(33): 3, np.int64(34): 3, np.int64(35): 2, np.int64(36): 3, np.int64(37): 0, np.int64(38): 2, np.int64(39): 1, np.int64(40): 0, np.int64(41): 1, np.int64(42): 1, np.int64(43): 0, np.int64(44): 2, np.int64(45): 3, np.int64(46): 0, np.int64(47): 2, np.int64(48): 1, np.int64(49): 1, np.int64(50): 3, np.int64(51): 3, np.int64(52): 2, np.int64(53): 3, np.int64(54): 1, np.int64(55): 1, np.int64(56): 0, np.int64(57): 0, np.int64(58): 2, np.int64(59): 0, np.int64(60): 0, np.int64(61): 1, np.int64(62): 1, np.int64(63): 0, np.int64(64): 3, np.int64(65): 1, np.int64(66): 1, np.int64(67): 2, np.int64(68): 0, np.int64(69): 3, np.int64(70): 2, np.int64(71): 1, np.int64(72): 1, np.int64(73): 0, np.int64(74): 1, np.int64(75): 2, np.int64(76): 3, np.int64(77): 2, np.int64(78): 0, np.int64(79): 3, np.int64(80): 3, np.int64(81): 0, np.int64(82): 3, np.int64(83): 1, np.int64(84): 3, np.int64(85): 2, np.int64(86): 2, np.int64(87): 2, np.int64(88): 2, np.int64(89): 2, np.int64(90): 1, np.int64(91): 0, np.int64(92): 3, np.int64(93): 0, np.int64(94): 1, np.int64(95): 3, np.int64(96): 0, np.int64(97): 1, np.int64(98): 0, np.int64(99): 0, np.int64(100): 2, np.int64(101): 3, np.int64(102): 2, np.int64(103): 3, np.int64(104): 1, np.int64(105): 0, np.int64(106): 2, np.int64(107): 2, np.int64(108): 3, np.int64(109): 0, np.int64(110): 0, np.int64(111): 1, np.int64(112): 1, np.int64(113): 2, np.int64(114): 0, np.int64(115): 2, np.int64(116): 2, np.int64(117): 3, np.int64(118): 1, np.int64(119): 2, np.int64(120): 0, np.int64(121): 2, np.int64(122): 3, np.int64(123): 3, np.int64(124): 0, np.int64(125): 1, np.int64(126): 2, np.int64(127): 3, np.int64(128): 0, np.int64(129): 1, np.int64(130): 0, np.int64(131): 3, np.int64(132): 0, np.int64(133): 0, np.int64(134): 1, np.int64(135): 0, np.int64(136): 0, np.int64(137): 2, np.int64(138): 0, np.int64(139): 0, np.int64(140): 2, np.int64(141): 1, np.int64(142): 2, np.int64(143): 3, np.int64(144): 3, np.int64(145): 1, np.int64(146): 2, np.int64(147): 3, np.int64(148): 2, np.int64(149): 2, np.int64(150): 3, np.int64(151): 0, np.int64(152): 0, np.int64(153): 1, np.int64(154): 2, np.int64(155): 1, np.int64(156): 3, np.int64(157): 0, np.int64(158): 1, np.int64(159): 1, np.int64(160): 0, np.int64(161): 2, np.int64(162): 0, np.int64(163): 0, np.int64(164): 1, np.int64(165): 3, np.int64(166): 1, np.int64(167): 1, np.int64(168): 0, np.int64(169): 1, np.int64(170): 2, np.int64(171): 1, np.int64(172): 3, np.int64(173): 2, np.int64(174): 3, np.int64(175): 0, np.int64(176): 2, np.int64(177): 3, np.int64(178): 3, np.int64(179): 0, np.int64(180): 3, np.int64(181): 3, np.int64(182): 2, np.int64(183): 0, np.int64(184): 1, np.int64(185): 1, np.int64(186): 3, np.int64(187): 1, np.int64(188): 2, np.int64(189): 2, np.int64(190): 3, np.int64(191): 0, np.int64(192): 0, np.int64(193): 1, np.int64(194): 0, np.int64(195): 2, np.int64(196): 3, np.int64(197): 3, np.int64(198): 2, np.int64(199): 0, np.int64(200): 3, np.int64(201): 0, np.int64(202): 3, np.int64(203): 1, np.int64(204): 2, np.int64(205): 3, np.int64(206): 0, np.int64(207): 2, np.int64(208): 1, np.int64(209): 0, np.int64(210): 0, np.int64(211): 3, np.int64(212): 3, np.int64(213): 3, np.int64(214): 1, np.int64(215): 3, np.int64(216): 2, np.int64(217): 3, np.int64(218): 3, np.int64(219): 2, np.int64(220): 3, np.int64(221): 1, np.int64(222): 0, np.int64(223): 0, np.int64(224): 1, np.int64(225): 0, np.int64(226): 3, np.int64(227): 3, np.int64(228): 3, np.int64(229): 1, np.int64(230): 3, np.int64(231): 0, np.int64(232): 2, np.int64(233): 3, np.int64(234): 3, np.int64(235): 3, np.int64(236): 3, np.int64(237): 0, np.int64(238): 3, np.int64(239): 2, np.int64(240): 0, np.int64(241): 3, np.int64(242): 0, np.int64(243): 1, np.int64(244): 0, np.int64(245): 3, np.int64(246): 1, np.int64(247): 1, np.int64(248): 1, np.int64(249): 0, np.int64(250): 0, np.int64(251): 3, np.int64(252): 2, np.int64(253): 0, np.int64(254): 0, np.int64(255): 2, np.int64(256): 0, np.int64(257): 1, np.int64(258): 3, np.int64(259): 2, np.int64(260): 2, np.int64(261): 0, np.int64(262): 2, np.int64(263): 1, np.int64(264): 3, np.int64(265): 0, np.int64(266): 0, np.int64(267): 0, np.int64(268): 2, np.int64(269): 1, np.int64(270): 0, np.int64(271): 3, np.int64(272): 2, np.int64(273): 3, np.int64(274): 0, np.int64(275): 0, np.int64(276): 0, np.int64(277): 2, np.int64(278): 1, np.int64(279): 0, np.int64(280): 2, np.int64(281): 1, np.int64(282): 3, np.int64(283): 1, np.int64(284): 2, np.int64(285): 0, np.int64(286): 3, np.int64(287): 0, np.int64(288): 3, np.int64(289): 1, np.int64(290): 3, np.int64(291): 1, np.int64(292): 2, np.int64(293): 1, np.int64(294): 1, np.int64(295): 3, np.int64(296): 1, np.int64(297): 2, np.int64(298): 2, np.int64(299): 1, np.int64(300): 1, np.int64(301): 1, np.int64(302): 1, np.int64(303): 1, np.int64(304): 3, np.int64(305): 3, np.int64(306): 2, np.int64(307): 0, np.int64(308): 1, np.int64(309): 0, np.int64(310): 1, np.int64(311): 1, np.int64(312): 2, np.int64(313): 3, np.int64(314): 1, np.int64(315): 0, np.int64(316): 0, np.int64(317): 1, np.int64(318): 1, np.int64(319): 1, np.int64(320): 1, np.int64(321): 1, np.int64(322): 3, np.int64(323): 0, np.int64(324): 0, np.int64(325): 3, np.int64(326): 0, np.int64(327): 1, np.int64(328): 1, np.int64(329): 0, np.int64(330): 3, np.int64(331): 2, np.int64(332): 1, np.int64(333): 1, np.int64(334): 1, np.int64(335): 3, np.int64(336): 3, np.int64(337): 3, np.int64(338): 1, np.int64(339): 0, np.int64(340): 2, np.int64(341): 3, np.int64(342): 0, np.int64(343): 2, np.int64(344): 2, np.int64(345): 1, np.int64(346): 1, np.int64(347): 3, np.int64(348): 3, np.int64(349): 3, np.int64(350): 1, np.int64(351): 1, np.int64(352): 3, np.int64(353): 3, np.int64(354): 3, np.int64(355): 0, np.int64(356): 1, np.int64(357): 3, np.int64(358): 0, np.int64(359): 3, np.int64(360): 2, np.int64(361): 3, np.int64(362): 0, np.int64(363): 3, np.int64(364): 1, np.int64(365): 3, np.int64(366): 2, np.int64(367): 3, np.int64(368): 3, np.int64(369): 1, np.int64(370): 1, np.int64(371): 2, np.int64(372): 3, np.int64(373): 3, np.int64(374): 0, np.int64(375): 3, np.int64(376): 2, np.int64(377): 3, np.int64(378): 0, np.int64(379): 0, np.int64(380): 1, np.int64(381): 3, np.int64(382): 3, np.int64(383): 0, np.int64(384): 3, np.int64(385): 3, np.int64(386): 1, np.int64(387): 2, np.int64(388): 3, np.int64(389): 0, np.int64(390): 0, np.int64(391): 1, np.int64(392): 3, np.int64(393): 2, np.int64(394): 0, np.int64(395): 3, np.int64(396): 3, np.int64(397): 3, np.int64(398): 0, np.int64(399): 0, np.int64(400): 2, np.int64(401): 0, np.int64(402): 3, np.int64(403): 0, np.int64(404): 1, np.int64(405): 0, np.int64(406): 3, np.int64(407): 2, np.int64(408): 2, np.int64(409): 1, np.int64(410): 2, np.int64(411): 1, np.int64(412): 0, np.int64(413): 1, np.int64(414): 2, np.int64(415): 1, np.int64(416): 1, np.int64(417): 1, np.int64(418): 2, np.int64(419): 0, np.int64(420): 3, np.int64(421): 3, np.int64(422): 1, np.int64(423): 3, np.int64(424): 0, np.int64(425): 3, np.int64(426): 3, np.int64(427): 1, np.int64(428): 3, np.int64(429): 2, np.int64(430): 2, np.int64(431): 1, np.int64(432): 3, np.int64(433): 1, np.int64(434): 0, np.int64(435): 1, np.int64(436): 2, np.int64(437): 1, np.int64(438): 0, np.int64(439): 1, np.int64(440): 3, np.int64(441): 1, np.int64(442): 2, np.int64(443): 2, np.int64(444): 1, np.int64(445): 0, np.int64(446): 2, np.int64(447): 2, np.int64(448): 3, np.int64(449): 1, np.int64(450): 1, np.int64(451): 3, np.int64(452): 3, np.int64(453): 2, np.int64(454): 1, np.int64(455): 2, np.int64(456): 2, np.int64(457): 2, np.int64(458): 3, np.int64(459): 2, np.int64(460): 2, np.int64(461): 0, np.int64(462): 1, np.int64(463): 3, np.int64(464): 2, np.int64(465): 3, np.int64(466): 2, np.int64(467): 1, np.int64(468): 3, np.int64(469): 3, np.int64(470): 3, np.int64(471): 0, np.int64(472): 1, np.int64(473): 3, np.int64(474): 0, np.int64(475): 0, np.int64(476): 3, np.int64(477): 1, np.int64(478): 1, np.int64(479): 3, np.int64(480): 3, np.int64(481): 1, np.int64(482): 1, np.int64(483): 2, np.int64(484): 2, np.int64(485): 0, np.int64(486): 2, np.int64(487): 1, np.int64(488): 2, np.int64(489): 3, np.int64(490): 3, np.int64(491): 1, np.int64(492): 2, np.int64(493): 2, np.int64(494): 3, np.int64(495): 0, np.int64(496): 3, np.int64(497): 1, np.int64(498): 2, np.int64(499): 2, np.int64(500): 3, np.int64(501): 0, np.int64(502): 0, np.int64(503): 0, np.int64(504): 1, np.int64(505): 3, np.int64(506): 2, np.int64(507): 0, np.int64(508): 3, np.int64(509): 2, np.int64(510): 2, np.int64(511): 0, np.int64(512): 2, np.int64(513): 0, np.int64(514): 3, np.int64(515): 3, np.int64(516): 1, np.int64(517): 3, np.int64(518): 3, np.int64(519): 1, np.int64(520): 0, np.int64(521): 3, np.int64(522): 0, np.int64(523): 1, np.int64(524): 2, np.int64(525): 0, np.int64(526): 0, np.int64(527): 2, np.int64(528): 2, np.int64(529): 3, np.int64(530): 0, np.int64(531): 2, np.int64(532): 3, np.int64(533): 1, np.int64(534): 1, np.int64(535): 1, np.int64(536): 1, np.int64(537): 2, np.int64(538): 3, np.int64(539): 3, np.int64(540): 2, np.int64(541): 3, np.int64(542): 2, np.int64(543): 2, np.int64(544): 2, np.int64(545): 0, np.int64(546): 2, np.int64(547): 1, np.int64(548): 1, np.int64(549): 2, np.int64(550): 3, np.int64(551): 0, np.int64(552): 2, np.int64(553): 3, np.int64(554): 2, np.int64(555): 2, np.int64(556): 3, np.int64(557): 0, np.int64(558): 3, np.int64(559): 1, np.int64(560): 0, np.int64(561): 0, np.int64(562): 2, np.int64(563): 1, np.int64(564): 1, np.int64(565): 2, np.int64(566): 1, np.int64(567): 2, np.int64(568): 2, np.int64(569): 3, np.int64(570): 2, np.int64(571): 0, np.int64(572): 3, np.int64(573): 0, np.int64(574): 0, np.int64(575): 0, np.int64(576): 0, np.int64(577): 0, np.int64(578): 3, np.int64(579): 2, np.int64(580): 2, np.int64(581): 3, np.int64(582): 3, np.int64(583): 2, np.int64(584): 1, np.int64(585): 0, np.int64(586): 2, np.int64(587): 0, np.int64(588): 2, np.int64(589): 0, np.int64(590): 2, np.int64(591): 0, np.int64(592): 3, np.int64(593): 2, np.int64(594): 3, np.int64(595): 3, np.int64(596): 3, np.int64(597): 3, np.int64(598): 0, np.int64(599): 2, np.int64(600): 2, np.int64(601): 1, np.int64(602): 0, np.int64(603): 2, np.int64(604): 3, np.int64(605): 1, np.int64(606): 3, np.int64(607): 2, np.int64(608): 3, np.int64(609): 2, np.int64(610): 2, np.int64(611): 3, np.int64(612): 3, np.int64(613): 1, np.int64(614): 2, np.int64(615): 2, np.int64(616): 1, np.int64(617): 2, np.int64(618): 2, np.int64(619): 2, np.int64(620): 0, np.int64(621): 0, np.int64(622): 0, np.int64(623): 1, np.int64(624): 0, np.int64(625): 2, np.int64(626): 1, np.int64(627): 2, np.int64(628): 1, np.int64(629): 3, np.int64(630): 3, np.int64(631): 1, np.int64(632): 1, np.int64(633): 3, np.int64(634): 2, np.int64(635): 0, np.int64(636): 2, np.int64(637): 1, np.int64(638): 3, np.int64(639): 3, np.int64(640): 0, np.int64(641): 2, np.int64(642): 3, np.int64(643): 1, np.int64(644): 1, np.int64(645): 1, np.int64(646): 0, np.int64(647): 2, np.int64(648): 1, np.int64(649): 0, np.int64(650): 3, np.int64(651): 3, np.int64(652): 0, np.int64(653): 0, np.int64(654): 3, np.int64(655): 3, np.int64(656): 0, np.int64(657): 3, np.int64(658): 0, np.int64(659): 1, np.int64(660): 1, np.int64(661): 2, np.int64(662): 2, np.int64(663): 3, np.int64(664): 2, np.int64(665): 0, np.int64(666): 3, np.int64(667): 0, np.int64(668): 3, np.int64(669): 1, np.int64(670): 1, np.int64(671): 0, np.int64(672): 2, np.int64(673): 1, np.int64(674): 2, np.int64(675): 0, np.int64(676): 3, np.int64(677): 0, np.int64(678): 2, np.int64(679): 3, np.int64(680): 2, np.int64(681): 0, np.int64(682): 2, np.int64(683): 0, np.int64(684): 1, np.int64(685): 2, np.int64(686): 2, np.int64(687): 3, np.int64(688): 1, np.int64(689): 3, np.int64(690): 1, np.int64(691): 2, np.int64(692): 2, np.int64(693): 2, np.int64(694): 2, np.int64(695): 1, np.int64(696): 3, np.int64(697): 3, np.int64(698): 1, np.int64(699): 0, np.int64(700): 1, np.int64(701): 3, np.int64(702): 2, np.int64(703): 0, np.int64(704): 0, np.int64(705): 1, np.int64(706): 1, np.int64(707): 0, np.int64(708): 1, np.int64(709): 3, np.int64(710): 3, np.int64(711): 1, np.int64(712): 0, np.int64(713): 3, np.int64(714): 0, np.int64(715): 3, np.int64(716): 3, np.int64(717): 1, np.int64(718): 3, np.int64(719): 3, np.int64(720): 2, np.int64(721): 2, np.int64(722): 2, np.int64(723): 0, np.int64(724): 0, np.int64(725): 3, np.int64(726): 0, np.int64(727): 3, np.int64(728): 0, np.int64(729): 3, np.int64(730): 3, np.int64(731): 3, np.int64(732): 2, np.int64(733): 2, np.int64(734): 0, np.int64(735): 0, np.int64(736): 2, np.int64(737): 3, np.int64(738): 0, np.int64(739): 2, np.int64(740): 2, np.int64(741): 1, np.int64(742): 1, np.int64(743): 3, np.int64(744): 1, np.int64(745): 1, np.int64(746): 1, np.int64(747): 0, np.int64(748): 2, np.int64(749): 3, np.int64(750): 1, np.int64(751): 1, np.int64(752): 1, np.int64(753): 0, np.int64(754): 0, np.int64(755): 0, np.int64(756): 2, np.int64(757): 1, np.int64(758): 0, np.int64(759): 3, np.int64(760): 3, np.int64(761): 1, np.int64(762): 2, np.int64(763): 1, np.int64(764): 0, np.int64(765): 3, np.int64(766): 2, np.int64(767): 1, np.int64(768): 3, np.int64(769): 3, np.int64(770): 2, np.int64(771): 2, np.int64(772): 2, np.int64(773): 0, np.int64(774): 3, np.int64(775): 0, np.int64(776): 0, np.int64(777): 1, np.int64(778): 2, np.int64(779): 0, np.int64(780): 1, np.int64(781): 2, np.int64(782): 2, np.int64(783): 2, np.int64(784): 2, np.int64(785): 2, np.int64(786): 0, np.int64(787): 1, np.int64(788): 3, np.int64(789): 0, np.int64(790): 1, np.int64(791): 0, np.int64(792): 2, np.int64(793): 2, np.int64(794): 3, np.int64(795): 0, np.int64(796): 1, np.int64(797): 0, np.int64(798): 1, np.int64(799): 3, np.int64(800): 1, np.int64(801): 1, np.int64(802): 3, np.int64(803): 3, np.int64(804): 3, np.int64(805): 0, np.int64(806): 2, np.int64(807): 3, np.int64(808): 0, np.int64(809): 0, np.int64(810): 1, np.int64(811): 0, np.int64(812): 3, np.int64(813): 3, np.int64(814): 1, np.int64(815): 2, np.int64(816): 0, np.int64(817): 2, np.int64(818): 1, np.int64(819): 0, np.int64(820): 0, np.int64(821): 0, np.int64(822): 3, np.int64(823): 3, np.int64(824): 0, np.int64(825): 1, np.int64(826): 1, np.int64(827): 3, np.int64(828): 2, np.int64(829): 1, np.int64(830): 2, np.int64(831): 2, np.int64(832): 0, np.int64(833): 3, np.int64(834): 3, np.int64(835): 3, np.int64(836): 0, np.int64(837): 2, np.int64(838): 1, np.int64(839): 3, np.int64(840): 3, np.int64(841): 0, np.int64(842): 3, np.int64(843): 2, np.int64(844): 0, np.int64(845): 3, np.int64(846): 1, np.int64(847): 1, np.int64(848): 1, np.int64(849): 0, np.int64(850): 2, np.int64(851): 1, np.int64(852): 1, np.int64(853): 2, np.int64(854): 0, np.int64(855): 1, np.int64(856): 2, np.int64(857): 3, np.int64(858): 3, np.int64(859): 2, np.int64(860): 1, np.int64(861): 1, np.int64(862): 2, np.int64(863): 0, np.int64(864): 0, np.int64(865): 3, np.int64(866): 2, np.int64(867): 3, np.int64(868): 1, np.int64(869): 1, np.int64(870): 0, np.int64(871): 2, np.int64(872): 1, np.int64(873): 1, np.int64(874): 2, np.int64(875): 2, np.int64(876): 1, np.int64(877): 0, np.int64(878): 2, np.int64(879): 3, np.int64(880): 0, np.int64(881): 3, np.int64(882): 1, np.int64(883): 2, np.int64(884): 1, np.int64(885): 0, np.int64(886): 0, np.int64(887): 2, np.int64(888): 2, np.int64(889): 3, np.int64(890): 3, np.int64(891): 3, np.int64(892): 0, np.int64(893): 0, np.int64(894): 3, np.int64(895): 3, np.int64(896): 0, np.int64(897): 1, np.int64(898): 2, np.int64(899): 1, np.int64(900): 0, np.int64(901): 1, np.int64(902): 3, np.int64(903): 2, np.int64(904): 1, np.int64(905): 0, np.int64(906): 1, np.int64(907): 3, np.int64(908): 3, np.int64(909): 2, np.int64(910): 1, np.int64(911): 0, np.int64(912): 2, np.int64(913): 3, np.int64(914): 2, np.int64(915): 0, np.int64(916): 0, np.int64(917): 0, np.int64(918): 1, np.int64(919): 2, np.int64(920): 1, np.int64(921): 3, np.int64(922): 2, np.int64(923): 1, np.int64(924): 0, np.int64(925): 3, np.int64(926): 0, np.int64(927): 2, np.int64(928): 2, np.int64(929): 0, np.int64(930): 0, np.int64(931): 3, np.int64(932): 0, np.int64(933): 1, np.int64(934): 3, np.int64(935): 2, np.int64(936): 0, np.int64(937): 2, np.int64(938): 0, np.int64(939): 3, np.int64(940): 0, np.int64(941): 0, np.int64(942): 1, np.int64(943): 1, np.int64(944): 0, np.int64(945): 1, np.int64(946): 2, np.int64(947): 0, np.int64(948): 2, np.int64(949): 3, np.int64(950): 1, np.int64(951): 2, np.int64(952): 2, np.int64(953): 2, np.int64(954): 1, np.int64(955): 3, np.int64(956): 2, np.int64(957): 3, np.int64(958): 0, np.int64(959): 1, np.int64(960): 2, np.int64(961): 2, np.int64(962): 2, np.int64(963): 2, np.int64(964): 2, np.int64(965): 0, np.int64(966): 0, np.int64(967): 0, np.int64(968): 3, np.int64(969): 1, np.int64(970): 1, np.int64(971): 0, np.int64(972): 0, np.int64(973): 1, np.int64(974): 1, np.int64(975): 1, np.int64(976): 0, np.int64(977): 0, np.int64(978): 2, np.int64(979): 0, np.int64(980): 1, np.int64(981): 2, np.int64(982): 0, np.int64(983): 1, np.int64(984): 1, np.int64(985): 3, np.int64(986): 3, np.int64(987): 3, np.int64(988): 1, np.int64(989): 0, np.int64(990): 3, np.int64(991): 1, np.int64(992): 1, np.int64(993): 2, np.int64(994): 3, np.int64(995): 2, np.int64(996): 2, np.int64(997): 0, np.int64(998): 2, np.int64(999): 1}
+</pre></div></div>
+</div>
+<p>To inspect the resulting partitioning, we can add the partition assignments as node labels and visualise them on the spatial network.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># add the partition labels as node labels</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">part_labels_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;CV-partition (k=4)&#39;</span><span class="p">,</span><span class="n">nodes</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">part_labels_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="c1"># plot the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">spatial_net</span><span class="p">,</span><span class="n">marker_size</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;CV-partition (k=4)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 640x480 with 2 Axes&gt;, &lt;Axes: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_partition_compact_volume_partitions_8_1.png" src="../../_images/_collections_partition_compact_volume_partitions_8_1.png" />
+</div>
+</div>
+<p>Visually, the partitions appear both compact and similar in size. We can verify this by inspecting the summary statistics stored in the <code class="docutils literal notranslate"><span class="pre">Partition</span></code> object.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">coef_var_vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">partition_output</span><span class="o">.</span><span class="n">community_volumes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">partition_output</span><span class="o">.</span><span class="n">community_volumes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mi">100</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percentage Coefficient of Variation in Partition Volumes:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">coef_var_vols</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="s1">&#39;%&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Percentage Coefficient of Variation in Partition Volumes: 0.75 %
+</pre></div></div>
+</div>
+<p>The coefficient of variation of the partition volumes is just 0.75%, indicating that the algorithm has produced partitions with highly uniform edge volumes.</p>
+<p>Like all SpaceNet functionality, the compact, volume-balanced partitioning algorithm is not restricted to two-dimensional networks. Let’s now apply it to a three-dimensional spatial network.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># retreive example dataset points</span>
+<span class="n">cylinder_df</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;cylinder&#39;</span><span class="p">)</span>
+<span class="n">cylinder_points</span> <span class="o">=</span> <span class="n">cylinder_df</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span><span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+
+<span class="c1"># construct a spatial network</span>
+<span class="n">cylinder_sn</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">spatial_network_from_points</span><span class="p">(</span><span class="n">cylinder_points</span><span class="p">,</span><span class="n">max_edge_distance</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+
+<span class="c1"># partition the spatial network with 6 partitions</span>
+<span class="n">cyl_part_output</span> <span class="o">=</span> <span class="n">sn</span><span class="o">.</span><span class="n">partition</span><span class="o">.</span><span class="n">compact_volume_partition</span><span class="p">(</span><span class="n">cylinder_sn</span><span class="p">,</span><span class="n">k</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># add as labels to visualise and/or query</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">add_node_labels</span><span class="p">(</span><span class="n">cylinder_sn</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="n">cyl_part_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;CV-partition (k=6)&#39;</span><span class="p">,</span><span class="n">nodes</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">cyl_part_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+
+<span class="c1"># again, let&#39;s check the volumes are consistent</span>
+<span class="n">coef_var_vols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cyl_part_output</span><span class="o">.</span><span class="n">community_volumes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">cyl_part_output</span><span class="o">.</span><span class="n">community_volumes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">*</span><span class="mi">100</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Percentage Coefficient of Variation in Partition Volumes:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">coef_var_vols</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="s1">&#39;%&#39;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Percentage Coefficient of Variation in Partition Volumes: 0.3 %
+</pre></div></div>
+</div>
+<p>Once again, the partition volumes are highly consistent, with a coefficient of variation of less than <strong>0.5%</strong>. We can visualise the resulting partitions on the spatial network in the same way as before.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Tip: you can interact with matplotlib plots in a notebook using the widget backend</span>
+<span class="c1"># Uncomment the next line for this</span>
+<span class="c1">#%matplotlib widget</span>
+
+<span class="c1"># plot the network</span>
+<span class="n">sn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">plot_spatial_network</span><span class="p">(</span><span class="n">cylinder_sn</span><span class="p">,</span><span class="n">edge_width</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span><span class="n">node_label_name</span><span class="o">=</span><span class="s1">&#39;CV-partition (k=6)&#39;</span><span class="p">,</span><span class="n">marker_size</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(&lt;Figure size 1000x800 with 2 Axes&gt;, &lt;Axes3D: &gt;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../../_images/_collections_partition_compact_volume_partitions_14_1.png" src="../../_images/_collections_partition_compact_volume_partitions_14_1.png" />
+</div>
+</div>
+<p>The resulting partitions remain contiguous and compact on the cylindrical surface, demonstrating that the algorithm naturally extends to three-dimensional spatial networks while preserving the desired properties of a spatial tiling.</p>
+<p>This tutorial has introduced the practical use of the compact, volume-balanced partitioning algorithm. There are several parameters that can be adjusted to suit different applications. For example, the number of partitions can be specified directly using <code class="docutils literal notranslate"><span class="pre">k</span></code>, or inferred by providing a target partition volume <code class="docutils literal notranslate"><span class="pre">T</span></code>. The trade-off between spatial compactness and volume balance is controlled by <code class="docutils literal notranslate"><span class="pre">alpha</span></code>: values of <code class="docutils literal notranslate"><span class="pre">alpha</span></code> close to <strong>0</strong> prioritise compactness, whereas values close to <strong>1</strong>
+prioritise equal partition volumes. Exploring these parameters can help generate partitions that best match the characteristics of your spatial network.</p>
+<p>For a complete description of the available parameters and their behaviour, see the documentation for <code class="docutils literal notranslate"><span class="pre">compact_volume_partition()</span></code>.</p>
 </section>
 
 

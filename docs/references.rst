@@ -21,8 +21,8 @@ Pair correlation functions
     :list: enumerated
     :filter: keyword % "pcf"
 
-Partitioning methods
---------------------
+Partition methods
+-----------------
 
 
 .. bibliography::

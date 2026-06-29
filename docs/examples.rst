@@ -30,14 +30,14 @@ Point pattern analysis
     _collections/point_patterns/weighted_pair_correlation_functions
 
 
-Partitioning methods
---------------------
+Partition methods
+-----------------
 .. nbgallery::
     _collections/partition/compact_volume_partitions
 
-
-Miscellaneous examples
-----------------------
-.. nbgallery::
-    _collections/misc/visualising_spatial_networks
-    _collections/misc/exporting_to_dataframe
+..
+    Miscellaneous examples
+    ----------------------
+    .. nbgallery::
+        _collections/misc/visualising_spatial_networks
+        _collections/misc/exporting_to_dataframe

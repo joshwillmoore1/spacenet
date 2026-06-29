@@ -42,7 +42,7 @@
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=2caa9db7"></script>
+    <script src="_static/documentation_options.js?v=5aa371e9"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,6 +66,7 @@
     <link rel="icon" href="_static/fav.svg"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="v0.0.1" href="_collections/release_notes/v0.0.1.html" />
     <link rel="prev" title="References" href="references.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -425,7 +426,10 @@ document.write(`
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"></div>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_collections/release_notes/v0.0.1.html">v0.0.1</a></li>
+</ul>
+</div>
 </nav></div>
     </div>
   
@@ -507,6 +511,9 @@ document.write(`
 <h2>Release history<a class="headerlink" href="#release-history" title="Link to this heading">#</a></h2>
 <p>This is the list of changes to SpaceNet between each version:</p>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="_collections/release_notes/v0.0.1.html">v0.0.1</a></li>
+</ul>
 </div>
 </section>
 <section id="test-summary">
@@ -515,44 +522,47 @@ document.write(`
 <div class="literal-block-wrapper docutils container" id="id1">
 <div class="code-block-caption"><span class="caption-text">SpaceNet Test Suite Report</span><a class="headerlink" href="#id1" title="Link to this code">#</a></div>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>============================= test session starts ==============================
-collecting ... collected 34 items
+collecting ... collected 37 items
 
 tests/test_centrality.py::test_node_reach PASSED                         [  2%]
 tests/test_centrality.py::test_laplacian PASSED                          [  5%]
 tests/test_centrality.py::test_degree_centrality PASSED                  [  8%]
-tests/test_centrality.py::test_closeness PASSED                          [ 11%]
-tests/test_core_functions.py::test_generate_spatial_network PASSED       [ 14%]
-tests/test_core_functions.py::test_add_node_labels PASSED                [ 17%]
-tests/test_core_functions.py::test_delete_node_labels PASSED             [ 20%]
-tests/test_core_functions.py::test_query_nodes PASSED                    [ 23%]
-tests/test_core_functions.py::test_distance PASSED                       [ 26%]
-tests/test_core_functions.py::test_distance_cached PASSED                [ 29%]
-tests/test_core_functions.py::test_clear_distance_cached PASSED          [ 32%]
-tests/test_core_functions.py::test_node_to_dataframe PASSED              [ 35%]
-tests/test_core_functions.py::test_subnetwork PASSED                     [ 38%]
-tests/test_core_functions.py::test_shortest_path_cached PASSED           [ 41%]
-tests/test_global.py::test_spatial_network_volume PASSED                 [ 44%]
-tests/test_global.py::test_alpha_index PASSED                            [ 47%]
-tests/test_global.py::test_beta_index PASSED                             [ 50%]
-tests/test_global.py::test_gamma_index PASSED                            [ 52%]
-tests/test_global.py::test_cyclomatic_number PASSED                      [ 55%]
-tests/test_global.py::test_diameter PASSED                               [ 58%]
-tests/test_global.py::test_mean_clustering PASSED                        [ 61%]
-tests/test_global.py::test_mean_detour_index PASSED                      [ 64%]
-tests/test_node_metrics.py::test_degree PASSED                           [ 67%]
-tests/test_node_metrics.py::test_clustering_coefficient PASSED           [ 70%]
-tests/test_node_metrics.py::test_eccentricity PASSED                     [ 73%]
-tests/test_partition.py::test_modularity_leiden PASSED                   [ 76%]
-tests/test_partition.py::test_modularity_louvain PASSED                  [ 79%]
-tests/test_partition.py::test_compact_volume_partition PASSED            [ 82%]
-tests/test_point_patterns.py::test_polynomial_kernel PASSED              [ 85%]
-tests/test_point_patterns.py::test_integrated_poly_finite_kernel PASSED  [ 88%]
+tests/test_centrality.py::test_closeness PASSED                          [ 10%]
+tests/test_core_functions.py::test_spatial_network_from_points PASSED    [ 13%]
+tests/test_core_functions.py::test_add_node_labels PASSED                [ 16%]
+tests/test_core_functions.py::test_delete_node_labels PASSED             [ 18%]
+tests/test_core_functions.py::test_query_nodes PASSED                    [ 21%]
+tests/test_core_functions.py::test_distance PASSED                       [ 24%]
+tests/test_core_functions.py::test_distance_cached PASSED                [ 27%]
+tests/test_core_functions.py::test_clear_distance_cached PASSED          [ 29%]
+tests/test_core_functions.py::test_node_to_dataframe PASSED              [ 32%]
+tests/test_core_functions.py::test_subnetwork PASSED                     [ 35%]
+tests/test_core_functions.py::test_shortest_path_cached PASSED           [ 37%]
+tests/test_core_functions.py::test_spatial_network_from_edgelist PASSED  [ 40%]
+tests/test_core_functions.py::test_spatial_network_from_adjacency_sparse PASSED [ 43%]
+tests/test_core_functions.py::test_spatial_network_from_adjacency_numpy PASSED [ 45%]
+tests/test_global.py::test_spatial_network_volume PASSED                 [ 48%]
+tests/test_global.py::test_alpha_index PASSED                            [ 51%]
+tests/test_global.py::test_beta_index PASSED                             [ 54%]
+tests/test_global.py::test_gamma_index PASSED                            [ 56%]
+tests/test_global.py::test_cyclomatic_number PASSED                      [ 59%]
+tests/test_global.py::test_diameter PASSED                               [ 62%]
+tests/test_global.py::test_mean_clustering PASSED                        [ 64%]
+tests/test_global.py::test_mean_detour_index PASSED                      [ 67%]
+tests/test_node_metrics.py::test_degree PASSED                           [ 70%]
+tests/test_node_metrics.py::test_clustering_coefficient PASSED           [ 72%]
+tests/test_node_metrics.py::test_eccentricity PASSED                     [ 75%]
+tests/test_partition.py::test_modularity_leiden PASSED                   [ 78%]
+tests/test_partition.py::test_modularity_louvain PASSED                  [ 81%]
+tests/test_partition.py::test_compact_volume_partition PASSED            [ 83%]
+tests/test_point_patterns.py::test_polynomial_kernel PASSED              [ 86%]
+tests/test_point_patterns.py::test_integrated_poly_finite_kernel PASSED  [ 89%]
 tests/test_point_patterns.py::test_pair_correlation_function PASSED      [ 91%]
 tests/test_point_patterns.py::test_cross_pair_correlation_function PASSED [ 94%]
 tests/test_point_patterns.py::test_weighted_pair_correlation_function PASSED [ 97%]
 tests/test_point_patterns.py::test_cross_weighted_pair_correlation_function PASSED [100%]
 
-============================= 34 passed in 28.08s ==============================
+============================= 37 passed in 28.79s ==============================
 </pre></div>
 </div>
 </div>
