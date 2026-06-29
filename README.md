@@ -7,7 +7,7 @@
 
 **SpaceNet** is an open-source Python package for the spatial analysis of **spatially embedded networks**.
 
-The package provides tools for quantifying the geometry, topology, and spatial structure and statistical properties of spatial networks. SpaceNet is designed to support both applied analyses and the development of new methodology in spatial network analysis.
+The package provides tools for quantifying the geometry, topology, spatial structure and statistical properties of spatial networks. SpaceNet is designed to support both applied analyses and the development of new methodology in spatial network analysis.
 
 
 ## Installation
