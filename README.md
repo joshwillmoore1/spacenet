@@ -69,4 +69,3 @@ If you encounter a bug, have a feature request, or would like to contribute code
 ## License
 
 SpaceNet is released under the BSD 3-Clause License. See the `LICENSE` file for details.
-````
