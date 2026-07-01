@@ -79,10 +79,6 @@ html_favicon = '_static/images/fav.svg'
 
 
 # theme options
-
-# version switch url
-version_switcher_json_url = 'https://spacenet-python.com/version_switcher.json'
-
 html_theme_options = {
     "primary_sidebar_end": ["indices.html"],
     "logo": {
@@ -107,10 +103,10 @@ html_theme_options = {
     ],
     "icon_links_label": "Quick Links",
     "analytics": {"google_analytics_id": "G-HQ98Y5N0C9"},
-    #"switcher": {
-    #    "json_url": version_switcher_json_url,
-    #    "version_match": release,
-    #},
+    "switcher": {
+        "json_url": 'https://www.spacenet-python.com/version_switcher.json',
+        "version_match": release,
+    },
 }
 
 
