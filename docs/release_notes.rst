@@ -26,7 +26,7 @@ This is the list of changes to SpaceNet between each version:
     :glob:
     :maxdepth: 1
 
-    _collections/release_notes/v0.0.1.rst
+    _collections/release_notes/v0.0.2.rst
 
 Test summary
 ------------

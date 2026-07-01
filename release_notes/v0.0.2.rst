@@ -1,4 +1,4 @@
-v0.0.1
+v0.0.2
 ======
 
 We are pleased to announce the initial public release of **SpaceNet**, an
@@ -68,4 +68,4 @@ networks.
 
 We welcome bug reports, feature requests, and community contributions through
 the project's GitHub repository.
-```
+
