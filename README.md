@@ -1,7 +1,6 @@
 # SpaceNet
 
 [![Python package](https://github.com/joshwillmoore1/spacenet/actions/workflows/python-package.yml/badge.svg)](https://github.com/joshwillmoore1/spacenet/actions/workflows/python-package.yml)
-[![License](https://img.shields.io/badge/license-MIT-green.svg)]()
 
 <img width="3229" height="375" alt="docs_banner" src="https://github.com/user-attachments/assets/38c2e128-6a9d-48ce-aa5f-2b02b61fae10" />
 
@@ -68,4 +67,4 @@ If you encounter a bug, have a feature request, or would like to contribute code
 
 ## License
 
-SpaceNet is released under the BSD 3-Clause License. See the `LICENSE` file for details.
+SpaceNet is released under the MIT License. See the `LICENSE` file for details.

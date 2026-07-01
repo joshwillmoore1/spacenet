@@ -116,7 +116,9 @@ def compact_volume_partition(
     Notes
     -----
     
-    TODO: add reference to paper
+    For more information, see the reference paper:
+    
+    Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology. DOI: *to follow*
     
     
     Examples

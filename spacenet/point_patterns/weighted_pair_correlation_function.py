@@ -79,7 +79,9 @@ def weighted_pair_correlation_function(spatial_network, node_label_name_b=None, 
     Notes
     -----
     
-    TODO: add reference to paper
+    For more information, see the reference paper:
+    
+    Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology. DOI: *to follow*
     
     Examples
     --------

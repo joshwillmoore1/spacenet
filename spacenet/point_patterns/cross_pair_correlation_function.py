@@ -62,8 +62,9 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
     Notes
     -----
     
+    For more information, see the reference paper:
     
-    TODO: add reference to paper
+    Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology. DOI: *to follow*
 
     
     Examples
