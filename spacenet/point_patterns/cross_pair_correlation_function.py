@@ -10,7 +10,7 @@ from spacenet.point_patterns.helpers.is_connected_filter import is_connected_fil
 from spacenet.helpers.node_node_distance import node_node_distance  
 from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import polynomial_kernel_bandwidth_scale
 
-def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1):
+def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1,redistribution_scale=0):
     """
     
     Computes the pair correlation function (PCF) or cross-pair correlation function (cross-PCF) for nodes in a spatial network.
@@ -45,7 +45,8 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
         Whether to print progress messages during computation. Default is True.
     n_jobs : int, optional
         The number of parallel jobs to run when computing contributions. If n_jobs > 1, the contributions will be computed in parallel across multiple CPU cores. Default is 1 (no parallelization).
-    
+    redistribution_scale : float, optional
+        Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to 0, corresponding to node-centric geometric weighting.    
 
     Returns
     -------
@@ -64,7 +65,7 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
     
     For more information, see the reference paper:
     
-    Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology. DOI: *to follow*
+    Moore et al. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
 
     
     Examples
@@ -193,10 +194,10 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
     
     if n_jobs == 1:             
         for i, obj_a in enumerate(tqdm(nodes_a, desc="Computing contributions", unit="contributions", disable=not verbose)):   
-            contributions[i,:] = compute_contributions(obj_a, nodes_b, r, spatial_kernel_bandwidth,spatial_kernel_n, total_length,all_network_distances[obj_a],node_to_edges)
+            contributions[i,:] = compute_contributions(obj_a, nodes_b, r, spatial_kernel_bandwidth,spatial_kernel_n, total_length,all_network_distances[obj_a],node_to_edges,redistribution_scale)
     else:
         contributions = np.array(compute_contributions_parallel(nodes_a, nodes_b, r, spatial_kernel_bandwidth,
-                                    spatial_kernel_n,total_length, all_network_distances,node_to_edges, n_jobs=n_jobs,verbose=verbose))
+                                    spatial_kernel_n,total_length, all_network_distances,node_to_edges, n_jobs=n_jobs,verbose=verbose,redistribution_scale=redistribution_scale))
     # Compute the g function
     g = np.mean(contributions, axis=0)
     

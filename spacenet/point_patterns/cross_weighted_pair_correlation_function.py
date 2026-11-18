@@ -13,7 +13,7 @@ from spacenet.helpers.node_node_distance import node_node_distance
 from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import polynomial_kernel_bandwidth_scale
 
 
-def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,node_label_name_b, nodes_a=None,nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1):
+def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,node_label_name_b, nodes_a=None,nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1,redistribution_scale=0):
     """
     
     Compute the cross weighted pair correlation function between two populations of objects (A and B) on a spatial network, where the contributions of each object to the pair correlation function are weighted by a kernel function based on their marker levels.
@@ -71,7 +71,9 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
         Whether to print progress messages during computation. Default is True.
     n_jobs : int, optional
         The number of parallel jobs to run when computing contributions. If n_jobs > 1, the contributions will be computed in parallel across multiple CPU cores. Default is 1 (no parallelization).
-    
+    redistribution_scale : float, optional
+        Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to 0, corresponding to node-centric geometric weighting.    
+
     Returns
     -------
     
@@ -91,7 +93,7 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
     
     For more information, see the reference paper:
     
-    Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology. DOI: *to follow*
+    Moore et al. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
     
     Examples
     --------
@@ -240,11 +242,11 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
     if n_jobs == 1:
         for i, obj_a in enumerate(tqdm(nodes_a, desc="Computing contributions", unit="contributions", disable=not verbose)):
    
-            contributions[i,:,:] = compute_weighted_contributions(obj_a, nodes_b, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances[obj_a],marker_contributions_weighting,node_to_edges)
+            contributions[i,:,:] = compute_weighted_contributions(obj_a, nodes_b, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances[obj_a],marker_contributions_weighting,node_to_edges,redistribution_scale)
             #compute_weighted_contributions(object_id_A: np.array, nodes_b: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict):
     else:
         contributions = np.array(compute_weighted_contributions_parallel(nodes_a, nodes_b, r, spatial_kernel_bandwidth,
-                                   spatial_kernel_n, total_length, all_network_distances,marker_contributions_weighting,node_to_edges, n_jobs=n_jobs,verbose=verbose))
+                                   spatial_kernel_n, total_length, all_network_distances,marker_contributions_weighting,node_to_edges, n_jobs=n_jobs,verbose=verbose,redistribution_scale=redistribution_scale))
     
     # now compute the weighting for objects A
     tau_A = np.arange(marker_min_A, marker_max_A + marker_step_A, marker_step_A)

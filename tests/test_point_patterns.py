@@ -32,8 +32,8 @@ def test_polynomial_kernel():
 
 def test_integrated_poly_finite_kernel():
         
-    int_poly_vals = sn.point_patterns.helpers.integrated_poly_finite_kernel(r=np.array([1]),w=np.array([1]),d_1=np.array([0]),d_2=np.array([1]),n=2)
-    int_poly_vals_over_extend = sn.point_patterns.helpers.integrated_poly_finite_kernel(r=np.array([2]),w=np.array([1]),d_1=np.array([0]),d_2=np.array([1]),n=2)   
+    int_poly_vals = sn.point_patterns.helpers.integrated_poly_finite_kernel(r=1,w=np.array([1]),d_1=np.array([0]),d_2=np.array([1]),n=2,redistribution_scale=np.inf)
+    int_poly_vals_over_extend = sn.point_patterns.helpers.integrated_poly_finite_kernel(r=2,w=np.array([1]),d_1=np.array([0]),d_2=np.array([1]),n=2,redistribution_scale=np.inf)   
     assert(int_poly_vals[0]==0.5)
     assert(int_poly_vals_over_extend[0]==0)
 
@@ -43,7 +43,7 @@ def test_pair_correlation_function(setup_network_and_params):
     r_all,g_all,ci_all=sn.point_patterns.cross_pair_correlation_function(G,spatial_kernel_bandwidth=60,spatial_kernel_n=2,r_max=1000,r_step=5,return_confidence_interval=True)
 
     assert(len(r_all)==len(g_all)==len(ci_all[0]))
-    assert(np.isclose(g_all,1.0,atol=0.05).all())
+    assert(np.isclose(g_all[r_all>60],1.0,atol=0.05).all())
     assert((ci_all[0]<g_all).all())
     assert((ci_all[1]>g_all).all())
     

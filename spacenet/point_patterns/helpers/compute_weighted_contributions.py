@@ -4,7 +4,7 @@ from spacenet.point_patterns.helpers.integrated_poly_finite_kernel import integr
 from spacenet.point_patterns.helpers.prepare_reachable_edge_arrays import prepare_reachable_edge_arrays
 
 
-def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict):
+def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,these_marker_contributions_weighting: np.array,node_to_edges: dict,redistribution_scale:float=np.inf) -> np.array:
     """
     
     Compute the local contributions to the pair correlation function for a given reference node (object_id_A) and a set of target nodes (object_indices_B) at specified radii (r), weighted by marker contributions.
@@ -30,6 +30,10 @@ def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.a
         An array of shape (num_objects_B, num_markers) containing the contributions of each object in population B to each marker. This should be precomputed based on the marker values and the weighting scheme for the contributions.
     node_to_edges : dict
         A dictionary mapping node indices to a list of edges (and their weights) that are connected to that node. This should be precomputed for efficiency.
+    redistribution_scale : float, optional
+        Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to np.inf, corresponding to uniform geometric weighting.    
+
+    
     
     Returns
     -------
@@ -82,7 +86,9 @@ def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.a
                 w=edge_weights[edge_mask],
                 d_1=edge_d_1[edge_mask],
                 d_2=edge_d_2[edge_mask],
-                delta_r=spatial_kernel_bandwidth, n=spatial_kernel_n
+                delta_r=spatial_kernel_bandwidth, 
+                n=spatial_kernel_n,
+                redistribution_scale=redistribution_scale
             ))
             
             # Compute the kernel for the marker contributions - this should be each column of the marker contributions weighting matrix multiplied by the  spatial kernel contribution
@@ -106,6 +112,8 @@ def compute_weighted_contributions(object_id_A: np.array, object_indices_B: np.a
     # Compute local contributions
     local_contributions = numerator_contributions / total_kernel_lengths
     # for each column of local contributions divide by the total density
+    
+    # if the total density is zero for any marker, check the contributions is also zero, if not raise an error 
     local_contributions /= total_density.T
 
     
