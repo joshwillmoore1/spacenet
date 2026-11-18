@@ -1,105 +1,288 @@
 import numpy as np
-from spacenet.point_patterns.helpers.polynomial_kernel import polynomial_kernel 
 import numba
+import math
+from functools import lru_cache
+from spacenet.point_patterns.helpers.polynomial_kernel import polynomial_kernel
 
-@numba.njit(
-    fastmath=True
-)
-def integrated_poly_finite_kernel(r,w,d_1,d_2,delta_r=1,n=2):
+@lru_cache(maxsize=16)
+def _cached_leggauss(order):
+    nodes, weights = np.polynomial.legendre.leggauss(order)
+    return nodes, weights
+
+
+@numba.njit(fastmath=True, inline="always")
+def _integrate_interval(
+    a, b, t0, w, delta_r, n, inv_2c_rel2,
+    nodes, weights
+):
     """
-    
-    Computes the integrated polynomial kernel function for given distances and bandwidth parameters. The integrated kernel is defined as:
-    
-    .. math::
-        L_{i} \\left(  r \\right) = \\sum_{e_{nm} \\in E}  \\int_{0}^{w_{nm}} \\kappa_{\\Delta r, n } \\left(  |  d_{in} + \\frac{d_{im} - d_{in}}{w_{nm}}x  - r |  \\right) dx
+    Integrate over dimensionless interval [a,b].
 
-    The kernel function is integrated over the length of the edge, weighted by the edge weight.   
+    The interval is already clipped to kernel
+    support and must not cross t = 0.5.
+    """
+    if b <= a:
+        return 0.0
+
+    mid = 0.5 * (a+b)
+    half = 0.5 * (b-a)
+    scale = w/delta_r
+
+    total = 0.0
+
+    for k in range(len(nodes)):
+        t = mid + half*nodes[k]
+
+        # Polynomial kernel
+        u = abs(t-t0)*scale
+        kernel = 1.0-u**n
+
+        # Distance to nearest endpoint
+        nearest = min(t, 1.0-t)
+
+        # Nearest-endpoint Gaussian
+        q = math.exp(
+            -nearest*nearest*inv_2c_rel2
+        )
+
+        total += weights[k]*q*kernel
+
+    return half*total
+
+
+@numba.njit(fastmath=True, inline="always")
+def _integrate_branch_fast(
+    a, b, t0, w, delta_r, n, inv_2c_rel2,
+    nodes, weights
+):
+    """
+    Integrate one monotonic geodesic branch.
+
+    Clips to kernel support and splits at:
+      - kernel centre t0
+      - edge midpoint 0.5
+    """
+    radius = delta_r/w
+
+    lo = max(a, t0-radius)
+    hi = min(b, t0+radius)
+
+    if hi <= lo:
+        return 0.0
+
+    # Up to three intervals after splitting
+    # at t0 and 0.5.
+    cuts = np.empty(4, dtype=np.float64)
+    count = 2
+    cuts[0] = lo
+    cuts[1] = hi
+
+    if lo < t0 < hi:
+        cuts[count] = t0
+        count += 1
+
+    if lo < 0.5 < hi:
+        cuts[count] = 0.5
+        count += 1
+
+    # Sort at most four values
+    for i in range(count):
+        for j in range(i+1, count):
+            if cuts[j] < cuts[i]:
+                tmp = cuts[i]
+                cuts[i] = cuts[j]
+                cuts[j] = tmp
+
+    total = 0.0
+
+    for i in range(count-1):
+        total += _integrate_interval(
+            cuts[i], cuts[i+1],
+            t0, w, delta_r, n,
+            inv_2c_rel2, nodes, weights
+        )
+
+    return total
+
+
+@numba.njit(fastmath=True)
+def _integrated_smooth_fast(
+    r, w, d_1, d_2, delta_r, n, c,
+    nodes, weights
+):
+    result = np.zeros(len(w), dtype=np.float64)
+
+    kernel_prefactor = (n+1.0)/(2.0*n*delta_r)
+
+    sqrt2pi = math.sqrt(2.0*math.pi)
+    sqrt2 = math.sqrt(2.0)
+
+    for j in range(len(w)):
+        wi = w[j]
+        d1 = d_1[j]
+        d2 = d_2[j]
+
+        if wi <= 0.0:
+            continue
+
+        if not (
+            np.isfinite(d1) and np.isfinite(d2)
+        ):
+            continue
+
+        # Physical confidence scale relative to edge
+        c_rel = c/wi
+        inv_2c_rel2 = 0.5/(c_rel*c_rel)
+
+        # Edge-specific normalisation
+        Z = (
+            c_rel*sqrt2pi
+            *math.erf(1.0/(2.0*sqrt2*c_rel))
+        )
+
+        # Shortest-path switching point
+        ts = (d2+wi-d1)/(2.0*wi)
+        ts = min(1.0, max(0.0, ts))
+
+        # Kernel centres
+        t1 = (r-d1)/wi
+        t2 = 1.0-(r-d2)/wi
+
+        # Integrate both geodesic branches
+        v1 = _integrate_branch_fast(
+            0.0, ts, t1, wi,
+            delta_r, n, inv_2c_rel2,
+            nodes, weights
+        )
+
+        v2 = _integrate_branch_fast(
+            ts, 1.0, t2, wi,
+            delta_r, n, inv_2c_rel2,
+            nodes, weights
+        )
+
+        result[j] = (
+            wi*kernel_prefactor*(v1+v2)/Z
+        )
+
+    return result
+
+
+@numba.njit(inline="always")
+def _poly_kernel_antiderivative(u, dr, n):
+    if u <= -dr:
+        return -0.5
+
+    if u >= dr:
+        return 0.5
+
+    z = abs(u) / dr
+
+    return (
+        (n + 1.0) / (2.0 * n)
+        * (u / dr)
+        * (1.0 - z**n / (n + 1.0))
+    )
+
+
+
+def integrated_poly_finite_kernel(
+    r, w, d_1, d_2, delta_r=1.0, n=2.0,
+    redistribution_scale=1.0, quadrature_order=16
+):
+    """
+    Nearest-endpoint Gaussian weighted
+    polynomial kernel integration.
 
     Parameters
     ----------
     r : float
-        The distance at which to evaluate the integrated kernel function.
-    w : numpy.ndarray
-        An array of edge weights corresponding to the lengths of the edges in the network.
-    d_1 : numpy.ndarray
-        An array of distances from the reference node to one endpoint of each edge.
-    d_2 : numpy.ndarray
-        An array of distances from the reference node to the other endpoint of each edge.
-    delta_r : float, optional
-        The bandwidth parameter for the polynomial kernel function. Default is 1.
-    n : int, optional
-        The exponent parameter for the polynomial kernel function. Default is 2.
-    
+        Target geodesic separation.
+    w : ndarray
+        Edge lengths.
+    d_1, d_2 : ndarray
+        Endpoint shortest-path distances.
+    delta_r : float
+        Polynomial kernel support radius.
+    n : float
+        Positive real kernel exponent.
+    redistribution_scale : float
+        Physical confidence length scale.
+    quadrature_order : int
+        Gauss-Legendre quadrature order.
+
     Returns
     -------
-    integrated_kernel_values : numpy.ndarray    
-        An array of integrated kernel values from node i at all r values.
-    
-    Notes
-    -----
-    See reference paper for details on the derivation of the integrated kernel function and its implementation.
-    
-    
+    ndarray
+        Integrated contribution for each edge.
     """
-    
-    # Initialize the integrated kernel values as a NumPy array
-    integrated_kernel_values = np.zeros_like(w, dtype=np.float64)
-
-    # Handle the special case where d_1 == d_2
-    special_case_mask = (d_1 == d_2)
-    integrated_kernel_values[special_case_mask] = (
-        w[special_case_mask] * polynomial_kernel(np.abs(d_1[special_case_mask] - r), n=n, delta_r=delta_r)
-    )
-    # Handle the general case where d_1 != d_2
-    general_case_mask = ~special_case_mask
-    d_a = np.minimum(d_1, d_2)
-    d_b = np.maximum(d_1, d_2)
-
-    scale = w / (d_b - d_a)
-    upper_limit = np.maximum(0, np.minimum(w, scale * (r - d_a + delta_r)))
-    lower_limit = np.maximum(0, np.minimum(upper_limit, scale * (r - d_a - delta_r)))
-    M = np.maximum(lower_limit, np.minimum(upper_limit, scale * (r - d_a)))
-
-    valid_mask = (lower_limit >= 0) & (upper_limit <= w) & general_case_mask
-
-    if np.any(valid_mask):
-        k = (d_b[valid_mask] - d_a[valid_mask]) / w[valid_mask]
-        I_1 = np.zeros_like(k)
-        I_2 = np.zeros_like(k)
-
-        nonzero_k_mask = (k != 0)
-        
-        # find the value d_a, k, M for the nonzero k values
-        valid_d_a = d_a[valid_mask]
-        d_a_mask = valid_d_a[nonzero_k_mask]
-        #d_a_mask = d_a[valid_mask][nonzero_k_mask]
-        k_mask = k[nonzero_k_mask]
-        
-        valid_m_mask = M[valid_mask]  # M is already filtered by valid_mask
-        M_mask = valid_m_mask[nonzero_k_mask]
-        
-        if np.any(nonzero_k_mask):
-            
-            scale_coef = (1 / (k_mask* (n + 1)))
-            
-            valid_lower_limit = lower_limit[valid_mask] 
-            lower_limit_mask = valid_lower_limit[nonzero_k_mask]
-            
-            valid_upper_limit = upper_limit[valid_mask]
-            upper_limit_mask = valid_upper_limit[nonzero_k_mask]
-            
-            I_1[nonzero_k_mask] = -(scale_coef * (
-                (np.maximum(0, -1 * (d_a_mask + k_mask * M_mask - r)))**(n + 1) -
-                (np.maximum(0, -1 * (d_a_mask + k_mask * lower_limit_mask - r)))**(n + 1)
-            ))
-            I_2[nonzero_k_mask] = (scale_coef * (
-                (np.maximum(0, d_a_mask + k_mask * upper_limit_mask - r))**(n + 1) -
-                (np.maximum(0, d_a_mask + k_mask * M_mask - r))**(n + 1)
-            ))
-
-        integrated_kernel_values[valid_mask] = (
-            ((n + 1) / (2 * n * delta_r)) *
-            (upper_limit[valid_mask] - lower_limit[valid_mask] -
-             (1 / (delta_r**n)) * (I_1 + I_2))
+    if delta_r <= 0 or n <= 0 or redistribution_scale < 0:
+        raise ValueError(
+            "delta_r and n must be positive, c must be non-negative"   
         )
-    return integrated_kernel_values
+    
+    # Endpoint-weighted redistribution scale: use simple formula
+    if redistribution_scale==0:
+        return 0.5 * w * (
+        polynomial_kernel(
+            np.abs(d_1 - r),
+            n=n,
+            delta_r=delta_r
+        )
+        +
+        polynomial_kernel(
+            np.abs(d_2 - r),
+            n=n,
+            delta_r=delta_r
+        )
+    )
+        
+    # uniform redistribution scale: use exact analytical formula
+    elif  np.isinf(redistribution_scale):
+        result = np.zeros(len(w), dtype=np.float64)
+
+        for j in range(len(w)):
+            wi = w[j]
+            ds = d_1[j]
+            dt = d_2[j]
+
+            if wi <= 0.0:
+                continue
+
+            if not (np.isfinite(ds) and np.isfinite(dt)):
+                continue
+
+            d_star = 0.5 * (ds + dt + wi)
+
+            result[j] = (
+                2.0 * _poly_kernel_antiderivative(
+                    d_star-r, delta_r, n
+                )
+                - _poly_kernel_antiderivative(
+                    ds-r, delta_r, n
+                )
+                - _poly_kernel_antiderivative(
+                    dt-r, delta_r, n
+                )
+            )
+
+        return result
+    
+    
+    # generic case: finite redistribution scale
+    else:
+        w = np.ascontiguousarray(w, dtype=np.float64)
+        d_1 = np.ascontiguousarray(d_1, dtype=np.float64)
+        d_2 = np.ascontiguousarray(d_2, dtype=np.float64)
+
+        if w.shape != d_1.shape or w.shape != d_2.shape:
+            raise ValueError("Input shapes must match")
+
+        nodes, weights = _cached_leggauss(quadrature_order)
+
+        return _integrated_smooth_fast(
+            r, w, d_1, d_2,
+            delta_r, n, redistribution_scale,
+            nodes, weights
+        )
+

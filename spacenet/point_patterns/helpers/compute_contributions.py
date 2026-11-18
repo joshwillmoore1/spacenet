@@ -1,9 +1,9 @@
+
 import numpy as np
 from spacenet.point_patterns.helpers.polynomial_kernel import polynomial_kernel
 from spacenet.point_patterns.helpers.integrated_poly_finite_kernel import integrated_poly_finite_kernel
 from spacenet.point_patterns.helpers.prepare_reachable_edge_arrays import prepare_reachable_edge_arrays   
-
-def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,node_to_edges: dict) -> np.array:
+def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: np.array, spatial_kernel_bandwidth: float,spatial_kernel_n: float, total_length: float ,this_node_shortest_distance: dict,node_to_edges: dict,redistribution_scale: float=np.inf) -> np.array:
     """
     
     Computes the local contributions to the pair correlation function for a given reference node (object_id_A) and a set of target nodes (object_indices_B) at specified radii (r). 
@@ -29,6 +29,9 @@ def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: 
         A dictionary mapping node indices to their shortest distance from the reference node (object_id_A). This should be precomputed for efficiency.
     node_to_edges : dict
         A dictionary mapping node indices to a list of edges (and their weights) that are connected to that node. This should be precomputed for efficiency.
+    redistribution_scale : float, optional
+        Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to np.inf, corresponding to uniform geometric weighting.    
+
     
     Returns 
     -------
@@ -76,14 +79,17 @@ def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: 
             numerator_contributions[r_index]=numerator
 
             edge_mask = kernel_node_mask[edge_u_idx] | kernel_node_mask[edge_v_idx]
-            
+    
             total_length_in_kernel = np.sum(integrated_poly_finite_kernel(
                 r=r_value,
                 w=edge_weights[edge_mask],
                 d_1=edge_d_1[edge_mask],
                 d_2=edge_d_2[edge_mask],
-                delta_r=spatial_kernel_bandwidth, n=spatial_kernel_n
+                delta_r=spatial_kernel_bandwidth, 
+                n=spatial_kernel_n,
+                redistribution_scale=redistribution_scale
             ))
+            
             total_kernel_lengths[r_index]=total_length_in_kernel
             
             
@@ -92,3 +98,6 @@ def compute_contributions(object_id_A: np.array, object_indices_B: np.array, r: 
     local_contributions = local_contributions / total_density
 
     return local_contributions
+
+
+

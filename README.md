@@ -2,6 +2,8 @@
 
 [![Python package](https://github.com/joshwillmoore1/spacenet/actions/workflows/python-package.yml/badge.svg)](https://github.com/joshwillmoore1/spacenet/actions/workflows/python-package.yml)
 
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/spacenet?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=GREEN&left_text=downloads)](https://pepy.tech/projects/spacenet)
+
 <img width="3229" height="375" alt="docs_banner" src="https://github.com/user-attachments/assets/38c2e128-6a9d-48ce-aa5f-2b02b61fae10" />
 
 **SpaceNet** is an open-source Python package for the spatial analysis of **spatially embedded networks**.

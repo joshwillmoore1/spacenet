@@ -3,7 +3,7 @@ import numba
 @numba.njit(
     fastmath=True
 )
-def polynomial_kernel(x, n=2, delta_r=1):
+def polynomial_kernel(x, n=2.0, delta_r=1.0):
     """
     Computes the polynomial kernel function for a given distance or array of distances. The polynomial kernel is defined as:
     

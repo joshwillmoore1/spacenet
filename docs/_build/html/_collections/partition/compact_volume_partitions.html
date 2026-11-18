@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -518,7 +518,7 @@ document.write(`
 <p>To address this, SpaceNet implements a compact, volume-balanced partitioning algorithm that adapts the refinement strategy of the Leiden algorithm. Rather than optimising modularity, the algorithm seeks to generate connected partitions that balance the edge volume assigned to each partition while simultaneously promoting spatial compactness in the network distance metric. Together, these objectives produce partitions that closely approximate the desirable properties of a spatial tiling on a
 network.</p>
 <p>Further details of the algorithm are available in:</p>
-<p><strong>Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology.</strong> DOI: …</p>
+<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 <p>In this tutorial, we’ll introduce the compact, volume-balanced partitioning algorithm and demonstrate how it can be used to partition spatial networks for downstream analysis. We’ll begin by generating a spatial network of random points.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:

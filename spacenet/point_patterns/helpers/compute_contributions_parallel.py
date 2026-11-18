@@ -1,9 +1,10 @@
 from spacenet.point_patterns.helpers.compute_contributions import compute_contributions
 import multiprocessing
 from tqdm import tqdm
+import numpy as np  
 
 def compute_contributions_parallel(object_indices_A, object_indices_B, r, spatial_kernel_bandwidth,
-                                    spatial_kernel_n, total_length, all_network_distances,node_to_edges, n_jobs=-1,verbose=True):
+                                    spatial_kernel_n, total_length, all_network_distances,node_to_edges, n_jobs=-1,verbose=True,redistribution_scale=np.inf):
     """
     
     Runs the compute_contributions function in parallel across multiple CPU cores for a list of object indices. 
@@ -33,6 +34,9 @@ def compute_contributions_parallel(object_indices_A, object_indices_B, r, spatia
         The number of parallel jobs to run when computing contributions. If n_jobs > 1, the contributions will be computed in parallel across multiple CPU cores. Default is -1 (use all available cores).
     verbose : bool, optional
         Whether to print progress messages during computation. Default is True.
+    redistribution_scale : float, optional
+        Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to np.inf, corresponding to uniform geometric weighting.    
+
     
     Returns
     -------
@@ -48,7 +52,7 @@ def compute_contributions_parallel(object_indices_A, object_indices_B, r, spatia
     if verbose:
         print(f"Computing contributions in parallel using {n_jobs} cores...")
     # Prepare arguments for each task
-    tasks = [(obj_a, object_indices_B, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances[obj_a],node_to_edges) for obj_a in object_indices_A]
+    tasks = [(obj_a, object_indices_B, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances[obj_a],node_to_edges,redistribution_scale) for obj_a in object_indices_A]
 
     # set the chunk size for the parallel processing
     chunk_size = max(1, len(tasks) // (n_jobs * 4))  
@@ -65,6 +69,6 @@ def compute_contributions_parallel(object_indices_A, object_indices_B, r, spatia
 
 
 def __process(args):
-    obj_a, object_indices_B, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances_obj_a,node_to_edges = args
+    obj_a, object_indices_B, r, spatial_kernel_bandwidth, spatial_kernel_n, total_length, all_network_distances_obj_a,node_to_edges,redistribution_scale = args
     return compute_contributions(obj_a, object_indices_B, r, spatial_kernel_bandwidth,
-                                 spatial_kernel_n, total_length, all_network_distances_obj_a,node_to_edges)
+                                 spatial_kernel_n, total_length, all_network_distances_obj_a,node_to_edges,redistribution_scale=redistribution_scale)

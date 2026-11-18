@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -515,7 +515,7 @@ document.write(`
 <p>The pair correlation function (PCF) is a widely used tool in spatial statistics for quantifying spatial relationships across multiple length scales. Rather than summarising a point pattern with a single statistic, the PCF measures how the local density of points changes as a function of distance. At each distance, it compares the observed density of points contain within a kernel centred about each point at that distance, with the density expected under a statistical null model of spatial
 positions, providing a scale-dependent measure of spatial organisation.</p>
 <p>Recently, the PCF was extended to spatial networks in:</p>
-<p><strong>Moore et al. (2026). netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology.</strong> DOI: …</p>
+<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 <p>The netPCF reformulates the PCF on spatial networks by defining the continuum of space along the network edges and measuring distances using network (geodesic) distance rather than Euclidean distance, using the data itself to define the domain of interest. The statistical null here is Complete Spatial Randomness on the network (a common choice when no prior knowledge of spatial distribution is known), so the interpretation of netPCF is:</p>
 <ul class="simple">
 <li><p>Values greater than <strong>1</strong> indicate clustering (co-localisation) at that distance.</p></li>
