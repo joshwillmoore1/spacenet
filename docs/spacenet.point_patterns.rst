@@ -13,7 +13,7 @@ Pair correlation functions
 
    cross_pair_correlation_function
    weighted_pair_correlation_function
-   cross_weighted_pair_correlation_function
+   dual_weighted_pair_correlation_function
 
 
 Correlation helper functions

@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bdbcc2a0" />
@@ -42,7 +42,7 @@
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=f7f30125"></script>
+    <script src="../_static/documentation_options.js?v=933cd161"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://www.spacenet-python.com/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.3';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="icon" href="../_static/fav.svg"/>
@@ -528,7 +528,7 @@ document.write(`
 <h1>spacenet.point_patterns.helpers.compute_weighted_contributions<a class="headerlink" href="#spacenet-point-patterns-helpers-compute-weighted-contributions" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.point_patterns.helpers.compute_weighted_contributions">
-<span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.helpers.</span></span><span class="sig-name descname"><span class="pre">compute_weighted_contributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">this_node_shortest_distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">these_marker_contributions_weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_edges</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.helpers.compute_weighted_contributions" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.helpers.</span></span><span class="sig-name descname"><span class="pre">compute_weighted_contributions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_id_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">this_node_shortest_distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">these_marker_contributions_weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redistribution_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.helpers.compute_weighted_contributions" title="Link to this definition">#</a></dt>
 <dd><p>Compute the local contributions to the pair correlation function for a given reference node (object_id_A) and a set of target nodes (object_indices_B) at specified radii (r), weighted by marker contributions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -550,6 +550,8 @@ document.write(`
 <dt><strong>these_marker_contributions_weighting</strong><span class="classifier">np.array</span></dt><dd><p>An array of shape (num_objects_B, num_markers) containing the contributions of each object in population B to each marker. This should be precomputed based on the marker values and the weighting scheme for the contributions.</p>
 </dd>
 <dt><strong>node_to_edges</strong><span class="classifier">dict</span></dt><dd><p>A dictionary mapping node indices to a list of edges (and their weights) that are connected to that node. This should be precomputed for efficiency.</p>
+</dd>
+<dt><strong>redistribution_scale</strong><span class="classifier">float, optional</span></dt><dd><p>Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to np.inf, corresponding to uniform geometric weighting.</p>
 </dd>
 </dl>
 </dd>

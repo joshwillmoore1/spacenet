@@ -93,10 +93,10 @@ def test_weighted_pair_correlation_function(setup_network_and_params):
     assert(g[tau_index_3,np.where(r==600)[0][0]]<0.5)
     
     
-def test_cross_weighted_pair_correlation_function(setup_network_and_params):
+def test_dual_weighted_pair_correlation_function(setup_network_and_params):
     G,_,_= setup_network_and_params
     
-    tau_a,tau_b,r,g,ci=sn.point_patterns.cross_weighted_pair_correlation_function(G,node_label_name_a='Marker (continuous)',node_label_name_b='Marker (continuous)',spatial_kernel_bandwidth=60,spatial_kernel_n=2,r_max=1000,r_step=5,return_confidence_interval=True)
+    tau_a,tau_b,r,g,ci=sn.point_patterns.dual_weighted_pair_correlation_function(G,node_label_name_a='Marker (continuous)',node_label_name_b='Marker (continuous)',spatial_kernel_bandwidth=60,spatial_kernel_n=2,r_max=1000,r_step=5,return_confidence_interval=True)
     
     tau_a_index_1 = np.where(tau_a==0)[0][0]
     tau_a_index_2 = np.where(tau_a==0.5)[0][0]

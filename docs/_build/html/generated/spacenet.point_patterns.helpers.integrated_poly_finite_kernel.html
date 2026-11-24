@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bdbcc2a0" />
@@ -42,7 +42,7 @@
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=f7f30125"></script>
+    <script src="../_static/documentation_options.js?v=933cd161"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -68,7 +68,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://www.spacenet-python.com/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.3';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="icon" href="../_static/fav.svg"/>
@@ -530,37 +530,48 @@ document.write(`
 <h1>spacenet.point_patterns.helpers.integrated_poly_finite_kernel<a class="headerlink" href="#spacenet-point-patterns-helpers-integrated-poly-finite-kernel" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.point_patterns.helpers.integrated_poly_finite_kernel">
-<span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.helpers.</span></span><span class="sig-name descname"><span class="pre">integrated_poly_finite_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.helpers.integrated_poly_finite_kernel" title="Link to this definition">#</a></dt>
-<dd><p>Computes the integrated polynomial kernel function for given distances and bandwidth parameters. The integrated kernel is defined as:</p>
+<span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.helpers.</span></span><span class="sig-name descname"><span class="pre">integrated_poly_finite_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta_r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redistribution_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quadrature_order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.helpers.integrated_poly_finite_kernel" title="Link to this definition">#</a></dt>
+<dd><p>Nearest-endpoint Gaussian weighted
+polynomial kernel integration for 
+localised accessible space normalisation.</p>
+<p>This is defined as:</p>
 <div class="math notranslate nohighlight">
-\[L_{i} \left(  r \right) = \sum_{e_{nm} \in E}  \int_{0}^{w_{nm}} \kappa_{\Delta r, n } \left(  |  d_{in} + \frac{d_{im} - d_{in}}{w_{nm}}x  - r |  \right) dx\]</div>
-<p>The kernel function is integrated over the length of the edge, weighted by the edge weight.</p>
+\[\int_{0}^{w_{st}}
+q_{st}(x;c) \kappa_{\Delta r,n}(d_{st}(x)-r)\,dx\]</div>
+<p>where <span class="math notranslate nohighlight">\(q_{st}(x;c)\)</span> is the nearest-endpoint Gaussian
+weighting function, <span class="math notranslate nohighlight">\(\kappa_{\Delta r,n}\)</span> is the polynomial
+kernel function, and <span class="math notranslate nohighlight">\(d_{st}(x)\)</span> is the shortest-path
+distance from point <span class="math notranslate nohighlight">\(x\)</span> on edge <span class="math notranslate nohighlight">\(e_{st}\)</span> to the
+reference node.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>r</strong><span class="classifier">float</span></dt><dd><p>The distance at which to evaluate the integrated kernel function.</p>
+<dt><strong>r</strong><span class="classifier">float</span></dt><dd><p>Target geodesic separation.</p>
 </dd>
-<dt><strong>w</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An array of edge weights corresponding to the lengths of the edges in the network.</p>
+<dt><strong>w</strong><span class="classifier">ndarray</span></dt><dd><p>Edge lengths.</p>
 </dd>
-<dt><strong>d_1</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An array of distances from the reference node to one endpoint of each edge.</p>
+<dt><strong>d_1, d_2</strong><span class="classifier">ndarray</span></dt><dd><p>Endpoint shortest-path distances.</p>
 </dd>
-<dt><strong>d_2</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An array of distances from the reference node to the other endpoint of each edge.</p>
+<dt><strong>delta_r</strong><span class="classifier">float</span></dt><dd><p>Polynomial kernel support radius.</p>
 </dd>
-<dt><strong>delta_r</strong><span class="classifier">float, optional</span></dt><dd><p>The bandwidth parameter for the polynomial kernel function. Default is 1.</p>
+<dt><strong>n</strong><span class="classifier">float</span></dt><dd><p>Positive real kernel exponent.</p>
 </dd>
-<dt><strong>n</strong><span class="classifier">int, optional</span></dt><dd><p>The exponent parameter for the polynomial kernel function. Default is 2.</p>
+<dt><strong>redistribution_scale</strong><span class="classifier">float</span></dt><dd><p>Physical confidence length scale.</p>
+</dd>
+<dt><strong>quadrature_order</strong><span class="classifier">int</span></dt><dd><p>Gauss-Legendre quadrature order.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><dl class="simple">
-<dt><strong>integrated_kernel_values</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>An array of integrated kernel values from node i at all r values.</p>
+<dt>ndarray</dt><dd><p>Integrated contribution for each edge.</p>
 </dd>
 </dl>
 </dd>
 </dl>
 <p class="rubric">Notes</p>
-<p>See reference paper for details on the derivation of the integrated kernel function and its implementation.</p>
+<p>For more information, see the reference paper:</p>
+<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 </dd></dl>
 
 </section>
