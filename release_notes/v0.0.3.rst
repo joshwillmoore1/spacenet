@@ -1,0 +1,55 @@
+v0.0.3
+=======
+
+We are pleased to announce the release of **SpaceNet v0.0.3**, an
+open-source Python package for the spatial analysis of spatial networks.
+
+This release introduces geometric redistribution functionality for
+network correlation functions, alongside updates to the pair correlation
+function (PCF) API, improvements to documentation, and general package
+maintenance.
+
+New Features
+------------
+
+**Geometric Redistribution for Correlation Functions**
+
+* Introduced geometric redistribution functionality for spatial
+  correlation functions, extending the analytical capabilities of
+  the SpaceNet framework.
+
+API Changes
+-----------
+
+**Dual-Weighted Pair Correlation Function**
+
+* Renamed the ``cross_weighted`` PCF functionality to ``dual_weighted``
+  to provide more consistent and descriptive terminology.
+
+* Users of the previous ``cross_weighted`` API should update their
+  code to use the corresponding ``dual_weighted`` functionality.
+
+Documentation
+-------------
+
+* Improved and standardised function docstrings throughout the package
+  to enhance clarity and consistency.
+
+* Added a test report for the v0.0.3 release.
+
+* Updated the README to reflect the latest package developments.
+
+Package Updates
+---------------
+
+* Updated the package version to v0.0.3.
+
+Acknowledgements
+----------------
+
+SpaceNet continues to be developed to support research into spatial
+network analysis and the development of new statistical methodology
+for spatially embedded networks.
+
+We welcome bug reports, feature requests, and community contributions
+through the project's GitHub repository.

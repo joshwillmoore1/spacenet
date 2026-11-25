@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PREVIOUS_TAG="v0.0.2"
+OUTPUT_FILE="release_notes.rst"
+
+# Verify that the tag exists
+if ! git rev-parse -q --verify "refs/tags/${PREVIOUS_TAG}" >/dev/null; then
+    echo "Error: Git tag ${PREVIOUS_TAG} does not exist."
+    exit 1
+fi
+
+# Count commits since previous release
+COMMIT_COUNT=$(git rev-list --count "${PREVIOUS_TAG}..HEAD")
+
+echo "Found ${COMMIT_COUNT} commits since ${PREVIOUS_TAG}."
+
+if [[ "$COMMIT_COUNT" -eq 0 ]]; then
+    echo "No new commits found. Release notes not generated."
+    exit 0
+fi
+
+# Generate release notes
+{
+    echo "Release Notes"
+    echo "============="
+    echo
+    echo "Changes since ${PREVIOUS_TAG}:"
+    echo
+    git log "${PREVIOUS_TAG}..HEAD" \
+        --pretty=format:'* %s'
+    echo
+} > "$OUTPUT_FILE"
+
+echo "Release notes generated: ${OUTPUT_FILE}"
