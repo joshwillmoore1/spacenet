@@ -37,6 +37,6 @@ tests/test_point_patterns.py::test_integrated_poly_finite_kernel PASSED  [ 89%]
 tests/test_point_patterns.py::test_pair_correlation_function PASSED      [ 91%]
 tests/test_point_patterns.py::test_cross_pair_correlation_function PASSED [ 94%]
 tests/test_point_patterns.py::test_weighted_pair_correlation_function PASSED [ 97%]
-tests/test_point_patterns.py::test_cross_weighted_pair_correlation_function PASSED [100%]
+tests/test_point_patterns.py::test_dual_weighted_pair_correlation_function PASSED [100%]
 
-============================= 37 passed in 28.79s ==============================
+============================= 37 passed in 27.71s ==============================

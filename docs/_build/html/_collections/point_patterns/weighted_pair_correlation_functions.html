@@ -517,7 +517,7 @@ document.write(`
 <p>The weighted network pair correlation function (weighted-netPCF) extends the pair correlation framework by allowing each node to contribute to the estimated correlation according to an associated weight. Instead of estimating the density of neighbouring nodes, the statistic estimates the weighted density of neighbouring nodes as a function of network distance. As before, the observed weighted densities are compared with those expected under a statistical null model, producing a scale-dependent
 measure of spatial association.</p>
 <p>This methodology was introduced in:</p>
-<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
+<p>Moore, Bull and Byrne. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 <p>In this tutorial, we’ll demonstrate the practical application of the weighted network pair correlation function using <code class="docutils literal notranslate"><span class="pre">weighted_pair_correlation_function()</span></code>. We’ll use the example spiral dataset and assign continuous weights to each node to illustrate how the statistic can identify spatial patterns in quantitative node attributes.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
@@ -618,7 +618,7 @@ Computing node-node distances...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Computing contributions: 100%|██████████| 326/326 [00:02&lt;00:00, 137.71contributions/s]
+Computing contributions: 100%|██████████| 326/326 [00:01&lt;00:00, 245.86contributions/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -632,7 +632,7 @@ Computing confidence intervals via spatial bootstrap...
 <p>In addition to the outputs returned by <code class="docutils literal notranslate"><span class="pre">netPCF</span></code> and <code class="docutils literal notranslate"><span class="pre">cross-netPCF</span></code>, <code class="docutils literal notranslate"><span class="pre">weighted_pair_correlation_function()</span></code> returns <code class="docutils literal notranslate"><span class="pre">target_marks</span></code>, which contains the marker values at which the weighted pair correlation function has been evaluated.</p>
 <p>Consequently, the estimated pair correlation values are now two-dimensional. Rather than varying only with network distance, the weighted pair correlation function is evaluated over both network distance (<code class="docutils literal notranslate"><span class="pre">radii</span></code>) and marker value (<code class="docutils literal notranslate"><span class="pre">target_marks</span></code>). We can see this by inspecting the shapes of the returned arrays.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The shape of the w-netPCF output:&#39;</span><span class="p">,</span><span class="n">wpcf_values</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -654,7 +654,7 @@ The shape of radii array: (51,)
 <p>Each row of <code class="docutils literal notranslate"><span class="pre">wpcf_values</span></code> corresponds to a marker value in <code class="docutils literal notranslate"><span class="pre">target_marks</span></code>, while each column corresponds to a network distance in <code class="docutils literal notranslate"><span class="pre">radii</span></code>. In other words, the weighted pair correlation function is evaluated over the two-dimensional space defined by marker value and network distance.</p>
 <p>To visualise this two-dimensional estimate, we’ll display <code class="docutils literal notranslate"><span class="pre">wpcf_values</span></code> as a heatmap.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the wpcf_values array for all target marks</span>
@@ -670,7 +670,7 @@ The shape of radii array: (51,)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -690,7 +690,7 @@ Text(0, 0.5, &#39;Target Mark, $\\tau$&#39;)
 <p>The key advantage of the weighted network pair correlation function is that it estimates spatial associations across the entire range of marker values simultaneously, providing a compact summary of how spatial organisation varies with both network distance and the continuous node attribute.</p>
 <p>To make this interpretation more intuitive, we can extract and plot pair correlation curves at selected marker values. These one-dimensional slices are analogous to the <code class="docutils literal notranslate"><span class="pre">netPCF</span></code> and <code class="docutils literal notranslate"><span class="pre">cross-netPCF</span></code> curves presented in the previous tutorials.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib.gridspec</span> <span class="kn">import</span> <span class="n">GridSpec</span>
@@ -752,7 +752,7 @@ Text(0, 0.5, &#39;Target Mark, $\\tau$&#39;)
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="output_area docutils container">

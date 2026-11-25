@@ -515,7 +515,7 @@ document.write(`
 <p>The pair correlation function (PCF) is a widely used tool in spatial statistics for quantifying spatial relationships across multiple length scales. Rather than summarising a point pattern with a single statistic, the PCF measures how the local density of points changes as a function of distance. At each distance, it compares the observed density of points contain within a kernel centred about each point at that distance, with the density expected under a statistical null model of spatial
 positions, providing a scale-dependent measure of spatial organisation.</p>
 <p>Recently, the PCF was extended to spatial networks in:</p>
-<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
+<p>Moore, Bull and Byrne. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 <p>The netPCF reformulates the PCF on spatial networks by defining the continuum of space along the network edges and measuring distances using network (geodesic) distance rather than Euclidean distance, using the data itself to define the domain of interest. The statistical null here is Complete Spatial Randomness on the network (a common choice when no prior knowledge of spatial distribution is known), so the interpretation of netPCF is:</p>
 <ul class="simple">
 <li><p>Values greater than <strong>1</strong> indicate clustering (co-localisation) at that distance.</p></li>
@@ -599,7 +599,7 @@ Computing node-node distances...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Computing contributions: 100%|██████████| 1159/1159 [00:03&lt;00:00, 299.89contributions/s]
+Computing contributions: 100%|██████████| 1159/1159 [00:02&lt;00:00, 448.99contributions/s]
 </pre></div></div>
 </div>
 <p>By default, <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code> returns two outputs:</p>
@@ -669,7 +669,7 @@ Getting cached node-node distances...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Computing contributions: 100%|██████████| 1159/1159 [00:02&lt;00:00, 506.38contributions/s]
+Computing contributions: 100%|██████████| 1159/1159 [00:02&lt;00:00, 569.81contributions/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -749,7 +749,7 @@ Getting cached node-node distances...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Computing contributions: 100%|██████████| 326/326 [00:00&lt;00:00, 553.19contributions/s]
+Computing contributions: 100%|██████████| 326/326 [00:00&lt;00:00, 620.91contributions/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -797,7 +797,7 @@ Computing confidence intervals via spatial bootstrap...
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x167b0b4a0&gt;
+&lt;matplotlib.legend.Legend at 0x139b46c00&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
