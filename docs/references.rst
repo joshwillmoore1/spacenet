@@ -10,7 +10,7 @@ Citing SpaceNet
 ---------------
 
 If you use **SpaceNet** in your research, please cite the relevant methodological
-papers listed above. If a dedicated SpaceNet paper becomes available, citation
+papers listed above. When a dedicated SpaceNet paper becomes available, citation
 details will be provided here.
 
 

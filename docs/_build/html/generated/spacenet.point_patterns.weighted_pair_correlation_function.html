@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css?v=7f9a90b1" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bdbcc2a0" />
@@ -62,6 +62,8 @@
                 gtag('js', new Date());
                 gtag('config', 'G-HQ98Y5N0C9');
             </script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'generated/spacenet.point_patterns.weighted_pair_correlation_function';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
@@ -72,7 +74,7 @@
     <link rel="icon" href="../_static/fav.svg"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="spacenet.point_patterns.cross_weighted_pair_correlation_function" href="spacenet.point_patterns.cross_weighted_pair_correlation_function.html" />
+    <link rel="next" title="spacenet.point_patterns.dual_weighted_pair_correlation_function" href="spacenet.point_patterns.dual_weighted_pair_correlation_function.html" />
     <link rel="prev" title="spacenet.point_patterns.cross_pair_correlation_function" href="spacenet.point_patterns.cross_pair_correlation_function.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -440,7 +442,7 @@ document.write(`
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../spacenet.point_patterns.html">spacenet.point_patterns</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.cross_pair_correlation_function.html">spacenet.point_patterns.cross_pair_correlation_function</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">spacenet.point_patterns.weighted_pair_correlation_function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.cross_weighted_pair_correlation_function.html">spacenet.point_patterns.cross_weighted_pair_correlation_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.dual_weighted_pair_correlation_function.html">spacenet.point_patterns.dual_weighted_pair_correlation_function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.helpers.spatial_bootstrap.html">spacenet.point_patterns.helpers.spatial_bootstrap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.helpers.polynomial_kernel.html">spacenet.point_patterns.helpers.polynomial_kernel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html">spacenet.point_patterns.helpers.integrated_poly_finite_kernel</a></li>
@@ -529,7 +531,32 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.point_patterns.weighted_pair_correlation_function">
 <span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.</span></span><span class="sig-name descname"><span class="pre">weighted_pair_correlation_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spatial_network</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_name_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes_b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_kernel_bandwidth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_kernel_n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">marker_step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_weight_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Distance'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_confidence_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">low_memory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redistribution_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.weighted_pair_correlation_function" title="Link to this definition">#</a></dt>
-<dd><p>Computes the weighted pair correlation function between two populations of nodes. Computes the spatial correlation between two populations of nodes where the second population (B) has a continuous label (marker) associated with it, and the pair correlation function is weighted by the similarity in the continuous label to a target value.</p>
+<dd><p>Compute the weighted network-based pair correlation function
+(weighted-netPCF) between a reference population of nodes and
+a population of nodes with continuous marks.</p>
+<p>Weighted-netPCF extends netPCF to quantify spatial relationships
+between nodes as a function of both shortest-path distance and
+continuous mark values. It accounts for network geometry and
+accessible space when estimating expected node-pair densities.</p>
+<p>Weighted-netPCF is defined as the ratio of the observed weighted
+density of node pairs at a given network distance, <span class="math notranslate nohighlight">\(r\)</span>,
+and target mark, <span class="math notranslate nohighlight">\(m\)</span>, to the expected weighted density
+under complete spatial randomness (CSR). Contributions from
+population B are weighted according to their continuous mark
+values, allowing spatial relationships to be evaluated across
+the full range of target marks.</p>
+<p>The resulting weighted-netPCF values can be interpreted as follows:</p>
+<ul class="simple">
+<li><p>Values greater than 1 indicate increased spatial association (co-localisation) with nodes having marks near the target value.</p></li>
+<li><p>Values less than 1 indicate reduced spatial association (spatial exclusion) with nodes having marks near the target value.</p></li>
+<li><p>Values equal to 1 indicate spatial relationships consistent with complete spatial randomness.</p></li>
+</ul>
+<p>Unlike the standard netPCF, which evaluates spatial relationships
+between discrete populations, weighted-netPCF simultaneously
+quantifies spatial relationships across a continuous range of
+target marks. The resulting statistic is a two-dimensional
+function of network distance and target mark, providing a
+continuous summary of spatial associations between populations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><dl class="simple">
@@ -588,7 +615,7 @@ document.write(`
 </dl>
 <p class="rubric">Notes</p>
 <p>For more information, see the reference paper:</p>
-<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
+<p>Moore, Bull &amp; Byrne. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 <p class="rubric">Examples</p>
 <p>Computing the weighted pair correlation function for a spatial network with a continuous node label (marker) and plotting the results:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">spacenet</span> <span class="k">as</span> <span class="nn">sn</span>

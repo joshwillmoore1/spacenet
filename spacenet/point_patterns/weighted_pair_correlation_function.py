@@ -16,9 +16,37 @@ from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import po
 
 def weighted_pair_correlation_function(spatial_network, node_label_name_b=None, nodes_a=None,nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth=0.2,marker_kernel_n=1,marker_min=0, marker_max=1, marker_step=0.1, edge_weight_name='Distance',return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1,redistribution_scale=0):
     """
-    
-    Computes the weighted pair correlation function between two populations of nodes. Computes the spatial correlation between two populations of nodes where the second population (B) has a continuous label (marker) associated with it, and the pair correlation function is weighted by the similarity in the continuous label to a target value. 
-    
+    Compute the weighted network-based pair correlation function
+    (weighted-netPCF) between a reference population of nodes and
+    a population of nodes with continuous marks.
+
+    Weighted-netPCF extends netPCF to quantify spatial relationships
+    between nodes as a function of both shortest-path distance and
+    continuous mark values. It accounts for network geometry and
+    accessible space when estimating expected node-pair densities.
+
+    Weighted-netPCF is defined as the ratio of the observed weighted
+    density of node pairs at a given network distance, :math:`r`,
+    and target mark, :math:`m`, to the expected weighted density
+    under complete spatial randomness (CSR). Contributions from
+    population B are weighted according to their continuous mark
+    values, allowing spatial relationships to be evaluated across
+    the full range of target marks.
+
+    The resulting weighted-netPCF values can be interpreted as follows:
+
+    - Values greater than 1 indicate increased spatial association (co-localisation) with nodes having marks near the target value.
+
+    - Values less than 1 indicate reduced spatial association (spatial exclusion) with nodes having marks near the target value.
+
+    - Values equal to 1 indicate spatial relationships consistent with complete spatial randomness.
+
+    Unlike the standard netPCF, which evaluates spatial relationships
+    between discrete populations, weighted-netPCF simultaneously
+    quantifies spatial relationships across a continuous range of
+    target marks. The resulting statistic is a two-dimensional
+    function of network distance and target mark, providing a
+    continuous summary of spatial associations between populations.
         
     Parameters
     ----------
@@ -83,7 +111,7 @@ def weighted_pair_correlation_function(spatial_network, node_label_name_b=None, 
     
     For more information, see the reference paper:
     
-    Moore et al. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
+    Moore, Bull & Byrne. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
     
     Examples
     --------
