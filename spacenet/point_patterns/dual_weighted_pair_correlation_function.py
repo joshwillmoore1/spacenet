@@ -13,11 +13,40 @@ from spacenet.helpers.node_node_distance import node_node_distance
 from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import polynomial_kernel_bandwidth_scale
 
 
-def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,node_label_name_b, nodes_a=None,nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1,redistribution_scale=0):
+def dual_weighted_pair_correlation_function(spatial_network,node_label_name_a,node_label_name_b, nodes_a=None,nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10,marker_kernel_bandwidth_A=0.2,marker_kernel_n_A=1,marker_min_A=0, marker_max_A=1, marker_step_A=0.1,marker_kernel_bandwidth_B=0.2,marker_kernel_n_B=1,marker_min_B=0, marker_max_B=1, marker_step_B=0.1, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1,redistribution_scale=0):
     """
-    
-    Compute the cross weighted pair correlation function between two populations of objects (A and B) on a spatial network, where the contributions of each object to the pair correlation function are weighted by a kernel function based on their marker levels.
-    Polynomial kernels are used to weight contributions based on marked levels, and the pair correlation function is computed across a range of distances (r) and target marker values for both populations. 
+    Compute the dual-weighted network-based pair correlation function
+    (dual-weighted netPCF) between two populations of nodes with
+    continuous marks.
+
+    Dual-weighted netPCF extends weighted-netPCF to quantify spatial
+    relationships as a function of shortest-path distance and two
+    continuous marks, one associated with each population. It accounts
+    for network geometry and accessible space when estimating expected
+    node-pair densities.
+
+    Dual-weighted netPCF is defined as the ratio of the observed
+    weighted density of node pairs at a given network distance,
+    :math:`r`, and target marks, :math:`\\tau_a` and :math:`\\tau_b`, to
+    the expected weighted density under complete spatial randomness
+    (CSR). Contributions from both populations are weighted according
+    to their continuous mark values, allowing spatial relationships
+    to be evaluated across combinations of target marks.
+
+    The resulting dual-weighted netPCF values can be interpreted
+    as follows:
+
+    - Values greater than 1 indicate increased spatial association (co-localisation) between nodes with marks near the target values.
+
+    - Values less than 1 indicate reduced spatial association (spatial exclusion) between nodes with marks near the target values.
+
+    - Values equal to 1 indicate spatial relationships consistent with complete spatial randomness.
+
+    Unlike weighted-netPCF, which resolves spatial relationships
+    across a single continuous mark, dual-weighted netPCF resolves
+    relationships across two continuous marks simultaneously.
+    The resulting statistic is a three-dimensional function of
+    network distance and the target marks of both populations.
     
     Parameters
     ----------
@@ -93,12 +122,12 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
     
     For more information, see the reference paper:
     
-    Moore et al. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
+    Moore, Bull & Byrne. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
     
     Examples
     --------
     
-    Compute the cross weighted pair correlation function for the Spiral dataset, where the contributions of each point to the pair correlation function are weighted by a kernel function based on their continuous marker levels. 
+    Compute the dual weighted pair correlation function for the Spiral dataset, where the contributions of each point to the pair correlation function are weighted by a kernel function based on their continuous marker levels. 
     The example computes the pair correlation function across a range of distances and target marker values, and plots the results for specific target marker combinations.
     
     .. code-block:: python  
@@ -116,18 +145,17 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
         G = sn.utils.spatial_network_from_points(points,network_type='delaunay',max_edge_distance=75)
         sn.utils.add_node_labels(G,continuous_labels,node_label_name='Marker (continuous)')
 
-        # compute the cross weighted-PCF for the spatial network continuous label 'Marker (continuous)'
-        tau_a,tau_b,radius,pcf_values,con_interval = sn.point_patterns.cross_weighted_pair_correlation_function(G,
+        # compute the dual weighted-PCF for the spatial network continuous label 'Marker (continuous)'
+        tau_a,tau_b,radius,pcf_values,con_interval = sn.point_patterns.dual_weighted_pair_correlation_function(G,
                                                                                                                 node_label_name_a='Marker (continuous)',
                                                                                                                 node_label_name_b='Marker (continuous)',
                                                                                                                 spatial_kernel_bandwidth=80,
                                                                                                                 r_max=1000,
                                                                                                                 return_confidence_interval=True)
 
-        # plot the PCF for the cross weighted pair correlation function at target mark of 0 and 1
+        # plot the PCF for the dual weighted pair correlation function at target mark of 0 and 1
         tau_a_index_0=np.where(tau_a==0)[0][0]
         tau_a_index_1=np.where(tau_a==1)[0][0]
-
         tau_b_index_0=np.where(tau_b==0)[0][0]
 
         fig,ax=plt.subplots()
@@ -139,7 +167,7 @@ def cross_weighted_pair_correlation_function(spatial_network,node_label_name_a,n
         ax.fill_between(radius,con_interval[0,tau_a_index_1,tau_b_index_0,:],con_interval[1,tau_a_index_1,tau_b_index_0,:],alpha=0.2,color='tab:orange')
 
         ax.set_xlabel('Radius')
-        ax.set_ylabel('Cross Weighted Pair Correlation')
+        ax.set_ylabel('Dual Weighted Pair Correlation')
         ax.set_ylim(0,2.5)
         ax.set_xlim(0,1000)   
         ax.legend()

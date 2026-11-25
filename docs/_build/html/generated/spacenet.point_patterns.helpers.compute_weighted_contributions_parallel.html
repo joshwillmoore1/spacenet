@@ -42,7 +42,7 @@
 
     <script src="../_static/jquery.js?v=5d32c60e"></script>
     <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../_static/documentation_options.js?v=f7f30125"></script>
+    <script src="../_static/documentation_options.js?v=933cd161"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -66,7 +66,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://www.spacenet-python.com/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.3';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="icon" href="../_static/fav.svg"/>
@@ -440,7 +440,7 @@ document.write(`
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../spacenet.point_patterns.html">spacenet.point_patterns</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.cross_pair_correlation_function.html">spacenet.point_patterns.cross_pair_correlation_function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.weighted_pair_correlation_function.html">spacenet.point_patterns.weighted_pair_correlation_function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.cross_weighted_pair_correlation_function.html">spacenet.point_patterns.cross_weighted_pair_correlation_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.dual_weighted_pair_correlation_function.html">spacenet.point_patterns.dual_weighted_pair_correlation_function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.helpers.spatial_bootstrap.html">spacenet.point_patterns.helpers.spatial_bootstrap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.helpers.polynomial_kernel.html">spacenet.point_patterns.helpers.polynomial_kernel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html">spacenet.point_patterns.helpers.integrated_poly_finite_kernel</a></li>
@@ -528,7 +528,7 @@ document.write(`
 <h1>spacenet.point_patterns.helpers.compute_weighted_contributions_parallel<a class="headerlink" href="#spacenet-point-patterns-helpers-compute-weighted-contributions-parallel" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="spacenet.point_patterns.helpers.compute_weighted_contributions_parallel">
-<span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.helpers.</span></span><span class="sig-name descname"><span class="pre">compute_weighted_contributions_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_indices_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_network_distances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">these_marker_contributions_weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.helpers.compute_weighted_contributions_parallel" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">spacenet.point_patterns.helpers.</span></span><span class="sig-name descname"><span class="pre">compute_weighted_contributions_parallel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">object_indices_A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">object_indices_B</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_bandwidth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spatial_kernel_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_network_distances</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">these_marker_contributions_weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_to_edges</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">redistribution_scale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#spacenet.point_patterns.helpers.compute_weighted_contributions_parallel" title="Link to this definition">#</a></dt>
 <dd><p>Computes the local contributions to the pair correlation function for a list of reference nodes (object_indices_A) and a set of target nodes (object_indices_B) at specified radii (r), weighted by marker contributions, in parallel across multiple CPU cores.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -554,6 +554,8 @@ document.write(`
 <dt><strong>n_jobs</strong><span class="classifier">int, optional</span></dt><dd><p>The number of parallel jobs to run when computing contributions. If n_jobs &gt; 1, the contributions will be computed in parallel across multiple CPU cores. Default is -1 (use all available cores).</p>
 </dd>
 <dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to print progress messages during computation. Default is True.</p>
+</dd>
+<dt><strong>redistribution_scale</strong><span class="classifier">float, optional</span></dt><dd><p>Physical length scale controlling the redistribution of geometric mass towards observed network vertices. Smaller values concentrate mass near edge endpoints, while larger values approach uniform weighting along edges. Defaults to np.inf, corresponding to uniform geometric weighting.</p>
 </dd>
 </dl>
 </dd>

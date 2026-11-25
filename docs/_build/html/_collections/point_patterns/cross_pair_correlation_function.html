@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -43,7 +43,7 @@
 
     <script src="../../_static/jquery.js?v=5d32c60e"></script>
     <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="../../_static/documentation_options.js?v=f7f30125"></script>
+    <script src="../../_static/documentation_options.js?v=933cd161"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -69,7 +69,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://www.spacenet-python.com/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.3';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="icon" href="../../_static/fav.svg"/>
@@ -521,7 +521,7 @@ document.write(`
 <li><p>Values close to <strong>1</strong> indicate behaviour consistent with spatial randomness.</p></li>
 </ul>
 <p>This methodology was extended to spatial networks in:</p>
-<p>Moore et al. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
+<p>Moore, Bull and Byrne. (2026). <em>netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology</em>. DOI: <a class="reference external" href="https://doi.org/10.64898/2026.07.02.736020">https://doi.org/10.64898/2026.07.02.736020</a></p>
 <p>In this tutorial, we’ll demonstrate the practical use of the network cross-pair correlation function using <code class="docutils literal notranslate"><span class="pre">cross_pair_correlation_function()</span></code>. For the mathematical details of the estimator, please refer to the reference paper.</p>
 <p>We’ll begin by loading the same spiral dataset used in the <code class="docutils literal notranslate"><span class="pre">netPCF</span></code> tutorial together with its associated categorical node labels.</p>
 <div class="nbinput docutils container">
@@ -606,7 +606,7 @@ Computing node-node distances...
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-Computing contributions: 100%|██████████| 326/326 [00:02&lt;00:00, 128.31contributions/s]
+Computing contributions: 100%|██████████| 326/326 [00:01&lt;00:00, 293.69contributions/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -643,7 +643,7 @@ Computing confidence intervals via spatial bootstrap...
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;matplotlib.legend.Legend at 0x1291b1100&gt;
+&lt;matplotlib.legend.Legend at 0x10415fe60&gt;
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">

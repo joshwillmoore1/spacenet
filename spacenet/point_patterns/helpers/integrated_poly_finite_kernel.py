@@ -192,8 +192,22 @@ def integrated_poly_finite_kernel(
 ):
     """
     Nearest-endpoint Gaussian weighted
-    polynomial kernel integration.
+    polynomial kernel integration for 
+    localised accessible space normalisation. 
+    
+    This is defined as:
 
+    .. math::
+
+        \int_{0}^{w_{st}}
+        q_{st}(x;c) \kappa_{\Delta r,n}(d_{st}(x)-r)\,dx
+
+    where :math:`q_{st}(x;c)` is the nearest-endpoint Gaussian
+    weighting function, :math:`\kappa_{\Delta r,n}` is the polynomial
+    kernel function, and :math:`d_{st}(x)` is the shortest-path
+    distance from point :math:`x` on edge :math:`e_{st}` to the
+    reference node.
+    
     Parameters
     ----------
     r : float
@@ -215,11 +229,22 @@ def integrated_poly_finite_kernel(
     -------
     ndarray
         Integrated contribution for each edge.
+        
+        
+    Notes
+    -----
+    
+    For more information, see the reference paper:
+    
+    Moore et al. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
+    
     """
     if delta_r <= 0 or n <= 0 or redistribution_scale < 0:
         raise ValueError(
             "delta_r and n must be positive, c must be non-negative"   
         )
+        
+    
     
     # Endpoint-weighted redistribution scale: use simple formula
     if redistribution_scale==0:

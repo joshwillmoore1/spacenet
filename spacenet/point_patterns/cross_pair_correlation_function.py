@@ -13,11 +13,34 @@ from spacenet.point_patterns.helpers.polynomial_kernel_bandwidth_scale import po
 def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None, spatial_kernel_bandwidth=10,spatial_kernel_n=2, r_min=0, r_max=100, r_step=10, edge_weight_name='Distance', return_confidence_interval=False,low_memory=False,verbose=True,n_jobs=1,redistribution_scale=0):
     """
     
-    Computes the pair correlation function (PCF) or cross-pair correlation function (cross-PCF) for nodes in a spatial network.
+    Compute the network-based pair correlation function (netPCF) or
+    cross-pair correlation function (cross-netPCF) for populations of
+    nodes embedded in a spatial network.
+
+    netPCF quantifies spatial relationships between nodes using
+    shortest-path distances, accounting for network geometry
+    and accessible space when estimating expected node-pair densities.
+
+    netPCF is defined as the ratio of the observed density of
+    node pairs at a given network distance, :math:`r`, to the
+    expected density under complete spatial randomness (CSR).
+    Node pairs are counted within an annulus centred at each
+    reference node, with distances measured along the network.
+
+    The resulting netPCF values can be interpreted as follows:
+
+    - Values greater than 1 indicate an increased density of node pairs (spatial clustering or co-localisation).
     
-    The PCF is computed when nodes_a and nodes_b refer to the same set of nodes, and quantifies spatial dependence within a single node population.
+    - Values less than 1 indicate a reduced density of node pairs (spatial exclusion or segregation).
     
-    The cross-PCF is computed when nodes_a and nodes_b refer to different node populations, and quantifies spatial dependence between those populations.
+    - Values equal to 1 indicate spatial relationships consistent with complete spatial randomness.
+
+    When ``population_A`` and ``population_B`` represent the same
+    population, the function computes the standard netPCF, measuring
+    spatial relationships within a single population. When they
+    represent different populations, the function computes the
+    cross-netPCF, measuring spatial relationships between the two
+    populations.
     
     Parameters
     ----------
@@ -65,7 +88,7 @@ def cross_pair_correlation_function(spatial_network, nodes_a=None, nodes_b=None,
     
     For more information, see the reference paper:
     
-    Moore et al. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
+    Moore, Bull & Byrne. (2026). *netPCF: Geometry-aware Pair Correlation Functions for Spatial Biology*. DOI: https://doi.org/10.64898/2026.07.02.736020
 
     
     Examples

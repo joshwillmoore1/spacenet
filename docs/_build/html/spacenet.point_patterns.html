@@ -30,7 +30,7 @@
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css?v=7f9a90b1" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css?v=d2d258e8" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bdbcc2a0" />
@@ -42,7 +42,7 @@
 
     <script src="_static/jquery.js?v=5d32c60e"></script>
     <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-    <script src="_static/documentation_options.js?v=f7f30125"></script>
+    <script src="_static/documentation_options.js?v=933cd161"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
@@ -68,7 +68,7 @@
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://www.spacenet-python.com/version_switcher.json';
-        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.2';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '0.0.3';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = false;
         </script>
     <link rel="icon" href="_static/fav.svg"/>
@@ -442,7 +442,7 @@ document.write(`
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">spacenet.point_patterns</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.cross_pair_correlation_function.html">spacenet.point_patterns.cross_pair_correlation_function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.weighted_pair_correlation_function.html">spacenet.point_patterns.weighted_pair_correlation_function</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.cross_weighted_pair_correlation_function.html">spacenet.point_patterns.cross_weighted_pair_correlation_function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.dual_weighted_pair_correlation_function.html">spacenet.point_patterns.dual_weighted_pair_correlation_function</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.spatial_bootstrap.html">spacenet.point_patterns.helpers.spatial_bootstrap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.polynomial_kernel.html">spacenet.point_patterns.helpers.polynomial_kernel</a></li>
 <li class="toctree-l2"><a class="reference internal" href="generated/spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html">spacenet.point_patterns.helpers.integrated_poly_finite_kernel</a></li>
@@ -530,13 +530,13 @@ document.write(`
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.point_patterns.cross_pair_correlation_function.html#spacenet.point_patterns.cross_pair_correlation_function" title="spacenet.point_patterns.cross_pair_correlation_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross_pair_correlation_function</span></code></a></p></td>
-<td><p>Computes the pair correlation function (PCF) or cross-pair correlation function (cross-PCF) for nodes in a spatial network.</p></td>
+<td><p>Compute the network-based pair correlation function (netPCF) or cross-pair correlation function (cross-netPCF) for populations of nodes embedded in a spatial network.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.point_patterns.weighted_pair_correlation_function.html#spacenet.point_patterns.weighted_pair_correlation_function" title="spacenet.point_patterns.weighted_pair_correlation_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">weighted_pair_correlation_function</span></code></a></p></td>
-<td><p>Computes the weighted pair correlation function between two populations of nodes.</p></td>
+<td><p>Compute the weighted network-based pair correlation function (weighted-netPCF) between a reference population of nodes and a population of nodes with continuous marks.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.point_patterns.cross_weighted_pair_correlation_function.html#spacenet.point_patterns.cross_weighted_pair_correlation_function" title="spacenet.point_patterns.cross_weighted_pair_correlation_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cross_weighted_pair_correlation_function</span></code></a></p></td>
-<td><p>Compute the cross weighted pair correlation function between two populations of objects (A and B) on a spatial network, where the contributions of each object to the pair correlation function are weighted by a kernel function based on their marker levels.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.point_patterns.dual_weighted_pair_correlation_function.html#spacenet.point_patterns.dual_weighted_pair_correlation_function" title="spacenet.point_patterns.dual_weighted_pair_correlation_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dual_weighted_pair_correlation_function</span></code></a></p></td>
+<td><p>Compute the dual-weighted network-based pair correlation function (dual-weighted netPCF) between two populations of nodes with continuous marks.</p></td>
 </tr>
 </tbody>
 </table>
@@ -553,7 +553,7 @@ document.write(`
 <td><p>Computes the polynomial kernel function for a given distance or array of distances.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/spacenet.point_patterns.helpers.integrated_poly_finite_kernel.html#spacenet.point_patterns.helpers.integrated_poly_finite_kernel" title="spacenet.point_patterns.helpers.integrated_poly_finite_kernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">helpers.integrated_poly_finite_kernel</span></code></a></p></td>
-<td><p>Computes the integrated polynomial kernel function for given distances and bandwidth parameters.</p></td>
+<td><p>Nearest-endpoint Gaussian weighted polynomial kernel integration for  localised accessible space normalisation.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/spacenet.point_patterns.helpers.is_connected_filter.html#spacenet.point_patterns.helpers.is_connected_filter" title="spacenet.point_patterns.helpers.is_connected_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">helpers.is_connected_filter</span></code></a></p></td>
 <td><p>A helper function to check if the network is connected and filter to the largest connected component if not.</p></td>
